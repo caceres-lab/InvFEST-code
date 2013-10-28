@@ -26,7 +26,7 @@ session_start(); //Inicio la sesión
 ?> 
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-	<link rel="shortcut icon" href="http://invfestdb.uab.cat/img/InvFEST_ico.png">
+	<link rel="shortcut icon" href="img/InvFEST_ico.png">
 	<title>Inversion Report: <?php echo $r['name']; ?></title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<script type="text/javascript" src="js/jquery.js"></script>

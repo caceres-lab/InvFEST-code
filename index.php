@@ -33,7 +33,7 @@ echo $head;
 	<img src="img/flag_yellow_low.jpg" alt="EU" height="50">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<img src="img/FP7-ide-RGB.gif" alt="FP7" height="50">
 </p>
-<p style="text-align: center;">&nbsp;<br/><a href="http://invfestdb.uab.cat/search.php"><button class="default">Start querying InvFEST</button></a></p>
+<p style="text-align: center;">&nbsp;<br/><a href="search.php"><button class="default">Start querying InvFEST</button></a></p>
   </div>
   <br />
   <div id="foot"><?php include('php/footer.php');?>

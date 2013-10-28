@@ -11,13 +11,13 @@
     <ul>
 
 		  <li></li>
-		   <li><a href="http://invfestdb.uab.cat/index.php"><button class="default">About the Project</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/search.php"><button class="default">Search Inversions</button></a></li>
-		<!--   <li><a href="http://invfestdb.uab.cat/statistics.php"><button class="default">Statistics</button></a></li>	-->	   
-		   <li><a href="http://invfestdb.uab.cat/download.php"><button class="default">Downloads</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/help.php"><button class="default">Help</button></a></li>		   
-		   <li><a href="http://invfestdb.uab.cat/submissions.php"><button class="default">Data Submissions</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/contact.php"><button class="default">Contact Us</button></a></li>
+		   <li><a href="index.php"><button class="default">About the Project</button></a></li>
+		   <li><a href="search.php"><button class="default">Search Inversions</button></a></li>
+		<!--   <li><a href="statistics.php"><button class="default">Statistics</button></a></li>	-->	   
+		   <li><a href="download.php"><button class="default">Downloads</button></a></li>
+		   <li><a href="help.php"><button class="default">Help</button></a></li>		   
+		   <li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
+		   <li><a href="contact.php"><button class="default">Contact Us</button></a></li>
 
 		 </ul>
     </div>		
@@ -53,13 +53,13 @@
 <?if ($r['name']==''){ ?>
 
 		  <li></li>
-		   <li><a href="http://invfestdb.uab.cat/index.php"><button class="default">About the Project</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/search.php"><button class="default">Search Inversions</button></a></li>
-	<!--	   <li><a href="http://invfestdb.uab.cat/statistics.php"><button class="default">Statistics</button></a></li>		-->   
-		   <li><a href="http://invfestdb.uab.cat/download.php"><button class="default">Downloads</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/help.php"><button class="default">Help</button></a></li>		   
-		   <li><a href="http://invfestdb.uab.cat/submissions.php"><button class="default">Data Submissions</button></a></li>
-		   <li><a href="http://invfestdb.uab.cat/contact.php"><button class="default">Contact Us</button></a></li>
+		   <li><a href="index.php"><button class="default">About the Project</button></a></li>
+		   <li><a href="search.php"><button class="default">Search Inversions</button></a></li>
+	<!--	   <li><a href="statistics.php"><button class="default">Statistics</button></a></li>		-->   
+		   <li><a href="download.php"><button class="default">Downloads</button></a></li>
+		   <li><a href="help.php"><button class="default">Help</button></a></li>		   
+		   <li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
+		   <li><a href="contact.php"><button class="default">Contact Us</button></a></li>
 
 
 <?
