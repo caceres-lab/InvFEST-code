@@ -1,0 +1,346 @@
+/*
+	2009 Miquel Ràmia <miquel.ramia@uab.cat>
+	Lab. de Bioinformàtica de la variació genètica
+	Grup de Genòmica, Bioinformàtica i Evolució
+	Departament de Genètica i Microbiolgia
+	Universitat Autònoma de Barcelona   
+*/
+
+/* GENERAL */
+/*
+body {
+	margin: 6.5% 0 0 0;
+	font-family: verdana, helvetica, sans-serif;
+	font-size:0.8em;
+	background: url('img/tiled.jpg') fixed rgb(98, 148, 175);
+	background-color:#f5f5f9;
+	text-align: justify;
+}
+*/
+#wrapper {
+/*	margin: auto;
+	padding: 0;
+	max-width: 960px; */
+width:1150px;
+ margin:0 auto;
+ text-align:left;
+ height: 100%;
+}
+
+
+#head,
+/*#foot*/ {
+	background: rgba(204, 204, 204, 0.8);
+	border: black solid 0.1em;
+}
+
+#head {
+	padding: 0.2em 0.5em;
+	font-size: 2em;
+	color: black;
+	font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+}
+
+
+#logo {
+	float:right;
+	display:inline-block;
+	color:black;
+	font-size:0.5em;
+    padding-left: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+}
+
+#menu_div {
+    margin:0;
+	font-size:0.6em;
+	color: black;
+    padding-top: 0.0px;
+    padding-bottom: 0.0px;
+	padding-left: 10em;
+	background: #96A9E4;
+	/*width: 30em;*/
+    position: fixed;
+    top: 42px;
+    left: 0;
+    height: 20px;
+    width: 100%;	
+  }
+  /*
+      font-size: 0.6em;
+    position: fixed;
+    top: 30px;
+    left: 0;
+    height: 25px;
+    width: 100%;
+    color: aqua;
+    padding-top: 10px;
+    padding-left: 10px;
+  */
+ 
+  
+
+#menu {
+	list-style-type:none;
+    margin:0;
+    padding:0;
+  }
+
+#menu_item {
+    display:inline;
+}
+
+#login {
+	float:right;
+ 	display:inline-block;
+	color:black;
+/*	font-size:0.5em;*/
+    padding-right: 20px;
+}
+
+.clear {
+	clear: both;
+}
+
+.compulsory {
+	color:red;
+	display:inline-block;
+}
+
+#includeCompulsory {
+	display:inline-block;
+}
+
+thead {
+	font-weight:bold;
+}
+
+/* ROUND CORNERS*/
+#head,
+#foot {
+/*	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;*/
+}
+#foot {
+   border:1px solid #F1F1F1;
+ /*	padding: 0.8em;
+	text-align: center;
+   position:absolute;
+    left:100px; 
+    bottom:0px;*/
+   font-family:Ubuntu;
+   font-size:10px; 
+   text-align: center;
+}
+
+body{
+
+margin:0 auto;
+text-align:center;
+background-color: #f9f9f5;
+}
+
+a:link {text-decoration:none;color:#1c4257;}
+a:visited {text-decoration:none;color:#1c4257;}
+a:hover {text-decoration:underline;color:#7e95b0;}
+a:active {text-decoration:underline;color:#7e95b0;}
+
+#container{
+ width:1100px;
+ margin:0 auto;
+ text-align:left;
+}
+
+#floatingbar{
+ border:1px solid #F1F1F1;
+ height:80px;
+}
+
+#minibar{
+ border:1px solid #F1F1F1;
+ height:50px;
+}
+
+#floatingbar ul, #minibar ul{
+ list-style-type:none;
+ margin-top:-3px;
+ margin-left:-37px;
+ 
+}
+
+#haedtitle{
+  padding-bottom: 5px;
+  text-align: left; 
+  font-family:Ubuntu;
+  font-size:17px;
+  font-weight:bold;
+}
+
+
+#floatingbar ul li,#minibar ul li{
+ float:left;
+ padding:0px;
+ font-family:Ubuntu;
+ font-size:14px;
+
+}
+
+#floatingbar ul li a,#minibar ul li a{
+ text-decoration:none;
+
+}
+
+#minibar { display:none;}
+
+
+
+.floater{
+position:fixed;
+top:0px;
+z-index:999;
+height:50px;
+width:1150px;
+border-top:none;
+background-color: #F1F1F1;
+border:1px solid #000000;
+color:#ccc;
+display:block;
+clear:both;
+margin-left:auto;
+margin-right:auto;
+float:left;
+
+box-shadow: 0 0 7px rgba(0,0,0,0.4);
+	-webkit-box-shadow: 0 0 7px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0 0 7px rgba(0,0,0,0.4);
+	border-radius: .214em;
+	-webkit-border-radius: .214em;
+	-moz-border-radius: .214em;
+
+}
+
+
+
+button {
+	position: relative;
+	margin: 0 .5em .5em .5em;
+/*	padding: 0.5em 1.5em; */
+	font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+	color: #4f4f4f;/*405BA2*/
+	text-shadow: 0 1px 1px #fff;
+	background: #ddd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#c4c4c4));
+	background: -moz-linear-gradient(top, #ededed, #c4c4c4);
+	border: 1px solid #acacac;
+	border-top-color: #bdbdbd;
+/*	letter-spacing:-1px;  */
+	border-bottom-color: #949494;
+	border-radius: .214em;
+	-webkit-border-radius: .214em;
+	-moz-border-radius: .214em;
+	transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	
+	         box-shadow: inset 0 1px 0 #fff;
+    		-webkit-box-shadow: inset 0 1px 0 #fff;
+    		-moz-box-shadow: inset 0 1px 0 #fff;
+    		-o-box-shadow: inset 0 1px 0 #fff;
+	       
+			
+	cursor: pointer;
+	}
+	button:hover,
+	button:focus {
+		
+		
+		box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
+		}
+	button:active {
+		background: #ccc;
+		background: -webkit-gradient(linear, left top, left bottom, from(#c3c3c3), to(#ebebeb));
+		background: -moz-linear-gradient(top, #c3c3c3, #ebebeb);
+		border-color: #a6a6a6;
+		border-top-color: #939393;
+		border-bottom-color: #bcbcbc;
+
+		
+			box-shadow: inset 0 -1px 0 #fff;
+    		-webkit-box-shadow: inset 0 -1px 0 #fff;
+    		-moz-box-shadow: inset 0 -1px 0 #fff;
+    		-o-box-shadow: inset 0 -1px 0 #fff;
+		}
+button.default {
+	color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+		
+	}
+	button.default:hover,
+	button.default:focus {
+	box-shadow: 0 0 7px #53a6d5;
+	
+		
+		     box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+			
+		}
+	button.default:active {
+		background: #8abcd7;
+		background: -webkit-gradient(linear, left top, left bottom, from(#81afc8), to(#b7def4));
+		background: -moz-linear-gradient(top, #81afc8, #b7def4);
+		border-color: #6e94a9;
+		border-top-color: #567c91;
+		border-bottom-color: #88aec4;
+
+		
+		box-shadow: inset 0 -1px 1px #fff;
+    		-webkit-box-shadow: inset 0 -1px 1px #fff;
+    		-moz-box-shadow: inset 0 -1px 1px #fff;
+    		-o-box-shadow: inset 0 -1px 1px #fff;
+		
+		
+		}
+button[disabled],
+button[disabled]:active {
+	color: #a7a7a7;
+	background: #efefef;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#e1e1e1));
+	background: -moz-linear-gradient(top, #f6f6f6, #e1e1e1);
+	border-color: #d4d4d4;
+	border-top-color: #dedede;
+	border-bottom-color: #c9c9c9;
+	cursor: default;
+	}
+	button[disabled]:hover,
+	button[disabled]:focus {
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-o-box-shadow: none;
+		}
+		
+		#dirbutton img { margin-top:-3px;}
+		
+	

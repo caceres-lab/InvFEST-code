@@ -1,0 +1,53 @@
+/*
+	2009 Miquel Ràmia <miquel.ramia@uab.cat>
+	Lab. de Bioinformàtica de la variació genètica
+	Grup de Genòmica, Bioinformàtica i Evolució
+	Departament de Genètica i Microbiolgia
+	Universitat Autònoma de Barcelona   
+*/
+
+/* GENERAL */
+
+body {
+	margin: 1% 5% 0 5%;
+	font-family: helvetica, sans-serif;
+	font-size:0.9em;
+	background: url('img/tiled.jpg') fixed rgb(98, 148, 175);
+}
+
+#wrapper {
+	margin: 0;
+	padding: 0;
+}
+
+
+#head,
+#foot {
+	background: rgba(204, 204, 204, 0.8);
+	border: black solid 0.1em;
+}
+
+#head {
+	padding: 0.2em 0.5em;
+	font-size: 2em;
+	color: black;
+	font-weight: bold;
+}
+
+#foot {
+	padding: 0.8em;
+	text-align: center;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+/* ROUND CORNERS*/
+#head,
+#foot {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}

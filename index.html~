@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<!--
+	2009 Miquel Ràmia <miquel.ramia@uab.cat>
+	Lab. de Bioinformàtica de la variació genètica
+	Grup de Genòmica, Bioinformàtica i Evolució
+	Departament de Genètica i Microbiolgia
+	Universitat Autònoma de Barcelona   
+-->
+
+<head>
+	<title>Inversion "TestInversion" Report</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script type="text/javascript" src="js/search_ajax.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="head">Human Inversion DataBase</div>
+		<div id="main">
+			<div id="welcome">
+				<p>Welcome to the <em>Human Inversion DataBase</em>. Make a search with the search box</p>
+			</div>
+			
+			<div id="search">
+				<input type="text" value="Search..."name="search" class="input-text"/>
+				<input type="submit" name="submit" onclick="showResult()" />
+			</div>
+			<div class="clear"></div>
+			<div id="search_results"></div>
+		</div>
+		<div id="foot">(footer)</div>
+	</div><!--end Wrapper-->
+</body>
+</html>

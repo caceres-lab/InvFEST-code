@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<!--
+	2009 Miquel Ràmia <miquel.ramia@uab.cat>
+	Lab. de Bioinformàtica de la variació genètica
+	Grup de Genòmica, Bioinformàtica i Evolució
+	Departament de Genètica i Microbiolgia
+	Universitat Autònoma de Barcelona   
+-->
+<?php include_once('php/select_report.php');?>
+
+<head>
+	<title>Inversion "TestInversion" Report</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".hidden").hide();                                  //hide all contents 
+			$(".section-title").click(function(){                 //toggle when click title
+				$(this).next(".section-content, .grlsection-content").slideToggle(600);
+			});
+		});
+	</script>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/report.css" />
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="head">Human Inversion DataBase</div>
+		<div id="report">
+			
+			<h1 id="report_title">Inversion Inv_<?php echo $id;?> (Report)</h1>
+		
+			<div id="general_info" class="report-section" >
+				<div class="section-title">General data:</div>
+				<div class="grlsection-content">
+					<div class="left">
+						<p class="field"><strong>Name: </strong></p>
+						<p class="field"><strong>Type: </strong></p>
+						<p class="field"><strong>size: </strong></p>
+						<p class="field"><strong>Chromosome: </strong><?php echo $r['chr'];?></p>
+						<p class="field"><strong>Validation: </strong></p>
+						<ul>
+							<li>Korbel evidence: <?php echo ($r['ko_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>Kidd evidence: <?php echo ($r['k_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>Levy evidence: <?php echo ($r['l_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>McKernan evidence: <?php echo ($r['m_ex'] == 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>Ahn evidence: <?php echo ($r['a_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>Wang evidence: <?php echo ($r['w_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+							<li>Our evidence: <?php echo ($r['o_ex']== 1)? '<img src="css/img/tick.png"/>':''; ?></li>
+						</ul>
+						<p class="field"><strong>Origin mechanism: </strong></p>
+						<p class="field"><strong>Population frequency: </strong></p>
+						<p class="field"><strong>Feature: </strong></p>
+						<p class="field"><strong>Notes: </strong></p>
+						<p class="field"><strong>Reported By: </strong></p>
+						<p class="field"><strong>Reported Source: </strong></p>
+					</div>
+					<div class="right bkp">
+						<h4>Breakpoint 1</h4>
+						<p class="field"><strong>Start: </strong></p>
+						<p class="field"><strong>End: </strong></p>
+						<p class="field"><strong>Type: </strong></p>
+						<p class="field"><strong>Defined By: </strong></p>
+					</div>
+					<div class="right bkp">
+						<h4>Breakpoint 2</h4>
+						<p class="field"><strong>Start: </strong></p>
+						<p class="field"><strong>End: </strong></p>
+						<p class="field"><strong>Type: </strong></p>
+						<p class="field"><strong>Defined By: </strong></p>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				
+				<?php 
+				
+					$perlurl = "?id=$id&chr=".$r['chr']."&v_bp1=".$r['v_bp1']."&v_bp2=".$r['v_bp2']."&p_bp1=".$r['gp_bp1']."&p_bp2=".$r['gp_bp2']."&f_bp1_start=".$r['f_bp1_start']."&f_bp1_end=".$r['f_bp1_end']."&f_bp2_start=".$r['f_bp2_start']."&f_bp2_end=".$r['f_bp2_end'];
+				
+				?>
+				
+				<br/><p class="field"><strong>Region map: </strong></p>
+				<img id="region"src="image.pl<?php echo $perlurl; ?>" />
+						
+			</div>
+
+			<div class="report-section">
+				<div class="section-title">Korbel evidence:</div>
+				<div id="test1" class="section-content ">
+					<p class="field"><strong>Korbel evidence Id: </strong><?php echo $r['ko_id'] ;?></p>
+					<p class="field"><strong>Breakpoint 1: </strong><?php echo $r['ko_bp1'] ;?></p>
+					<p class="field"><strong>Breakpoint 2: </strong><?php echo $r['ko_bp2'] ;?></p>
+				</div>
+			</div>
+			
+			<div class="report-section">
+				<div class="section-title">Kidd evidence:</div>
+				<div id="test1" class="section-content ">
+					<p class="field"><strong>Kidd evidence Id: </strong><?php echo $r['k_id'] ;?></p>
+					<p class="field"><strong>Breakpoint 1: </strong><?php echo $r['k_bp1'] ;?></p>
+					<p class="field"><strong>Breakpoint 2: </strong><?php echo $r['k_bp2'] ;?></p>
+				</div>
+			</div>
+			
+			<div class="report-section">
+				<div class="section-title">McKernan evidence:</div>
+				<div id="test1" class="section-content ">
+					<?php echo $report_m ; ?>
+				</div>
+			</div>
+			
+			<div class="report-section">
+				<div class="section-title">Levy evidence:</div>
+				<div id="test1" class="section-content ">
+					<?php echo $report_l ; ?>
+				</div>
+			</div>	
+			
+			<div class="report-section">
+				<div class="section-title">Ahn evidence:</div>
+				<div id="test1" class="section-content ">
+						<p class="field"><strong>Id: </strong><?php echo $r['a_id'] ;?></p>
+						<p class="field"><strong>Breakpoint 1: </strong><?php echo $r['a_bp1_start']."-".$r['a_bp1_end'];?></p>
+						<p class="field"><strong>Breakpoint 2: </strong><?php echo $r['a_bp2_start']."-".$r['a_bp2_end'];?></p>
+				</div>
+			</div>		
+
+			<div class="report-section">
+				<div class="section-title">Wang evidence:</div>
+				<div id="test1" class="section-content ">
+					<p class="field"><strong>Id: </strong><?php echo $r['w_id'] ;?></p>
+					<p class="field"><strong>Breakpoint 1: </strong><?php echo $r['w_bp1'] ;?></p>
+					<p class="field"><strong>Breakpoint 2: </strong><?php echo $r['w_bp2'] ;?></p>
+				</div>
+			</div>	
+			
+			<div class="report-section">
+				<div class="section-title">Our evidence:</div>
+				<div id="test1" class="section-content ">
+					<p class="field"><strong>Id: </strong><?php echo $r['o_id'] ;?></p>
+					<p class="field"><strong>Breakpoint 1: </strong><?php echo $r['o_bp1_start']."-".$r['o_bp1_end'] ;?></p>
+					<p class="field"><strong>Breakpoint 2: </strong><?php echo $r['o_bp2_start']."-".$r['o_bp2_end'] ;?></p>
+				</div>
+			</div>								
+
+
+			<div class="clear"></div>
+		</div> <!--end Report-->
+		<div id="foot">(footer)</div>
+	</div><!--end Wrapper-->
+</body>
+</html>
