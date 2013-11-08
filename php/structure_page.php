@@ -14,7 +14,7 @@ $creator='
 -->';
 $head="<head>
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link rel='shortcut icon' href='http://invfestdb.uab.cat/img/InvFEST_ico.png'>
+<link rel='shortcut icon' href='img/InvFEST_ico.png'>
 <title>InvFEST: Human Polymorphic Inversion DataBase</title>
 <meta http-equiv='content-type' content='text/html;charset=utf-8' />
 
@@ -203,7 +203,7 @@ count=0;
 
 //<option value=\"size\">Size</option>
 var sizeA='<input text=\"text\" name=\"field_value[]\" id=\"size';
-var sizeB='\" size=25>&nbsp;<img src=\"img/alert.png\" class=\"masterTooltip\" title=\"Joins to other [Size] filters with [AND]\" width=\"18\"/>&nbsp;';
+var sizeB='\" size=25>&nbsp;in Mb<img src=\"img/alert.png\" class=\"masterTooltip\" title=\"Joins to other [Size] filters with [AND]\" width=\"18\"/>&nbsp;';
 
 //<option value='inv_status'>Inversion Status</option>
 var invStatusA= '<select name=\"field_value[]\" id=\"inversion_status';
