@@ -1,5 +1,5 @@
-cd /var/www/invdb/liftOver/
+cd $1
 
-liftOver -positions liftOver.in hg19ToHg18.over.chain.gz liftOver.out liftOver.unmapped
+liftOver -positions $2.in hg19ToHg18.over.chain.gz $2.out liftOver.unmapped
 
 rm *bed*

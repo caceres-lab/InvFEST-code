@@ -1,4 +1,8 @@
 <?php 
+#error_reporting(E_ERROR );
+#ini_set('display_errors',1);
+#ini_set('display_startup_errors',1);
+#error_reporting(-1);
 session_start(); //Inicio la sesión
 ?>
 <?php include_once('php/select_index.php');?>
@@ -114,13 +118,17 @@ $assembly=$_POST["assembly"];
 if (($assembly == "hg19") and preg_match("/^(chr\w+)\W+(\d+)\W+(\d+)$/i", $search_field, $matches)) {
 
 	$query_hg19_position = $matches[1].':'.$matches[2].'-'.$matches[3];
-	file_put_contents('/var/www/invdb/liftOver/liftOver.in', $query_hg19_position);
+	$TEMPFILE=uniqid('liftover_');
+	file_put_contents(dirname(__FILE__).'/liftOver/'.$TEMPFILE.'.in', $query_hg19_position);
 
-	$cmd='/var/www/invdb/liftOver/liftOver.sh';
+	$cmd=dirname(__FILE__).'/liftOver/liftOver.sh '.dirname(__FILE__).'/liftOver '.$TEMPFILE;
 	exec($cmd, $output, $errmsg);
-	//var_dump($output); echo "  ---  Error: ".$errmsg;echo $cmd;
+	#var_dump($output); echo "  ---  Error: ".$errmsg;echo $cmd;
 
-	$search_field = file_get_contents('/var/www/invdb/liftOver/liftOver.out');
+	$search_field = file_get_contents(dirname(__FILE__).'/liftOver/'.$TEMPFILE.'.out');
+	#rm tempfile
+	unlink(dirname(__FILE__).'/liftOver/'.$TEMPFILE.'.out');
+	unlink(dirname(__FILE__).'/liftOver/'.$TEMPFILE.'.in');
 
 }
 
@@ -372,7 +380,7 @@ $where_string = implode(" AND ", $where);
 
 
 // --- CONSULTA BBDD ----------------------------------------------------------------------
-include_once('db_conexion.php');
+include_once('php/db_conexion.php');
 
 $select = "inversions.id,
 	inversions.name,
