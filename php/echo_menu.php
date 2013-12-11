@@ -18,11 +18,13 @@
 		   <li><a href="help.php"><button class="default">Help</button></a></li>		   
 		   <li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
 		   <li><a href="contact.php"><button class="default">Contact Us</button></a></li>
+		   <li><font color="#759bb1"><b>&nbsp;&nbsp;Database Version: 1.0</b></font></li>
 
 		 </ul>
     </div>		
   		</td>
   		<td valign="top" align="right" style="border:0px;">
+
   <div id="login" class='right'>
 				<?
 				if ($id=='') {$origin='index';} 
