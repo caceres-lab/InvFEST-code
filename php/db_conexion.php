@@ -7,21 +7,21 @@ if ($_SESSION["autentificado"]=='SI') {
 		// Admin user
 		$user = "invfest";
 		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-dev";
+		$db = "INVFEST-DB";
 	
 	} elseif ($_SESSION['MySQLuser']=="invfestdb-lab") {
 	
 		// Lab user
 		$user = "invfestdb-lab";
 		$password = "InvFESTLab";
-		$db = "INVFEST-DB-dev";
+		$db = "INVFEST-DB";
 	
 	} else {
 	
 		// I don't know who you are...
 		$user = "invfest";
 		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-PUBLIC-dev";
+		$db = "INVFEST-DB-PUBLIC";
 	
 	}
 
@@ -30,7 +30,7 @@ if ($_SESSION["autentificado"]=='SI') {
 		// No login
 		$user = "invfest";
 		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-PUBLIC-dev";
+		$db = "INVFEST-DB-PUBLIC";
 
 }
 
