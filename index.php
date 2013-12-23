@@ -17,7 +17,18 @@ echo $head;
 <script type="text/javascript" src="js/header.js"></script>
 <!-- ................................................................................................................................. -->
 <body>
+<?php 
 
+#write in file $IP visit
+$myFile = "hits.txt";
+$fh = fopen($myFile, 'a');
+$ip=$_SERVER['REMOTE_ADDR'];
+$date = date('m d Y', time());
+$stringData = "$ip $date\n";
+#echo $stringData;
+fwrite($fh, $stringData);
+fclose($fh);
+?>
 <?php include('php/echo_menu.php');?>
 <br/>
   <div id="welcome" class="section-content">
