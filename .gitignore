@@ -1,4 +1,7 @@
 hits.txt
+stats/hits.txt
+stats/*xday.txt
+stats/*bz2
 php/db_conexion.php
 sql/InvFESTdb.FREEZE1.sql.gz
 sql/InvFESTdb.private.backup.sql.gz
