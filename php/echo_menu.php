@@ -4,8 +4,8 @@
   	
   <table style="border:0px;">
   	<tr style="border:0px;">
-  		<td style="border:0px;width:200px;"><a href="http://invfestdb.uab.cat"><img border=0 src="img/InvFEST.png" width="200"></a></td>
-  		<td style="border:0px;width:1430px;"><a href="http://invfestdb.uab.cat"><img border=0 src="img/longname.png" width="500"></a>
+  		<td style="border:0px;width:200px;"><a href="index.php"><img border=0 src="img/InvFEST.png" width="200"></a></td>
+  		<td style="border:0px;width:1430px;"><a href="index.php"><img border=0 src="img/longname.png" width="500"></a>
   		
      <div style="float: left">
     <ul>

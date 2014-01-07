@@ -20,14 +20,12 @@ echo $head;
 <?php 
 
 #write in file $IP visit
-$myFile = "hits.txt";
-$fh = fopen($myFile, 'a');
+$myFile = "stats/hits.txt";
 $ip=$_SERVER['REMOTE_ADDR'];
 $date = date('m d Y', time());
 $stringData = "$ip $date\n";
 #echo $stringData;
-fwrite($fh, $stringData);
-fclose($fh);
+file_put_contents($myFile, $stringData, FILE_APPEND | LOCK_EX);
 ?>
 <?php include('php/echo_menu.php');?>
 <br/>
