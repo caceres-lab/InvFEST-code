@@ -1,4 +1,7 @@
 #get month year
+DIR=`dirname $0`
+echo $DIR
+cd $DIR
 y=$(date +'%Y')
 m=$(date +'%m')
 DATE=$y.$m
