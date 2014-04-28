@@ -1,0 +1,107 @@
+#------------------------------------------------------------------------------------
+# Copyright (C) 2014, by the authors,  All rights reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#	
+# Name:      	FAQ.txt 
+#
+# Author(s): 	Alexander Martínez-Fundichely & Sònia Casillas
+#		Comparative and Functional Genomics group
+#		Institut de Biotecnologia i de Biomedicina
+#		Universitat Autònoma de Barcelona, Spain
+#
+# Contact:	batscherow@gmail.com, sonia.casillas@uab.cat
+#
+#     Status.......: 3.1 (Released)
+#     Status Date..: 01.04.2014
+#     Purpose......: Frequently Asked Questions (FAQ)
+#
+# Changes   Date(DD.MM.YYYY)   NAME   DESCRIPTION
+#
+#------------------------------------------------------------------------------------
+
+Geometric Rules Inversion ALgorithm (GRIAL)
+
+Frequently Asked Questions (FAQ)
+
+SUMMARY ==============================================
+
+GRIAL is a software for predicting inversions and refining their 
+breakpoints based on the computation of some geometric rules specific 
+to inversions in a PEM assay. GRIAL can also score all the predicted 
+inversions based on the number of concordant PEMs in the region of the 
+inversion, and the expected number of discordant PEMs supporting each 
+breakpoint given the inversion size, the repetitive nature of the sequence 
+of the breakpoints, and the sequencing coverage.
+
+If you use GRIAL in your research, please cite: Martínez-Fundichely 
+et al. (in preparation)
+
+
+FAQS =================================================
+
+(*) What does GRIAL do?
+
+GRIAL is an algorithm for predicting inversions from paired-end mapping (PEM) data.
+It is based on some geometrical rules that are specific to inversions. GRIAL also
+refines the breakpoints location to the shortest possible region given the uncertainty
+inherent to the data. For more information on GRIAL please refer to the MANUAL and
+the GRIAL publication: Martínez-Fundichely et al. (in preparation).
+
+
+(*) What do we mean by "breakpoints" in the results of GRIAL?
+
+GRIAL clusters together all PEMs that can be supporting the same inversion breakpoint
+according to the set of geometrical rules described in the MANUAL and GRIAL publication.
+According to the mapping position of these PEMs in the reference genome, GRIAL predicts and
+refines the location of the inversion breakpoints.
+
+Sometimes several discordant PEMs might be compatible with multiple possible inversions.
+In this case, GRIAL clusters the PEMs such that they predict the minimum number of
+inversions with the highest PEM support.
+
+Also in some cases a predicted inversion is supported by discordant PEMs in only one 
+breakpoint. In this case GRIAL inferes the location of the other breakpoint by applying
+some geometrical rules compatible with the inversion prediction, but in this case the 
+location of this inferred breakpoint is not refined.
+
+For more information and illustration of this, please refer to the MANUAL and the GRIAL
+publication: Martínez-Fundichely et al. (in preparation).
+
+
+(*) Can GRIAL be used to predict other types of structural variants?
+
+NO. The geometrical rules implemented in GRIAL are specific to the prediction of inversions
+from PEM data. However, the theoretical framework developed and implemented in GRIAL might
+be extended to other structural variants. See Escaramís et al. 2013. 
+
+
+(*) Why running GRIAL on my PEM data is taking so much time?
+
+The running time of GRIAL not only depends on the total number of PEMs being analyzed, but 
+also on the density of PEMs in specific regions of the genome. Quite often, highly complex
+regions of the genome (specially centromeres and satellite regions) contain errors or gaps
+in the reference assembly. These regions tend to have a high density of discordant PEMs 
+that are mostly unreliable. To reduce the running time of GRIAL we suggest avoiding these
+artifactual regions by filtering PEMs mapping into satellite regions, low-complex regions or 
+simple-repeats (DISCARD_MAPPINGS_IN_REPEATS=yes, DISCARD_REPEATS_LIST=EIX).
+
+The use of concordant PEMs either to compute the statistics of the library prior to the
+inversion prediction, or to score the predicted inversions, also increments the running
+time of GRIAL several-fold. If your PEM data is huge, we suggest avoiding the use of
+concordant PEM data by providing the library statistics (CONCORDANTS=0 and metrics provided
+in the section "SECTION 2: LIBRARY STATISTICS & ASSEMBLY" of the Configuration File) and 
+not scoring the predicted inversions (SCORE_INVERSIONS=no).
+
+===============================================
