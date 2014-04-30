@@ -43,7 +43,7 @@ read_config_file($ARGV[0]);
 
 if (($GENERATE_REPEATS_TRACK eq 'no') and ($GENERATE_SEGDUPS_TRACK eq 'no')) {
 
-	die ("ERROR: You don't need the repeats track nor the segdups track according to your parameters in the configuration file. These files will not be generated unless any of DISCARD_MAPPINGS_IN_REPEATS, TAG_MAPPINGS_IN_REPEATS, DISCARD_MAPPINGS_IN_SEGDUPS, or TAG_MAPPINGS_IN_SEGDUPS is set to 'yes'\n\n");
+	die ("ERROR: You don't need the repeats track nor the segdups track according to your parameters in the configuration file. These files will not be generated unless any of DISCARD_MAPPINGS_IN_REPEATS, TAG_MAPPINGS_IN_REPEATS, DISCARD_MAPPINGS_IN_SEGDUPS, TAG_MAPPINGS_IN_SEGDUPS, MAPABILITY_REPEATS, or MAPABILITY_SEGDUPS is set to 'yes'\n\n");
 
 }
 
