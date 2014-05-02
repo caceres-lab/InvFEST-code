@@ -1,0 +1,9 @@
+Microhomology	MH1-1	4969	4972	+
+Complex_inversi	BP1	4969	4972	+
+Indel	29-bp deletion in HuRef	4972	5001	+
+Microhomology	MH2-1	4998	5002	+
+Complex_inversi	Inverted region	5001	5108	+
+Microhomology	MH1-2	5108	5111	-
+Complex_inversi	BP2	5108	5111	+
+Indel	864-bp deletion in HuRef	5108	5972	+
+Microhomology	MH2-2	5969	5973	-

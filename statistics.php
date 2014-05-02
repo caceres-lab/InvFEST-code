@@ -62,6 +62,11 @@ echo $head;
   }
  }
 #echo round(max($values)/5);
+###opening summary last month
+#$lm=date('m d Y',strtotime("-1 months"));
+#$alm = explode(" ",$lm);
+#$last = fopen("stats/$alm[2].$alm[0].xday.txt", "r");
+
 ?>
  
    <canvas id="canvas" height="450" width="600"></canvas>

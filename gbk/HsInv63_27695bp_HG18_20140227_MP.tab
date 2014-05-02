@@ -1,0 +1,10 @@
+Indel	8-bp indel in HuRef	2219	2227	+
+Primer	A1	4678	4699	+
+Complex_inversi	BP1	4783	10001	+
+Indel	5216-bp indel in HuRef	4785	10001	+
+Complex_inversi	Inverted region	10001	22695	+
+Primer	B1	11863	11883	-
+Primer	B2	11899	11920	-
+Primer	C1	21877	21898	+
+Complex_inversi	BP2	22695	22703	+
+Primer	D1	23347	23368	-

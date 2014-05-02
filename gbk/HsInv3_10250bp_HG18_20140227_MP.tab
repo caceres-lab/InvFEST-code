@@ -1,0 +1,11 @@
+Indel	1650-bp deletion in HuRef	3351	5001	+
+Complex_inversi	BP1	4998	5001	+
+Microhomology	MH1	4998	5001	+
+Complex_inversi	Inverted region	5001	5250	+
+Primer	B1	5158	5179	-
+Primer	C1	5218	5239	+
+Indel	2-bp deletion in HuRef	5250	5252	+
+Complex_inversi	BP2	5252	5255	+
+Microhomology	MH2	5252	5255	-
+Primer	D1	5310	5331	-
+Primer	D1	5657	5681	-

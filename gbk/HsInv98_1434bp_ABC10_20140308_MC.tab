@@ -1,0 +1,10 @@
+Microhomology	MH1-1	28	32	+
+Complex_inversi	BP1	32	32	+
+Indel	14-bp duplication	32	44	+
+Indel	694-bp deletion	32	32	+
+Complex_inversi	Inverted region	44	994	+
+Microhomology	MH2-1	44	47	+
+Repeat_unit	AluSz	720	1030	-
+Inverted_repeat	IR2 (86% id.)	720	1017	+
+Complex_inversi	BP2	994	1013	+
+Microhomology	MH3-1	994	1013	+

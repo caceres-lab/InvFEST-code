@@ -1,0 +1,15 @@
+Primer	A1	3401	3421	+
+Primer	A2	3958	3981	+
+Complex_inversi	BP1	4287	4290	+
+Complex_inversi	Inverted region	4290	5625	+
+Indel	8-bp deletion in ABC12	4290	4290	+
+Repeat_region	Simple repeat	4584	4975	+
+Gap	Gap in ABC12	4975	5291	+
+Primer	B1	4992	5012	-
+Primer	B2	5574	5595	-
+Complex_inversi	BP2	5621	5625	+
+Indel	6-bp duplication	5625	5631	+
+Complex_inversi	BP3	5631	5633	+
+Indel	357-bp deletion in ABC12	5631	5631	+
+Primer	D2	5686	5707	-
+Primer	D1	5973	5995	-

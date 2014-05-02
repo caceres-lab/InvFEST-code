@@ -1,0 +1,21 @@
+Complex_inversi	BP1	279	282	+
+Microhomology	MH1-1	279	282	+
+Indel	8-bp deletion in HG18	282	290	+
+Complex_inversi	BP2	290	294	+
+Complex_inversi	Inverted region	290	1376	-
+Microhomology	MH2-1	290	294	+
+Complex_inversi	BP3	299	301	+
+Microhomology	MH3-1	299	301	+
+Indel	6-bp duplication in HG18	301	307	+
+Complex_inversi	BP4	307	312	+
+Microhomology	MH2-2	307	312	+
+Primer	B2	320	341	+
+SNP	.	324	325	+
+Gap	.	625	725	+
+Repeat_region	Simple repeat	725	1080	-
+Complex_inversi	BP5	1376	1379	+
+Indel	357-bp deletion in HG18	1376	1733	+
+Microhomology	MH1-2	1376	1379	-
+Complex_inversi	BP6	1733	1735	+
+Microhomology	MH3-2	1733	1735	-
+Primer	D2	1788	1809	-

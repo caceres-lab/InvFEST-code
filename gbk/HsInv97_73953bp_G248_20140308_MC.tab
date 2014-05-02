@@ -1,0 +1,14 @@
+Primer	A2	33715	33736	+
+Primer	A1	34788	34809	+
+Indel	87-bp tandem duplication	35431	35518	+
+Complex_inversi	BP1	35518	35519	+
+Indel	Extra base	35518	35519	+
+Indel	24-bp deletion	35518	35518	+
+Complex_inversi	Inverted region	35519	44411	+
+Primer	C1	36100	36123	-
+Primer	B2	42726	42747	+
+Primer	B1	43785	43806	+
+Indel	133-bp deletion in HG18	43913	44046	+
+Complex_inversi	BP2	44411	44412	+
+Indel	1078-bp deletion	44412	44412	+
+Primer	D1	44617	44638	-

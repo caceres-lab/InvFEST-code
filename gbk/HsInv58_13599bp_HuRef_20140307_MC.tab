@@ -1,0 +1,31 @@
+LTR	MLT1E3	3047	3333	-
+LTR	ERVL-E-int	3336	3384	-
+LTR	MLT1D	3384	3578	+
+SINE	AluSg4	3578	3877	+
+LTR	MLT1D	3877	4172	+
+LTR	ERVL-E-int	4172	4618	-
+Primer	Primer A1	4558	4578	+
+LTR	LTR33B	4896	5042	-
+Complex_inversi	BP1	5000	5003	+
+Microhomology	MH1-1	5000	5003	+
+Indel	2188-bp deletion in HG18	5003	7191	+
+LTR	LTR33B	5224	5346	-
+SINE	MIR	6005	6026	+
+SINE	AluSx	6026	6324	+
+SINE	MIR	6324	6542	+
+DNAtransposon	MamRep1879	6601	6736	+
+SINE	AluJb	6943	7234	+
+Complex_inversi	BP2	7190	7191	+
+Microhomology	MH2-1	7190	7191	+
+Complex_inversi	Inverted region	7191	8060	+
+SINE	AluY	7236	7548	+
+Primer	Primer B1	7595	7615	+
+Primer	Primer C1	7595	7615	-
+DNAtransposon	MER63B	7944	8312	-
+Complex_inversi	BP3	8060	8063	+
+Indel	630-bp deletion in HG18	8060	8690	+
+Microhomology	MH1-1	8060	8063	-
+Complex_inversi	BP4	8690	8691	+
+Microhomology	MH2-2	8690	8691	-
+SINE	AluSg	8889	9199	-
+LINE	L3	9805	9911	-
