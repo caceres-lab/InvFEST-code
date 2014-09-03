@@ -5,8 +5,8 @@ use DBI;
 use DBD::mysql;
 
 my $host = "localhost";
-my $user = "invfest";
-my $pass = "pwdInvFEST";
+my $user = "invfestdb-user";
+my $pass = "invfestdb-user";
 my $database = "INVFEST-DB-PUBLIC";
 
 my $dsn = "DBI:mysql:host=$host;port=3306";    # from other computers (mendel, ...)

@@ -146,7 +146,7 @@ my $start = abs(int($feat_start-($end_start*0.3)));
 ### Database connection for genes in region
 
 use DBI;
-my $dbh = DBI->connect('dbi:mysql:INVFEST-DB', 'invfest', 'pwdInvFEST');
+my $dbh = DBI->connect('dbi:mysql:INVFEST-DB-PUBLIC', 'invfestdb-user', 'invfestdb-user');
 
 ####exons query
 #get genes in region first
