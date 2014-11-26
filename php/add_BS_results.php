@@ -1,9 +1,9 @@
 #!/usr/bin/php5
 <?php
 
-$user = "inoguera";
-$password = "inoguera";
-$db = "inoguera2";
+$user = "invfest";
+$password = "pwdInvFEST";
+$db = "INVFEST-DB-dev";
 
 $con = mysql_connect('localhost', $user, $password);
 if (!$con) { die('Could not connect: ' . mysql_error()); }
