@@ -33,7 +33,7 @@ else {
 //Breakseq gff input file generation
 //----------------------------------------------------------------------------
 include('db_conexion.php');
-$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/test.gff", "w") or die("Unable to create gff file!");
+$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
 //Select inversions
 $query2="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
 print "$sql_bp".'<br/>';
