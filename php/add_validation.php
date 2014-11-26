@@ -206,27 +206,36 @@ $a="SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$e
 		}
 
 		if ($bp1s != "" || $bp1e!="" || $bp2s!="" || $bp2e!="") {
-			//CUANDO AÑADIMOS BP
-			/*add_BP`(
-			IN validation_id_val INT,
-			IN `inversion_id_val` int, 
-			IN chr_val  VARCHAR(255), -> FALTA PASARLO COMO HIDDEN
-			IN bp1s_val INT, 
-			IN bp1e_val INT, 
-			IN bp2s_val INT, 
-			IN bp2e_val INT, 
-			IN description_val  VARCHAR(255) 
-			*/
-			//DEVOLVERA LAS PREDICCIONES QUE HAN QUEDADO ANULADAS Y YO LO MUESTRO EN MENSAJE DE SALIDA
-			// INSERCION OK, PERO HAY CAMBIOS
-			//Llamamos al procedure add_BP (PASARA A SER UNA FUNCION Y NO UN PROCEDIMIENTO PARA ASI DEVOLVER LAS PREDICCIONES QUE QUEDAN ANULADAS
 			$changed=mysql_query("SELECT add_BP('$validation_id','$inv_id','$chr','$bp1s','$bp1e','$bp2s','$bp2e','$description', '".$_SESSION["userID"]."') AS chang");
 			$r= mysql_fetch_array($changed);
-	//echo "SELECT add_BP('$inv_id','$chr','$bp1s','$bp1e','$bp2s','$bp2e','$description') AS chang";
-			//mostramos las predicciones que han quedado anuladas: 
+	
 			if ($r['chang']=='YES') { 
 				$message="Some predictions status have changed<br />";
 			}
+			//BREAKSEQ ANNOTATION
+			$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
+//Select inversions
+$query2="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
+print "$sql_bp".'<br/>';
+$result_bp = mysql_query($query2) or die("Query fail: " . mysql_error());
+while($bprow = mysql_fetch_array($result_bp))
+{
+	$midpoint_BP1=round(($bprow['bp1_end']-$bprow['bp1_start'])/2+$bprow['bp1_start']);
+    	$midpoint_BP2=round(($bprow['bp2_end']-$bprow['bp2_end'])/2+$bprow['bp2_start']);
+    	$chr=$bprow['chr'];
+	$name=$bprow['name'];
+	$id_bp= $bprow['id'];
+	//$gene_id= $bprow['gene_id'];
+	$inverion_gff_line= "$chr\t$name\tInversion\t$midpoint_BP1\t$midpoint_BP2\t.\t.\t.\t$id_bp\n";
+	    
+    	fwrite($gff_file, $inverion_gff_line);
+}
+
+fclose($gff_file);
+
+//BreakSeq execution
+//---------------------------------------------------------------------------
+exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
 		}
 		
 		// Frequencies without genotypes

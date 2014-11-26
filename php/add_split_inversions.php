@@ -17,37 +17,63 @@ $pinv1 = implode(",", $pinv1_arr);
 $pinv2 = implode(",", $pinv2_arr);
 $vinv1 = implode(",", $vinv1_arr);
 $vinv2 = implode(",", $vinv2_arr);
-//echo "p inv1: $pinv1<br>p inv2: $pinv2<br>v inv1: $vinv1<br>v inv2: $vinv2<br>";
-
-// HAY QUE PONER ALGUN CONTROL DE ENTRADA?? UN MINIMO DE PREDICCIONES O VALIDACIONES PARA CADA INVERSION NUEVA??
-//DEBEMOS PERMITIR AÑADIR ALGUNA VALIDACION O PREDICCION?? O MEJOR QUE CADA INSERCION SE HAGA DESDE UN SOLO PUNTO??
+$user_id = $_SESSION["userID"];
+if($pinv1 == null){$pinv1 = "NA";}
+if($pinv2 == null){$pinv2 = "NA";}
+if($vinv1 == null){$vinv1 = "NA";}
+if($vinv2 == null){$vinv2 = "NA";}
 
 include_once('db_conexion.php');
 
-/*SPLIT split_inv
- CREATE DEFINER=`amartinez`@`158.109.212.95` PROCEDURE `split_inv`
-IN `old_Inv_name_val` varchar(255),  --> SERA EL ID!!
-IN new_inv1_pred_list varchar(255), 
-IN new_inv2_pred_list varchar(255),  
-IN new_inv1_valid_list varchar(255), 
-IN new_inv2_valid_list varchar(255), 
-IN inv1_status_val varchar(255), 		QUE ES ESTO? LO TIENE QUE DEFINIR EL USUARIO EN EL FORMULARIO DEL SPLIT??
-In inv2_status_val varchar(255)) 		QUE ES ESTO? LO TIENE QUE DEFINIR EL USUARIO EN EL FORMULARIO DEL SPLIT?? 
-    SQL SECURITY INVOKER 
-*/
+//Split
+$query="CALL split_inv('$inv_id','$pinv1','$pinv2','$vinv1','$vinv2','NA','NA','$user_id');";
+print $query.'<br >';
+$result = mysql_query($query) or die("Query fail: " . mysql_error());
+if($result){print "Split done succesfully".'<br >';}
 
-//mysql_query('CALL miProcedure()');
-//mysql_query('SELECT miFunction()');
+$query1="select id, name from inversions ORDER BY `id` DESC LIMIT 2;";
+$result1 = mysql_query($query1) or die("Query fail: " . mysql_error());
+while($row1 = mysql_fetch_array($result1)){
+echo "<br /><input type='submit' value=\"Go to the new inversion " .$row1['name']."\" name='gsubmit'  onclick=\"window.open('../report.php?q=".$row1['id']."')\" />";
+}
+$row = mysql_fetch_array($result);
+if ($row){print $row.'<br >';}
+mysql_free_result($result);
+mysql_close($con);
 
-//llamamos a la funcion add_validation:
-mysql_query("CALL split_inv('$inv_id', '$pinv1', '$pinv2', '$vinv1', '$vinv2', '','', '".$_SESSION["userID"]."')");
-//$sql_split = mysql_query("CALL split_inv('$inv_id', '$pinv1', '$pinv2', '$vinv1', '$vinv2', '','')");
-//mysql_fetch_array($sql_split);
+/*$con=mysqli_connect("localhost","inoguera","inoguera","inoguera2");
+// Check connection
+if (mysqli_connect_errno()){echo "Failed to connect to MySQL: " . mysqli_connect_error();}
+// Perform queries
+if(!mysqli_query($con,$query)){echo "Wrong query: $query";}
+else{echo "Split done succesfully: $query".'<br >';}
+mysqli_close($con);*/
 
-//if ($validation_id) HAY Q FORZAR A QUE SALGA MAL PARA SABER Q DEVUELVE!!
-echo "Split done succesfully<br />";
+//Breakseq gff input file generation
+//----------------------------------------------------------------------------
+include('db_conexion.php');
+$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
+//Select inversions
+$query2="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
+print "$sql_bp".'<br/>';
+$result_bp = mysql_query($query2) or die("Query fail: " . mysql_error());
+while($bprow = mysql_fetch_array($result_bp))
+{
+	$midpoint_BP1=round(($bprow['bp1_end']-$bprow['bp1_start'])/2+$bprow['bp1_start']);
+    	$midpoint_BP2=round(($bprow['bp2_end']-$bprow['bp2_end'])/2+$bprow['bp2_start']);
+    	$chr=$bprow['chr'];
+	$name=$bprow['name'];
+	$id_bp= $bprow['id'];
+	//$gene_id= $bprow['gene_id'];
+	$inverion_gff_line= "$chr\t$name\tInversion\t$midpoint_BP1\t$midpoint_BP2\t.\t.\t.\t$id_bp\n";
+	    
+    	fwrite($gff_file, $inverion_gff_line);
+}
 
-// CON EL SIGUIENTE BOTON SE REFRESCA LA PAGINA PRINCIPAL Y POR LO TANTO TAMBIEN SE CIERRA EL IFRAME-->
-echo "<br /><input type='submit' value='Close' name='gsubmit'  onclick='parent.location.reload();' />";
+fclose($gff_file);
 
+//BreakSeq execution
+//---------------------------------------------------------------------------
+exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
+print "<br ><br >BreakSeq is now performing the breakpoints annotation, results will be automatically updated on the inversion report page in a few minutes.".'<br >';
 ?>

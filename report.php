@@ -18,7 +18,7 @@ session_start(); //Inicio la sesión
 	Universitat Autonoma de Barcelona
 -->
 <?php include_once('php/select_report.php');?> 
-<?php include_once('php/php_global_variables.php');?>		
+<?php include_once('php/php_global_variables.php');?>
 <?php
 // if ($_SESSION["autentificado"]=='SI' && ($r['status']!='Withdrawn' && $r['status']!='withdrawn') {
 //	include_once('php/select_new_validation.php');
@@ -1281,6 +1281,31 @@ Human Polymorphic Inversion DataBase
 				
 				<?php }
 
+				if (($r['origin'] ='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+ 
+                		<tr><td class='title'>Mechanism of origin<br/>(predicted)</td><td colspan="3"><?php echo $r['Mech']." (predicted by BreakSeq)";?></td></tr>
+
+				<?php }
+
+				if (($r['Flexibility'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+ 
+                		<tr><td class='title'>Flexibility</td><td colspan="3"><?php echo $r['Flexibility'];?></td></tr>
+
+				<?php }
+
+				if (($r['GC'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+ 
+                		<tr><td class='title'>GC content (%)</td><td colspan="3"><?php echo $r['GC'];?></td></tr>
+
+				<?php }
+
+				if (($r['Stability'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+ 
+                		<tr><td class='title'>Stability</td><td colspan="3"><?php echo $r['Stability'];?></td></tr>
+
+				<?php }
+
+
 	if (($r['breakpoint_comments'] != '') or ($_SESSION["autentificado"]=='SI')) {
 	
 	echo "
@@ -1311,7 +1336,6 @@ Human Polymorphic Inversion DataBase
 						<td class='title'>Identity</td><td class='title'>Relative orientation</td></tr>";
 					echo $bp_seq_features;
 					echo "</table></td></tr>";
-					
 				}?>
 				
 			</table>

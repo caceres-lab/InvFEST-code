@@ -4,14 +4,14 @@ session_start(); //Inicio la sesión
 
 $id=$_GET["q"];
 
-include_once('db_conexion.php');
+include_once('db_conexion_inoguera.php');
 include_once('php/php_global_variables.php');
 
 #### Query Inversion Data  (A) 
 $sql_inv="SELECT i.name, i.chr, i.range_start, i.range_end, i.size, i.frequency_distribution, i.evo_origin, i.origin, i.status, i.comment, i.ancestral_orientation, i.age, i.comments_eh, 
 		(SELECT count(p.id) FROM predictions p WHERE p.inv_id='$id') as num_pred,
 		(SELECT count(distinct research_name) FROM validation v WHERE v.inv_id='$id') as num_val,
-		b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end,b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID  
+		b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.GC, b.Stability, b.Mech, b.Flexibility, b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID  
 	FROM inversions i INNER JOIN breakpoints b ON b.id = (SELECT id FROM breakpoints b2 WHERE b2.inv_id=i.id
 		ORDER BY FIELD (b2.definition_method, 'manual curation', 'default informatic definition'), b2.id DESC
 		LIMIT 1) LEFT JOIN validation val ON b.id = val.bp_id 
