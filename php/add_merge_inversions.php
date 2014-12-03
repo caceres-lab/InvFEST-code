@@ -7,6 +7,7 @@
 <?php
 $inv1=$_POST["inv1"];
 $inv2=$_POST["inv2"];
+$new_status=$_POST["status"];
 
 //comprobaciones
 if (!preg_match('/^[0-9]+$/', $inv1) || !preg_match('/^[0-9]+$/', $inv2)) {
@@ -56,4 +57,8 @@ fclose($gff_file);
 //BreakSeq execution
 //---------------------------------------------------------------------------
 exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
+//---------------------------------------------------------------------------
+$query3 = "UPDATE inversions SET status = '$new_status' WHERE id=$row[0];";
+	$result3 = mysql_query($query3) or die("Query fail: " . mysql_error());
+	$row3 = mysql_fetch_array($result3);
 ?>
