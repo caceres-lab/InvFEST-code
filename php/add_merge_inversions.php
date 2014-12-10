@@ -7,16 +7,15 @@
 <?php
 $inv1=$_POST["inv1"];
 $inv2=$_POST["inv2"];
+$separado_por_comas = implode(",", $inv2);
+$new_status=$_POST["status"];
 
 //comprobaciones
-if (!preg_match('/^[0-9]+$/', $inv1) || !preg_match('/^[0-9]+$/', $inv2)) {
-	echo "Inversion IDs introduced are not valid<br>";
-	
-}
-else {	
+
 	include('db_conexion.php');
 	//llamamos a la funcion add_validation:
-	$query = "SELECT merge_inv('$inv1,$inv2','".$_SESSION["userID"]."') AS new_inv_id;";
+	$query = "SELECT merge_inv('$inv1,$separado_por_comas','".$_SESSION["userID"]."') AS new_inv_id;";
+	print $query.'<br>';
 	$result = mysql_query($query) or die("Query fail: " . mysql_error());
 	if($result){print "Merge done succesfully".'<br >';}
 	$row = mysql_fetch_array($result);
@@ -29,11 +28,10 @@ else {
 	// CON EL SIGUIENTE BOTON SE REFRESCA LA PAGINA PRINCIPAL Y POR LO TANTO TAMBIEN SE CIERRA EL IFRAME-->
 	echo "<br /><input type='submit' value='Go to the new inversion' name='gsubmit'  onclick=\"location.href='../report.php?q=".$row[0]."'\" />";
 //header("location: search.php"
-}
 //Breakseq gff input file generation
 //----------------------------------------------------------------------------
 include('db_conexion.php');
-$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/test.gff", "w") or die("Unable to create gff file!");
+$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
 //Select inversions
 $query2="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
 print "$sql_bp".'<br/>';
@@ -56,4 +54,8 @@ fclose($gff_file);
 //BreakSeq execution
 //---------------------------------------------------------------------------
 exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
+//---------------------------------------------------------------------------
+$query3 = "UPDATE inversions SET status = '$new_status' WHERE id=$row[0];";
+	$result3 = mysql_query($query3) or die("Query fail: " . mysql_error());
+	$row3 = mysql_fetch_array($result3);
 ?>
