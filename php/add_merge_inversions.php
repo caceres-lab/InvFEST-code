@@ -7,10 +7,7 @@
 <?php
 $inv1=$_POST["inv1"];
 $inv2=$_POST["inv2"];
-<<<<<<< HEAD
 $separado_por_comas = implode(",", $inv2);
-=======
->>>>>>> acd4aaae4e2c8ead252a6100be78eb1591753f57
 $new_status=$_POST["status"];
 
 //comprobaciones
