@@ -1206,7 +1206,7 @@ while($thisrow = mysql_fetch_array($result_fe)){
 		WHERE new_inv_id='$id';";
 */
 $sql_history="SELECT * FROM inversion_history
-		WHERE previous_inv_id='$id' or new_inv_id='$id';";
+		WHERE previous_inv_id='$id' or new_inv_id='$id' GROUP BY new_inv_id;";
 $result_history=mysql_query($sql_history);
 $history='';
 while($historyrow = mysql_fetch_array($result_history)){
@@ -1314,7 +1314,12 @@ while($bprow = mysql_fetch_array($result_bp)){
 // APARTADO ADVANCED EDITION
 //merge inversions
 if ($_SESSION["autentificado"]=='SI'){
-	$sql_inv="select distinct id, name from inversions order by name, id;";
+	$chr_inv1 = $r['chr'];
+	$start_inv1 = $r['range_start'];
+	$end_inv1 = $r['range_end'];
+	//$sql_inv="select distinct id, name from inversions WHERE chr = '$chr_inv1' order by name, id;";
+	//$sql_inv="select distinct i.id, i.name from inversions i, breakpoints b WHERE chr = '$chr_inv1' AND (b.bp1_start BETWEEN $start_inv1 AND $end_inv1) OR (b.bp2_end BETWEEN $start_inv1 AND $end_inv1) OR ($start_inv1 BETWEEN b.bp1_start AND b.bp2_end) AND order by name, id;";
+	$sql_inv="select distinct i.id, i.name, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end from inversions i, breakpoints b WHERE i.chr = '$chr_inv1' AND i.id = b.inv_id AND ((b.bp1_start BETWEEN $start_inv1 AND $end_inv1) OR (b.bp2_end BETWEEN $start_inv1 AND $end_inv1) OR ($start_inv1 BETWEEN b.bp1_start AND b.bp2_end) OR ($end_inv1 BETWEEN b.bp1_start AND b.bp2_end)) group by i.id order by name, id;";
 	$result_inv = mysql_query($sql_inv);
 
 	$inv2='<option value="">-Select-</option>\n';

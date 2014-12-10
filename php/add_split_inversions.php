@@ -22,24 +22,34 @@ if($pinv1 == null){$pinv1 = "NA";}
 if($pinv2 == null){$pinv2 = "NA";}
 if($vinv1 == null){$vinv1 = "NA";}
 if($vinv2 == null){$vinv2 = "NA";}
+$new_status1=$_POST["status1"];
+$new_status2=$_POST["status2"];
+if($new_status1 == null){$new_status1 == "NA";}
+if($new_status2 == null){$new_status2 == "NA";}
 
-include_once('db_conexion.php');
+$new_ids = array();
+include('db_conexion.php');
 
 //Split
-$query="CALL split_inv('$inv_id','$pinv1','$pinv2','$vinv1','$vinv2','NA','NA','$user_id');";
+$query="CALL split_inv('$inv_id','$pinv1','$pinv2','$vinv1','$vinv2','$new_status1','$new_status2','$user_id');";
 print $query.'<br >';
 $result = mysql_query($query) or die("Query fail: " . mysql_error());
 if($result){print "Split done succesfully".'<br >';}
+mysql_free_result($result);
+//mysql_close($con);
 
-$query1="select id, name from inversions ORDER BY `id` DESC LIMIT 2;";
+//select new splited inversions
+//include('db_conexion.php');
+$query1="select id, name from inversions WHERE status != 'Obsolete' ORDER BY name DESC LIMIT 2;";
 $result1 = mysql_query($query1) or die("Query fail: " . mysql_error());
 while($row1 = mysql_fetch_array($result1)){
+/*foreach ($row1 as $value){echo $value.'<br>';}*/
 echo "<br /><input type='submit' value=\"Go to the new inversion " .$row1['name']."\" name='gsubmit'  onclick=\"window.open('../report.php?q=".$row1['id']."')\" />";
+array_push($new_ids, $row1['id']);
 }
-$row = mysql_fetch_array($result);
-if ($row){print $row.'<br >';}
-mysql_free_result($result);
+mysql_free_result($result1);
 mysql_close($con);
+
 
 /*$con=mysqli_connect("localhost","inoguera","inoguera","inoguera2");
 // Check connection
@@ -76,4 +86,12 @@ fclose($gff_file);
 //---------------------------------------------------------------------------
 exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
 print "<br ><br >BreakSeq is now performing the breakpoints annotation, results will be automatically updated on the inversion report page in a few minutes.".'<br >';
+$query3 = "UPDATE inversions SET status = '$new_status1' WHERE id=$new_ids[1];";
+	$result3 = mysql_query($query3) or die("Query fail: " . mysql_error());
+	print $query3.'<br>';
+	$row3 = mysql_fetch_array($result3);
+$query4 = "UPDATE inversions SET status = '$new_status2' WHERE id=$new_ids[0];";
+	$result4 = mysql_query($query4) or die("Query fail: " . mysql_error());
+		print $query4.'<br>';
+	$row4 = mysql_fetch_array($result4);
 ?>

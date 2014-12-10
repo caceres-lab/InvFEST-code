@@ -1283,7 +1283,7 @@ Human Polymorphic Inversion DataBase
 
 				if (($r['origin'] ='') or ($_SESSION["autentificado"]=='SI')) { ?> 
  
-                		<tr><td class='title'>Mechanism of origin<br/>(predicted)</td><td colspan="3"><?php echo $r['Mech']." (predicted by BreakSeq)";?></td></tr>
+                		<tr><td class='title'>Mechanism of origin</td><td colspan="3"><?php echo $r['Mech']." (predicted by BreakSeq)";?></td></tr>
 
 				<?php }
 
@@ -1656,10 +1656,17 @@ Human Polymorphic Inversion DataBase
 //		}
 	?>
 
-	<?if ($_SESSION["autentificado"]=='SI'  && ($r['status']!='Withdrawn' && $r['status']!='withdrawn')){?> 
+	<?if ($_SESSION["autentificado"]=='SI'  && ($r['status']!='Withdrawn' && $r['status']!='withdrawn')){?>
+	<?include('php/db_conexion.php');
+$sql_inversion_status="select distinct status from inversions where status is not null order by status;";
+$result_inversion_status = mysql_query($sql_inversion_status) or die("Query fail: " . mysql_error());
+while($thisrow = mysql_fetch_array($result_inversion_status)){
+	$inversion_status_option.="<option value=\"".$thisrow["status"]."\">".$thisrow["status"]."</option>";
+}?>
 	<div id="advanced_edition" class="report-section" >
 		<div class="section-title TitleB">+ Advanced inversion edition <!---------- ADVANCED EDITION ------>
 		</div>
+
 		<div class="hidden">
 		<div class="grlsection-content ContentA">
 			<div class="section-title TitleB">+ Merge current inversion with another
@@ -1667,8 +1674,10 @@ Human Polymorphic Inversion DataBase
 			<div class="hidden">
 			<div class="grlsection-content ContentA">
 				<form name="merge" action="php/add_merge_inversions.php" method="post" >
-				Inversion to be merged <select name="inv2"><?echo $inv2?></select> 
-				<input type="hidden" name="inv1" value="<?echo $id?>" />
+				Inversion/s to be merged<br> <select name="inv2[]" multiple="multiple"><?echo $inv2?>
+				</select>
+				<input type="hidden" name="inv1" value="<?echo $id?>" /><br>
+				Status for the new inversion <select name="status"><?echo $inversion_status_option?></select>
 				<input type="submit" value="Merge" />
 				</form>
 			</div>	
@@ -1704,6 +1713,12 @@ Human Polymorphic Inversion DataBase
 					}
 					else {echo $validations;}
 					?>
+					<thead>
+					  <td>Status</td>
+					  <td>New Inversion 1</td>
+					  <td>New Inversion 2</td>
+					 </thead>
+<tr><td></td><td> <select name="status1"><?echo $inversion_status_option?></td></select></td><td><select name="status2"><?echo $inversion_status_option?></td></tr></select></td>
 					</table>
 					<input type="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Split&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
 					<input type="hidden" name="inv_id" value="<?echo $id?>" />
