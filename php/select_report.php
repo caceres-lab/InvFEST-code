@@ -4,7 +4,7 @@ session_start(); //Inicio la sesión
 
 $id=$_GET["q"];
 
-include_once('db_conexion_inoguera.php');
+include_once('db_conexion.php');
 include_once('php/php_global_variables.php');
 
 #### Query Inversion Data  (A) 
