@@ -73,7 +73,7 @@ else {
 
 		while($row = mysql_fetch_array($result_get_inv)){
 			echo "<tr>";
-			echo "<td>".$row['id']."</td>";
+			echo "<td>".$row['name']."</td>";
 			echo "<td>".$row['chr']."</td>";
 			echo "<td>".$row['range_start']."</td>";
 			echo "<td>".$row['range_end']."</td>";
