@@ -1,4 +1,14 @@
- <div id="wrapper">
+<?php include('db_conexion.php');?>	
+<?if($db == 'INVFEST-DB-dev'){?>
+<div align="center">
+<table style="border:0px;">
+  	<tr style="border:0px;">
+  		<td style="border:0px;width:200px;"><a href="index.php"><img border=0 src="img/invfest_dev.png" width="200"></a></td></tr>
+</table>
+</div>
+<?}?>
+<div> 
+<div id="wrapper">
   <?php // echo $id_head;?> 
   <div  id="floatingbar">
   	

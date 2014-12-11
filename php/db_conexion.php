@@ -21,7 +21,7 @@ if ($_SESSION["autentificado"]=='SI') {
 		// I don't know who you are...
 		$user = "invfest";
 		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-PUBLIC-dev";
+		$db = "INVFEST-DB-dev";
 	
 	}
 
@@ -30,7 +30,7 @@ if ($_SESSION["autentificado"]=='SI') {
 		// No login
 		$user = "invfest";
 		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-PUBLIC-dev";
+		$db = "INVFEST-DB-dev";
 
 }
 

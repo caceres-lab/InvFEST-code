@@ -73,7 +73,7 @@ else {
 
 		while($row = mysql_fetch_array($result_get_inv)){
 			echo "<tr>";
-			echo "<td><a href=\"report.php?q=".$row['id']."\" target=\"_blank\" >".$row['name']."</a></td>";
+			echo "<td>".$row['id']."</td>";
 			echo "<td>".$row['chr']."</td>";
 			echo "<td>".$row['range_start']."</td>";
 			echo "<td>".$row['range_end']."</td>";
@@ -87,7 +87,7 @@ else {
 	echo "</tbody></table>";
 //Breakseq gff input file generation
 //----------------------------------------------------------------------------
-
+exec("kill $(ps aux | grep 'breakseq-1.3' | awk '{print $2}') > /dev/null 2>&1");
 $gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
 //Select inversions
 $sql_bp="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
