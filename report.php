@@ -1281,9 +1281,9 @@ Human Polymorphic Inversion DataBase
 				
 				<?php }
 
-				if (($r['origin'] ='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+				if (($r['origin'] =='') or ($_SESSION["autentificado"]=='SI') or ($r['origin'] =='ND')) { ?> 
  
-                		<tr><td class='title'>Mechanism of origin</td><td colspan="3"><?php echo $r['Mech']." (predicted by BreakSeq)";?></td></tr>
+                		<tr><td class='title'>Mechanism of origin<br>(predicted by BreakSeq)</td><td colspan="3"><?php echo $r['Mech'];?></td></tr>
 
 				<?php }
 
@@ -1295,7 +1295,7 @@ Human Polymorphic Inversion DataBase
 
 				if (($r['GC'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
  
-                		<tr><td class='title'>GC content (%)</td><td colspan="3"><?php echo $r['GC'];?></td></tr>
+                		<tr><td class='title'>GC content </td><td colspan="3"><?php echo $r['GC'];?></td></tr>
 
 				<?php }
 
