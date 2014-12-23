@@ -30,6 +30,7 @@ echo $head;
    <p style="text-align: justify;"><b>Direct access to the MySQL database at the InvFEST database server</b></p>
    <p style="text-align: justify;">Server: invfestdb.uab.cat <br/>
    User: invfestdb-user <br/>
+   Database: INVFEST-DB-PUBLIC <br/>
    Password: invfestdb-user <br/>&nbsp;</p>
    <p style="text-align: justify;"><b>Database structure</b></p>
    <p style="text-align: justify;"><img src="img/InvFESTdb-model.png" alt="InvFESTdb-model.png" width="1060"><br/>&nbsp;</p>

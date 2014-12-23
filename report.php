@@ -1281,7 +1281,7 @@ Human Polymorphic Inversion DataBase
 				
 				<?php }
 
-				if (($r['origin'] ='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+				if (($r['origin'] =='') or ($_SESSION["autentificado"]=='SI') or ($r['origin'] =='ND')) { ?> 
  
                 		<tr><td class='title'>Mechanism of origin</td><td colspan="3"><?php echo $r['Mech']." (predicted by BreakSeq)";?></td></tr>
 
