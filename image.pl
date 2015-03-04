@@ -3,6 +3,8 @@
 use strict;
 use Bio::Graphics;
 use Bio::SeqFeature::Generic;
+use Bio::Graphics::Panel;
+use Bio::Graphics::Feature;
 use CGI qw(:standard);
 
 
@@ -146,14 +148,15 @@ my $start = abs(int($feat_start-($end_start*0.3)));
 ### Database connection for genes in region
 
 use DBI;
-my $dbh = DBI->connect('dbi:mysql:INVFEST-DB-PUBLIC', 'invfestdb-user', 'invfestdb-user');
+my $dbh = DBI->connect('dbi:mysql:INVFEST-DB-dev', 'invfest', 'pwdInvFEST');
+
 
 ####exons query
 #get genes in region first
 my $query = "SELECT DISTINCT idHsRefSeqGenes, symbol, strand, txStart, txEnd, exonCount, exonStarts, exonEnds FROM HsRefSeqGenes 
 			 WHERE chr = \"".$chr."\" 
 			 AND ((txStart BETWEEN ".$start." AND ".($start+$len).")  
-			 OR (txEnd BETWEEN ".$start." AND ".($start+$len)."))";
+			 OR (txEnd BETWEEN ".$start." AND ".($start+$len).") OR ($start BETWEEN txStart AND txEND) OR (($start+$len) BETWEEN txStart AND txEND))";
 
 my $sth  = $dbh->prepare($query);
 $sth->execute();
@@ -187,6 +190,23 @@ if ($rows >= 1) {
 $sth->finish();
 =cut
 
+### Get current inversion's name
+
+my $query = "SELECT name FROM inversions WHERE id = $id;";
+my $sth  = $dbh->prepare($query);
+$sth->execute();
+my $rows = $sth->rows();
+my @names = ();
+if ($rows >= 1) {
+	while ( my $ref1 = $sth->fetchrow_hashref() ) {
+	    push (@names, $ref1);
+	}
+}
+my $name;
+for my $namess (@names){
+	$name = $namess->{'name'};
+}
+$sth->finish();
 #### get segmental duplications
 my $query = "SELECT chrom, chromStart, chromEnd, name FROM seg_dups 
 			 WHERE chrom = \"".$chr."\" 
@@ -204,6 +224,19 @@ if ($rows >= 1) {
 }
 $sth->finish();
 
+#### get other inversions present in the same inversion
+my $query = "SELECT DISTINCT i.name, i.id, i.name, b.inv_id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end FROM breakpoints b, inversions i WHERE b.chr = \"".$chr."\" AND i.id = b.inv_id AND ((b.bp1_start BETWEEN ".$start." AND ".($start+$len).") OR (b.bp2_end BETWEEN ".$start." AND ".($start+$len).") OR ($start BETWEEN b.bp1_start AND b.bp2_end) OR (($start+$len) BETWEEN b.bp1_start AND b.bp2_end)) GROUP BY i.id";
+
+my $sth  = $dbh->prepare($query);
+$sth->execute();
+my $rows = $sth->rows();
+my @other_inv = ();
+if ($rows >= 1) {
+	while ( my $ref = $sth->fetchrow_hashref() ) {
+	    push (@other_inv, $ref);
+	}
+}
+$sth->finish();
 
 $dbh->disconnect();
 #### End database
@@ -252,11 +285,12 @@ $panel->add_track($full_length,
 #ADD Tracks
 addFeatureGenes(\@genes, "blue", "segments", $start, ($start+$len));
 addFeature2coord("Segmental duplications", \@seg_dups, "green", "segments");
-addFeature4coord("Breakpoints",      \@bp_bp1s_ar, \@bp_bp2s_ar, \@bp_bp1e_ar, \@bp_bp2e_ar, \@bp_id_ar, 1000, "darkorchid");
+addFeatureotherinversions("Inversion breakpoints", \@other_inv, 1000, "darkorchid", "segments");
+#addFeature4coord("Breakpoints",      \@bp_bp1s_ar, \@bp_bp2s_ar, \@bp_bp1e_ar, \@bp_bp2e_ar, \@bp_id_ar, 1000, "darkorchid");
 addFeatureLine( "", 0, 0, "green", "line"); #blank track
 #addFeatureLine( "", $start, ($start+$len), "green", "line");
 #addFeatureLine( "", 0, 0, "green", "line"); #blank track
-addFeatureLine( "PREDICTIONS", 0, 0, "green", "line"); #blank track
+addFeatureLine( "PREDICTIONS for $name", 0, 0, "green", "line"); #blank track
 
 #addFeature4coord("Ahn evidence",     \@a_bp1s_ar,  \@a_bp2s_ar,  \@a_bp1e_ar,  \@a_bp2e_ar,  \@a_id_ar, 800,  "peachpuff");
 #addFeature4coord("GRIAL evidence",   \@g_bp1s_ar,  \@g_bp2s_ar,  \@g_bp1e_ar,  \@g_bp2e_ar,  \@g_id_ar, 300,  "goldenrod");
@@ -274,7 +308,84 @@ exit;
 
 ###############
 ##### Functions
+sub addFeatureotherinversions{
+		my($track_name, $ref_features, $score, $color, $glyph) = @_ ;
 
+	
+		my @features = @{$ref_features};
+
+		my $newtrack = $panel->add_track(
+							  -glyph     => 'segments',
+							  -label     => 1,
+							  -fgcolor   => sub { 
+                                                                            my $feature = shift; 
+									    return "gray" if $feature->primary_tag eq 'motif1'; 
+									    return "black" if $feature->primary_tag eq 'motif2'
+ 									},
+							  -key => $track_name,
+                                  			  -height => 12, 
+                                  			  -linewidth => sub { 
+                                                                            my $feature = shift; 
+									    return '0' if $feature->primary_tag eq 'motif1'; 
+									    return '2' if $feature->primary_tag eq 'motif2'
+ 									},  
+							  -connector => 'dashed',
+							  -connector_color => "black",
+							  -bgcolor => sub { 
+                                                                            my $feature = shift; 
+									    return 'gray' if $feature->primary_tag eq 'motif1'; 
+									    return 'darkorchid' if $feature->primary_tag eq 'motif2';
+ 									}  
+                                
+							 );
+		for my $feature_data (@features){	
+			my $foo = Bio::SeqFeature::Generic->new(
+								-display_name => $feature_data->{'name'},
+								-score        => $score,
+							   );
+
+			if ($feature_data->{'id'} == $id){
+				
+				my $subfoo3= Bio::SeqFeature::Generic->new(
+					-start => $feature_data->{'bp1_start'},
+					-end   => $feature_data->{'bp1_end'},
+					#-source_tag => "$id",
+					-primary=>'motif2'
+				);
+				my $subfoo4= Bio::SeqFeature::Generic->new(
+					-start => $feature_data->{'bp2_start'},
+					-end   => $feature_data->{'bp2_end'},
+					#-source_tag =>"$id",
+					-primary=>'motif2'
+				);
+		  
+				$foo->add_sub_SeqFeature($subfoo3,"EXPAND");
+				$foo->add_sub_SeqFeature($subfoo4,"EXPAND");
+			}
+
+			else{
+			my $subfoo1= Bio::SeqFeature::Generic->new(
+					-start => $feature_data->{'bp1_start'},
+					-end   => $feature_data->{'bp1_end'},
+					-primary=>'motif1'
+			);
+			my $subfoo2= Bio::SeqFeature::Generic->new(
+					-start => $feature_data->{'bp2_start'},
+					-end   => $feature_data->{'bp2_end'},
+					-primary=>'motif1'
+			);
+			
+			
+			$foo->add_sub_SeqFeature($subfoo1,"EXPAND");
+			$foo->add_sub_SeqFeature($subfoo2,"EXPAND");
+			}
+
+			$newtrack->add_feature($foo);
+			
+		}
+	
+
+ }
 sub addFeatureGenes{
 	my($refUniqueGenes, $color, $glyph, $Gstart, $Gend) = @_ ;
 	
@@ -305,7 +416,7 @@ sub addFeatureGenes{
 		
 		for (my $i=0; $i<$gene->{'exonCount'}; $i++) {
 
-			if (($exonStarts[$i]>=$Gstart) and ($exonEnds[$i]<=$Gend)) {
+			#if (($exonStarts[$i]>=$Gstart) and ($exonEnds[$i]<=$Gend)) {
 			
 				my $exon= Bio::SeqFeature::Generic->new(
 					-start => $exonStarts[$i],
@@ -314,7 +425,7 @@ sub addFeatureGenes{
 				);
 				
 				$nextGene->add_sub_SeqFeature($exon,"EXPAND");
-			}
+			#}
 		}
 
 		$genetrack->add_feature($nextGene);

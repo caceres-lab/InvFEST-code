@@ -387,8 +387,10 @@ $add_pred='<div class="report-section">
 
 	Breakpoint 1 start <div class="compulsory">*</div> <input type="text" id="pred_bp1s" name="pred_bp1s" /><br />
 	Breakpoint 1 end <div class="compulsory">*</div> <input type="text" id="pred_bp1e" name="pred_bp1e" /><br />
-	Breakpoint 2 start <div class="compulsory">*</div> <input type="text" id="pred_bp2s" name="pred_bp2s" /><br />
+	Breakpoint 1 between start-end <input type="checkbox" id="between_bp1" name="between_bp1" /><br />
+	Breakpoint 2 start <div class="compulsory">* </div> <input type="text" id="pred_bp2s" name="pred_bp2s" /><br />
 	Breakpoint 2 end <div class="compulsory">*</div> <input type="text" id="pred_bp2e" name="pred_bp2e" /><br />
+	Breakpoint 2 between start-end <input type="checkbox" id="between_bp2" name="between_bp2" /><br />
 	Study Name: <div class="compulsory">*</div> <select id="pred_study_name" name="pred_study_name" > <option value="" selected>-Select-</option>
 		'.$research_name_user.'
 	</select> <br />

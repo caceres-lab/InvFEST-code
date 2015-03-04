@@ -25,11 +25,10 @@ if ($BS_output) {
 			$array[] = $value[1];
 		}
 		$name= $cols[1]; 
-		$id_bp=($array[0]);
-		$flex=($array[1]);$GC=($array[2]);$Gene=($array[3]);$Helix=($array[4]);$Mech=($array[5]);
+		$flex=($array[0]);$GC=($array[1]);$Gene=($array[2]);$Helix=($array[3]);$Mech=($array[4]);
 		//print $id_bp.'<br/>'.$gene_id.'<br/>'.$id.'<br/>'.$flex.'<br/>'.$GC.'<br/>'.$Gene.'<br/>'.$Helix.'<br/>'.$Mech.'<br/>'.'<br/>';
 		//Add results to breakpoints table
-		$sql_query="UPDATE breakpoints SET Flexibility = $flex, GC = $GC, Stability = $Helix, Mech = '$Mech' WHERE id = $id_bp;";
+		$sql_query="UPDATE breakpoints SET Flexibility = $flex, GC = $GC, Stability = $Helix, Mech = '$Mech' WHERE inv_id = (SELECT id from inversions where name = \"$name\");";
 		$result_query=mysql_query($sql_query);
 		if (!$result_query) {
     		print('Invalid query: ' . mysql_error().'<br/>');

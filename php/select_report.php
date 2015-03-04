@@ -1423,9 +1423,82 @@ while($thisrow = mysql_fetch_array($result_val)){
 
 }
 
+#Comments history
+$sql_com_his="SELECT inversion_com, user, DATE_FORMAT(date,'%d-%m-%Y') as date from comments where inv_id = $id AND inversion_com NOT LIKE 'NULL' GROUP BY inversion_com ORDER BY date;";
+$result_com=mysql_query($sql_com_his);
+$comments_historys='';
+while($comment = mysql_fetch_array($result_com)){
+	$inversion_com = $comment['inversion_com'];
+	$user = $comment['user'];
+	$date = $comment['date'];
+	if (empty($inversion_com) or $inversion_com == "NULL"){$inversion_com = '';}
+	if (empty($user) or $user == 'NULL'){$user = 'unknown';}
+	if (empty($date) or $date == 'NULL'){$date = 'unknown';}
+	if ($inversion_com != ''){
+	$comments_history_inversion.="<p><font color= 'gray'>".$inversion_com."&nbsp;"."<sub>".$user."&nbsp;".$date."</p></sub>";
+	} else{
+	$comments_history_inversion='Empty history. This entry has not been commented yet!';}
+}
+if (empty($comments_history_inversion)){$comments_history_inversion='Empty history. This entry has not been commented yet!';}
 
+$sql_com_his="SELECT bp_com, user, DATE_FORMAT(date,'%d-%m-%Y') as date from comments where inv_id = $id AND bp_com NOT LIKE 'NULL' GROUP BY bp_com ORDER BY date;";
+$result_com=mysql_query($sql_com_his);
+while($comment = mysql_fetch_array($result_com)){
+	$bp_com = $comment['bp_com'];
+	$user = $comment['user'];
+	$date = $comment['date'];
+	if (empty($bp_com) or $bp_com == "NULL"){$bp_com = '';}
+	if (empty($user) or $user == 'NULL'){$user = 'unknown';}
+	if (empty($date) or $date == 'NULL'){$date = 'unknown';}
+	if ($bp_com != ''){
+	$comments_history_bp.="<p><font color= 'gray'>".$bp_com."&nbsp;"."<sub>".$user."&nbsp;".$date."</p></sub>";
+	} else{
+	$comments_history_bp='Empty history. This entry has not been commented yet!';}
+}
+
+if (empty($comments_history_bp)){$comments_history_bp='Empty history. This entry has not been commented yet!';}
+
+$sql_com_his="SELECT evolutionary_history_com, user, DATE_FORMAT(date,'%d-%m-%Y') as date from comments where inv_id = $id AND evolutionary_history_com NOT LIKE 'NULL' GROUP BY evolutionary_history_com ORDER BY date;";
+$result_com=mysql_query($sql_com_his);
+while($comment = mysql_fetch_array($result_com)){
+	$eh_com = $comment['evolutionary_history_com'];
+	$user = $comment['user'];
+	$date = $comment['date'];
+	if (empty($eh_com)){$eh_com = '';}
+	if (empty($user) or $user == 'NULL'){$user = 'unknown';}
+	if (empty($date) or $date == 'NULL'){$date = 'unknown';}
+	if ($eh_com != ''){
+	$comments_history_eh.="<p><font color= 'gray'>".$eh_com."&nbsp;"."<sub>".$user."&nbsp;".$date."</p></sub>";
+	} else{
+	$comments_history_eh='Empty history. This entry has not been commented yet!';}
+}
+if (empty($comments_history_eh)){$comments_history_eh='Empty history. This entry has not been commented yet!';}
+
+
+#Last inversion comment
+	$last_com_query= "select comment_id, inversion_com from comments where inv_id = $id ORDER BY comment_id DESC LIMIT 1;";
+	$result = mysql_query($last_com_query);
+	while($thisrow = mysql_fetch_array($result)){
+	if($thisrow['inversion_com'] == "NULL"){$last_com = '';}
+	else{$last_com=$thisrow['inversion_com'];}
+	}
+#Last bp comment
+	$last_bp_com_query= "select comment_id, bp_com from comments where inv_id = $id ORDER BY comment_id DESC LIMIT 1;";
+	$result_sql = mysql_query($last_bp_com_query);
+	$last_com_bp = '';
+	while($thisrow = mysql_fetch_array($result_sql)){
+	if($thisrow['bp_com'] == "NULL"){$last_com_bp = '';}
+	else{$last_com_bp=$thisrow['bp_com'];}
+	}
+#Last eh comment
+	$last_eh_com_query= "select comment_id, evolutionary_history_com from comments where inv_id = $id ORDER BY comment_id DESC LIMIT 1;";
+	$result_sql = mysql_query($last_eh_com_query);
+	$last_com_eh = '';
+	while($thisrow = mysql_fetch_array($result_sql)){
+	if($thisrow['evolutionary_history_com'] == "NULL"){$last_com_eh = '';}
+	else{$last_com_eh=$thisrow['evolutionary_history_com'];}
+	}
 mysql_close($con);
-
 /*
 
 */

@@ -39,20 +39,15 @@ file_put_contents($myFile, $stringData, FILE_APPEND | LOCK_EX);
     margin-right:5px;
     width:700px;
     border: none;
-	
 }
 .content{
     float:right;
     margin-right:5px;
     width:300px;
     height:100px;
-    font-family: sans-serif;	
+    	
 }
-h1.sansserif {
-    font-family: sans-serif;
-        font-size: 14px;
-	color: #006666;
-}
+
 table.sample {
 	width:30%;
 	height:25%;
@@ -124,7 +119,7 @@ input.deletebox{
 		if (!$result) {die('Invalid query: ' . mysql_error());}
 		echo '<table class="sample">';
 		echo '<tr>
-				<br>&emsp;&emsp;<h1 class = "sansserif"><b>News</b></h1></tr>';
+				<br><p style="color: #006666; font-family: Sans-serif; font-size: 0.9em;"><b>News</b></p></tr>';
 		while($news= mysql_fetch_array($result)){
 			echo '<tr>
 				<td>'.$news['Date'].'</td></tr><tr><td>'.'<i>&nbsp&nbsp'.$news['Title']	.'</i></td>';

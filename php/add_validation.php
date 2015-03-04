@@ -11,7 +11,8 @@ $research_name=$_POST["research_name"];
 $method=$_POST["method"];
 $status=$_POST["status"];
 $checked=$_POST["checked"];
-
+if (isset($_POST['between_bp1'])) {$betweenbp1="TRUE";}else{$betweenbp1="FALSE";}
+if (isset($_POST['between_bp2'])) {$betweenbp2="TRUE";}else{$betweenbp2="FALSE";}
 $validation=$_POST["validation"]; //puede ser: experimental o bioinformatics
 // Si es experimental, recibimos esta informacion:
 $experimental_conditions=$_POST["experimental_conditions"];
@@ -212,6 +213,16 @@ $a="SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$e
 			if ($r['chang']=='YES') { 
 				$message="Some predictions status have changed<br />";
 			}
+
+			#INSERT THE "BETWEEN BREAKPOINTS" INFORMATION TO THE DB		
+						$sql_between = "UPDATE breakpoints SET bp1_between='$betweenbp1', bp2_between = '$betweenbp2' WHERE inv_id = $inv_id;";
+						$result_between = mysql_query($sql_between);
+						if (!$result_between) {
+						    die('Error when passing the checkbox input to the db: ' . mysql_error());
+						}
+			
+						sleep(1);
+
 			//BREAKSEQ ANNOTATION
 			exec("kill $(ps aux | grep 'breakseq-1.3' | awk '{print $2}') > /dev/null 2>&1");
 			$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
