@@ -66,20 +66,25 @@ exec("kill $(ps aux | grep 'breakseq-1.3' | awk '{print $2}') > /dev/null 2>&1")
 $gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
 //Select inversions
 $query2="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.GC is null AND b.chr NOT IN ('chrM');";
-print "$sql_bp".'<br/>';
+#print "$sql_bp".'<br/>';
 $result_bp = mysql_query($query2) or die("Query fail: " . mysql_error());
 while($bprow = mysql_fetch_array($result_bp))
 {
-	$midpoint_BP1=round(($bprow['bp1_end']-$bprow['bp1_start'])/2+$bprow['bp1_start']);
-    	$midpoint_BP2=round(($bprow['bp2_end']-$bprow['bp2_end'])/2+$bprow['bp2_start']);
+	$midpoint_BP1=round(($bprow['bp1_end']+$bprow['bp1_start'])/2);
+	$bp2_end =$bprow['bp2_end'];
+	$bp2_start =$bprow['bp2_start'];
+	#print "$bp2_end\t$bp2_start\n";
+    	$midpoint_BP2=round(($bp2_start+$bp2_end)/2);
+	#print "$midpoint_BP2\n";
     	$chr=$bprow['chr'];
 	$name=$bprow['name'];
 	$id_bp= $bprow['id'];
 	//$gene_id= $bprow['gene_id'];
-	$inverion_gff_line= "$chr\t$name\tInversion\t$midpoint_BP1\t$midpoint_BP2\t.\t.\t.\t$id_bp\n";
-	    
-    	fwrite($gff_file, $inverion_gff_line);
+    $inverion_gff_line= "$chr\t$name\tInversion\t$midpoint_BP1\t$midpoint_BP2\t.\t.\t.\n";
+    
+    fwrite($gff_file, $inverion_gff_line);
 }
+
 
 fclose($gff_file);
 

@@ -1046,7 +1046,7 @@ Human Polymorphic Inversion DataBase
 			</div>
 		<div class="grlsection-content ContentA">
 		
-			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/invdb/image.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
+			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb/image.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
 			
 		</div>
 
