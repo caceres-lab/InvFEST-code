@@ -19,6 +19,7 @@ session_start(); //Inicio la sesión
 -->
 <?php include_once('php/select_report.php');?> 
 <?php include_once('php/php_global_variables.php');?>
+<?php include('php/db_conexion.php');?>
 <?php
 // if ($_SESSION["autentificado"]=='SI' && ($r['status']!='Withdrawn' && $r['status']!='withdrawn') {
 //	include_once('php/select_new_validation.php');
@@ -399,6 +400,11 @@ function getFormValues(fobj) {
 	}
 	str = str.substr(0,(str.length - 1));
 	return str;
+}
+
+//History comments div
+function showDiv() {
+   document.getElementById('commentshistoryDiv').style.display = "block";
 }
 
 function postData(url, parameters, divID){
@@ -941,17 +947,26 @@ Human Polymorphic Inversion DataBase
 		<td><?php echo $r['chr'].':'.$r['bp2_start'].'-'.$r['bp2_end'];?></td>
 	</tr>
 	
-	<?php if (($r['comment'] != '') or ($_SESSION["autentificado"]=='SI')) {
+	<?php if (($last_com != '') or ($_SESSION["autentificado"]=='SI')) {
 	
 	echo "
 	<tr>
 		<td class='title'>Comments</td>
-		<td colspan=3 id='comments_inv".$id."'><div  id='DIVcomments_inv".$id."'>".$r['comment']."</div>";
+		
+		<td colspan=3 id='comments_inv".$id."'><div  id='DIVcomments_inv".$id."'>".$last_com."</div>";
 		
 		
             	if ($_SESSION["autentificado"]=='SI') {
         		        		
         		echo "<input type='button' class='right' value='Edit' onclick=\"updateTD('comments_inv','".$id."')\" />";
+			#echo "<div id='commentshistoryDiv'  style='display:none;'> <hr>$comments_history_inversion</div>";
+			
+			#echo "<input type='button' name = 'answer' class='right' value='History' onclick='showDiv()' />";
+			#echo "<a input type='button' vaule = 'History' id='displayText' onClick='javascript:toggle();'>show</a> "; 
+			echo "<div id='toggleText'  style='display:none;'> <hr>$comments_history_inversion</div>";
+			echo "<input type='button' value='History' class='right' onClick=javascript:toggle();>";
+
+			#echo "<td colspan=3 id='comments_inv".$id."'><div  id='DIVcomments_inv".$id."'>".$comments_history_inversion."</div>";
 
             	}		
 		
@@ -963,6 +978,21 @@ Human Polymorphic Inversion DataBase
 	}
 	
 	?>
+<script language="javascript"> 
+function toggle() {
+	var ele = document.getElementById("toggleText");
+	var text = document.getElementById("displayText");
+	if(ele.style.display == "block") {
+    		ele.style.display = "none";
+		text.innerHTML = "show";
+  	}
+	else {
+		ele.style.display = "block";
+		text.innerHTML = "hide";
+	}
+} 
+</script>
+
 </table>
 
 <?php
@@ -1046,7 +1076,7 @@ Human Polymorphic Inversion DataBase
 			</div>
 		<div class="grlsection-content ContentA">
 		
-			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb/image.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
+			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb-dev/image.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
 			
 		</div>
 
@@ -1268,6 +1298,7 @@ Human Polymorphic Inversion DataBase
  
                 		<tr><td class='title'>Definition method</td><td colspan="3"><?php echo $array_definitionmethod[$r['definition_method']];?></td></tr>
 
+							
 				<?php }
  				
  				if (($r['origin'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
@@ -1283,40 +1314,42 @@ Human Polymorphic Inversion DataBase
 
 				if (($r['origin'] =='') or ($_SESSION["autentificado"]=='SI') or ($r['origin'] =='ND')) { ?> 
  
-                		<tr><td class='title'>Mechanism of origin<br>(predicted by BreakSeq)</td><td colspan="3"><?php echo $r['Mech'];?></td></tr>
+                		<tr><td class='title'>Mechanism of origin<br>(predicted by BreakSeq)</td><td colspan="3"><?php echo $r['Mech'];?></td></table>
 
 				<?php }
 
-				if (($r['Flexibility'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
+				if (($r['Flexibility'] !='') or ($_SESSION["autentificado"]=='SI')) { 
  
-                		<tr><td class='title'>Flexibility</td><td colspan="3"><?php echo $r['Flexibility'];?></td></tr>
+                		echo "<table width='100%'>"?><tr><td class='title' width="18%">Flexibility</td><td><?php echo $r['Flexibility'];?></td>
 
 				<?php }
 
 				if (($r['GC'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
  
-                		<tr><td class='title'>GC content </td><td colspan="3"><?php echo $r['GC'];?></td></tr>
+                		<td class='title' width="18%">GC content </td><td ><?php echo $r['GC'];?></td>
 
 				<?php }
 
 				if (($r['Stability'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
  
-                		<tr><td class='title'>Stability</td><td colspan="3"><?php echo $r['Stability'];?></td></tr>
+                		<td class='title' width="18%">Stability</td><td><?php echo $r['Stability'];?></td></tr></table>
 
 				<?php }
 
 
-	if (($r['breakpoint_comments'] != '') or ($_SESSION["autentificado"]=='SI')) {
+	if ($last_com_bp != '' or $_SESSION["autentificado"]=='SI') {
 	
 	echo "
-	<tr>
-		<td class='title'>Comments</td>
-		<td colspan=3 id='comments_bp".$id."'><div  id='DIVcomments_bp".$id."'>".$r['breakpoint_comments']."</div>";
+	<table width='100%'><tr>
+		<td class='title' width='18%'>Comments</td>
+		<td colspan=3 id='comments_bp".$id."'><div  id='DIVcomments_bp".$id."'>".$last_com_bp."</div>";
 		
 		
             	if ($_SESSION["autentificado"]=='SI') {
         		        		
         		echo "<input type='button' class='right' value='Edit' onclick=\"updateTD('comments_bp','".$id."')\" />";
+			echo "<div id='togglebphistory'  style='display:none;'> <hr>$comments_history_bp</div>";
+			echo "<input type='button' value='History' class='right' onClick=javascript:toggle2();>";
 
             	}		
 		
@@ -1386,17 +1419,19 @@ Human Polymorphic Inversion DataBase
 					<td class='title' width='18%'>Origin</td><td width='32%'><?php if ($r['evo_origin'] != '') {echo ucfirst($r['evo_origin']);} else {echo '<font color="grey">ND</font>';} ?></td>
 				</tr>
 				
-	<?php if (($r['comments_eh'] != '') or ($_SESSION["autentificado"]=='SI')) {
+	<?php if (($last_com_eh != '') or ($_SESSION["autentificado"]=='SI')) {
 	
 	echo "
 	<tr>
 		<td class='title'>Comments</td>
-		<td colspan=3 id='comments_eh".$id."'><div  id='DIVcomments_eh".$id."'>".$r['comments_eh']."</div>";
+		<td colspan=3 id='comments_eh".$id."'><div  id='DIVcomments_eh".$id."'>".$last_com_eh."</div>";
 		
 		
             	if ($_SESSION["autentificado"]=='SI') {
         		        		
         		echo "<input type='button' class='right' value='Edit' onclick=\"updateTD('comments_eh','".$id."')\" />";
+			echo "<div id='toggleehhistory'  style='display:none;'> <hr>$comments_history_eh</div>";
+			echo "<input type='button' value='History' class='right' onClick=javascript:toggle3();>";
 
             	}		
 		
@@ -1407,7 +1442,35 @@ Human Polymorphic Inversion DataBase
 	
 	}
 	
-	?>				
+	?>
+<script language="javascript"> 
+function toggle2() {
+	var ele = document.getElementById("togglebphistory");
+	var text = document.getElementById("displayText");
+	if(ele.style.display == "block") {
+    		ele.style.display = "none";
+		text.innerHTML = "show";
+  	}
+	else {
+		ele.style.display = "block";
+		text.innerHTML = "hide";
+	}
+} 
+</script>	
+<script language="javascript"> 
+function toggle3() {
+	var ele = document.getElementById("toggleehhistory");
+	var text = document.getElementById("displayText");
+	if(ele.style.display == "block") {
+    		ele.style.display = "none";
+		text.innerHTML = "show";
+  	}
+	else {
+		ele.style.display = "block";
+		text.innerHTML = "hide";
+	}
+} 
+</script>				
 				
 			</table>
 			
@@ -1657,7 +1720,7 @@ Human Polymorphic Inversion DataBase
 	?>
 
 	<?if ($_SESSION["autentificado"]=='SI'  && ($r['status']!='Withdrawn' && $r['status']!='withdrawn')){?>
-	<?include('php/db_conexion.php');
+	<?
 $sql_inversion_status="select distinct status from inversions where status is not null order by status;";
 $result_inversion_status = mysql_query($sql_inversion_status) or die("Query fail: " . mysql_error());
 while($thisrow = mysql_fetch_array($result_inversion_status)){
