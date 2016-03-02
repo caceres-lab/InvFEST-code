@@ -176,18 +176,21 @@ $a="SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$e
 					}
 					if ($separator!="") {
 						$info=explode($separator,$line);
-						$code=$info[0];
-		            $geder = ($info[1] == "" ? NULL : $info[1]);
-		            $population= ($info[2] == "" ? NULL : $info[2]);
-		            $region= ($info[3] == "" ? NULL : $info[3]);
-		            $family= ($info[4] == "" ? NULL : $info[4]); 
-		            $relationship= ($info[5] == "" ? NULL : $info[5]);
-						$genotype= $info[6];
-		            $allele_comment= ($info[6] == "" ? NULL : $info[6]);
-		            $allele_level= ($info[7] == "" ? NULL : $info[7]);
+			    $code=$info[0];
+		            $other_code= ($info[1] == "" ? NULL : $info[1]);
+		            $geder = ($info[2] == "" ? NULL : $info[2]);
+		            $population= ($info[3] == "" ? NULL : $info[3]);
+		            $region= ($info[4] == "" ? NULL : $info[4]);
+		            $family= ($info[5] == "" ? NULL : $info[5]); 
+		            $relationship= ($info[6] == "" ? NULL : $info[6]);
+		         #   $allele_level= ($info[7] == "" ? NULL : $info[7]);
+			    $allele_level=NULL;
+			    $genotype= $info[7];
 		            $panel= ($info[8] == "" ? NULL : $info[8]);
-		            $other_code= ($info[9] == "" ? NULL : $info[9]);
+		            $allele_comment= ($info[9] == "" ? NULL : $info[9]);
 
+
+#echo "CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');"; exit;
 						if ($code !="" && ($genotype=="INV/INV" || $genotype=="STD/INV" || $genotype=="STD/STD" || $genotype=="STD" || $genotype=="INV" || $genotype=="NA" || $genotype=="ND")) {
 
 						mysql_query("CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');");

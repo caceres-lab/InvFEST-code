@@ -3,7 +3,7 @@
 
 $user = "invfest";
 $password = "pwdInvFEST";
-$db = "INVFEST-DB-dev";
+$db = "INVFEST-DB";
 
 $con = mysql_connect('localhost', $user, $password);
 if (!$con) { die('Could not connect: ' . mysql_error()); }
@@ -12,7 +12,7 @@ mysql_select_db($db, $con);
 //Add BreakSeq annotation to the DB
 //----------------------------------------------------------------------------
 //BreakSeq output parsing
-$BS_output = @fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/Results/input.gff", "r");
+$BS_output = @fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "r") or die("can't open file");
 
 $array = array();
 if ($BS_output) {

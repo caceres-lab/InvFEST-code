@@ -9,6 +9,7 @@ $gene=$_POST["gene_func"];
 $genomic_effect=$_POST["genomic_eff_func"];
 $genomic_source=$_POST["source_genomic_func"];
 $consequences=$_POST["conseq_func"];
+$comment=$_POST["genomic_conseq_comment"];
 $mechanism=$_POST["mechanism"];
 
 $phenotypic_effect=$_POST["phenotypic_eff_func"];
@@ -65,7 +66,7 @@ else {
 		*/
 		if ($effect_type == "eff_genomic"){
 			mysql_query("CALL update_genomic_effect('$gene','$inv_id','$effect', '$consequences', '$source','".$_SESSION["userID"]."')");
-
+			mysql_query("UPDATE genomic_effect SET comment='$comment' WHERE inv_id = $inv_id;");
 			$sql_gene="select refseq, chr, txStart, txEnd from HsRefSeqGenes where idHsRefSeqGenes='$gene';";
 			$result_gene=mysql_query($sql_gene);
 			$r= mysql_fetch_array($result_gene);
@@ -75,6 +76,7 @@ else {
 			<tr><td class='title'>Mechanism</td><td id='".$gene."_mechanism'>".$mechanism."</td></tr>
 			<tr><td class='title'>Study</td><td>".$source."</td></tr>
 			<tr><td class='title'>Functional consequences</td><td>".$consequences."</td></tr>
+			<tr><td class='title'>Comment</td><td>".$comment."</td></tr>
 			";
 		}
 		elseif ($effect_type == "eff_phenotypic"){

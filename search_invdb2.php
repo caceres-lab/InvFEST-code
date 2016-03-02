@@ -139,8 +139,9 @@ if (($search_field == "enter position, inversion ID or gene symbol") or ($search
 	// ignore $search_field
 	
 	$where[] = "(LOWER(inversions.`status`) != 'withdrawn')";
-
-} else if (preg_match("/^(chr\w+):?(\d*)\W*(\d*)$/i", $search_field, $matches)) {   //chrX:1-200
+	//echo $search_field.'<br >';
+} 
+else if (preg_match("/^(chr\w+):?(\d*)\W*(\d*)$/i", $search_field, $matches)) {   //chrX:1-200
 
 //	echo "cromosoma: $matches[1] <br>";
 //	echo "start_coord: $matches[2] <br>";
@@ -166,14 +167,16 @@ if (($search_field == "enter position, inversion ID or gene symbol") or ($search
 	
 	$where[] = "(LOWER(inversions.`status`) != 'withdrawn')";
 
-} else if (preg_match("/^HsInv\d{4}$/i", $search_field, $matches)) {   //HsInv0001
+} 
+else if (preg_match("/^HsInv\d{4}$/i", $search_field, $matches)) {   //HsInv0001
 
 //	echo "Inversion id: $matches[0] <br><br>";
 
 	$where[] = "(inversions.name='$matches[0]')";
 
-} else if (preg_match("/^\w+[pq]\d*\.?\d*$/i", $search_field, $matches)) {   //2p25.1
-
+}
+else if (preg_match("/^[0-9XYM]{1,2}+[pq]\d*\.?\d*$/i", $search_field, $matches)) {   //2p25.1
+	//echo $search_field.'<br >';
 //	echo "cyto_band: $matches[0] <br><br>";
 	
 	// search coordinates associated to this band
@@ -192,6 +195,7 @@ if (($search_field == "enter position, inversion ID or gene symbol") or ($search
 	mysql_free_result($result_cytoband);	
 	
 	if ($cytoband_chrom != "") {
+		
 //		echo "cytoband cromosoma: $cytoband_chrom <br>";
 //		echo "cytoband start_coord: $cytoband_chromStart <br>";
 //		echo "cytoband end_coord: $cytoband_chromEnd <br><br>";	
@@ -201,8 +205,9 @@ if (($search_field == "enter position, inversion ID or gene symbol") or ($search
 	
 	$where[] = "(LOWER(inversions.`status`) != 'withdrawn')";
 
-} else {     //gene
-
+} 
+else {     //gene
+	//echo $search_field;
 	$aff_gene[] = "HsRefSeqGenes.symbol='".$search_field."'";
 	
 	$where[] = "(LOWER(inversions.`status`) != 'withdrawn')";
@@ -430,15 +435,298 @@ echo $head;
 <body>
 
 <?php include('php/echo_menu.php');?>
+<script type="text/javascript" src="js/header.js"></script>
+<!-- ................................................................................................................................. -->
+<body>
+<style 'type=text/css'>
 
+form {
+display: inline;
+}
+#report {
+/*	margin: 1em 6% 1.5em 6%;*/
+	padding: 0;
+	background-color:#f5f5f9;/*#444444*/
+}
+
+.report-section {
+	margin: 0.5em 0.0em 0.5em 0.0em;
+	/*width: 90%;*/
+	/*border: solid gray 2px;*/
+	/*margin-bottom: 0.5em;*/
+	background-color: rgba(255, 255, 255, 0.6);
+	/*border:1px solid #F1F1F1;*/
+}
+.section-content,
+.grlsection-content{
+		padding: 0.5em 3em ;
+		border:1px solid #F1F1F1;
+		font-family:Ubuntu;
+		font-size: 14px;
+}
+
+.floating {
+	width: 48%;
+	float: left;
+	margin: 0.4em;
+	font-size: 0.8em;
+}
+
+.TitleA,.TitleB,.TitleOther {
+	padding: 0 0.2em 0 0.4em;
+	color:white;
+}
+
+.TitleStatic {
+    color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+}
+
+.TitleA {
+	/*font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #405BA2;*/
+    
+    color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+	
+	
+}
+
+.TitleA:hover,
+.TitleA:focus {
+	box-shadow: 0 0 7px #53a6d5;
+	
+		
+		     box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+			
+		}
+.TitleA:active {
+		background: #8abcd7;
+		background: -webkit-gradient(linear, left top, left bottom, from(#81afc8), to(#b7def4));
+		background: -moz-linear-gradient(top, #81afc8, #b7def4);
+		border-color: #6e94a9;
+		border-top-color: #567c91;
+		border-bottom-color: #88aec4;
+
+		box-shadow: inset 0 -1px 1px #fff;
+    		-webkit-box-shadow: inset 0 -1px 1px #fff;
+    		-moz-box-shadow: inset 0 -1px 1px #fff;
+    		-o-box-shadow: inset 0 -1px 1px #fff;
+		
+		
+		}
+
+/*.TitleB {
+	font-size: 1.2em;
+	border: solid #9A9999 1px;
+	background-color: #96A9E4;
+}*/
+
+.TitleB {
+	/*font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #405BA2;*/
+    
+    color: #57261c;  
+	background: #e3b4a3;   
+	background: -webkit-gradient(linear, left top, left bottom, from(#f5c1b9), to(#cb9185));    
+	background: -moz-linear-gradient(top, #f5c1b9, #cb9185);
+	border: 1px solid #b17d75;  
+	border-top-color: #c6928a;  
+	border-bottom-color: #935d58;  
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+}
+
+.TitleB:hover,
+.TitleB:focus {
+	box-shadow: 0 0 7px #d56a53;   
+	
+		
+		     box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+			
+		}
+.TitleB:active {
+		background: #d7948a;  
+		background: -webkit-gradient(linear, left top, left bottom, from(#c88a81), to(#f4bcb7));    
+		background: -moz-linear-gradient(top, #c88a81, #f4bcb7);
+		border-color: #a9736e;  
+		border-top-color: #915e56;  
+		border-bottom-color: #c48d88;  
+
+		box-shadow: inset 0 -1px 1px #fff;
+    		-webkit-box-shadow: inset 0 -1px 1px #fff;
+    		-moz-box-shadow: inset 0 -1px 1px #fff;
+    		-o-box-shadow: inset 0 -1px 1px #fff;
+		
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+.TitleOther {
+	font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #B7C6FF;
+}
+.section-title small {
+	float:right;
+	font-size: 0.6em;
+}
+.section-title:hover {
+	cursor: s-resize;
+}
+
+/*.section-content,*/
+.ContentA {
+	padding: 0.5em 3em ;
+	background-color: white;
+    /*border: solid 1px;
+    border-collapse: collapse;
+    border-color: #405BA2;*/
+}
+
+.section-content p:hover,
+.ContentA p:hover{
+/*	background-color: rgba(175,175,175, 0.4);*/
+
+}
+
+.prova:hover{
+	background-color: rgba(175,175,175, 0.4);
+	-moz-border-radius: 8px;
+}
+
+.ContentA li {
+	padding-top: 0.5em;
+}
+
+.hidden {
+	display: none
+}
+
+/*.right, 
+.left {
+	width : 49%;
+	padding: 0;
+}
+*/
+.left {	
+	float:left; 
+}
+
+.right { 
+	float: right; 
+}
+
+.bkp {
+	font-size: 0.9em;
+	border: solid gray 1px;
+	margin: 1em;
+	padding: 1em;
+	width: 40%;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.bkp h4{
+	margin-top: 0;
+}
+
+.field {
+	margin: 0;
+	padding: 0.3em 0.3em;
+}	
+
+/*IFRAME*/
+iframe {
+	display:block;
+	margin: auto;
+	width: 90%;
+}
+
+#region {
+	display:block;
+	margin: auto;
+	padding-bottom: 1em;
+}
+
+/**/
+.invalid_pred {
+	color:#808080;
+	font-style:italic;
+}
+
+table,tr,td {
+	border: 1px solid black;
+	border-collapse:collapse;
+    border-color: #dcdcea;
+    font-family: Ubuntu;
+    font-size: 14px;
+}
+td.title {
+	font-weight:bolder;
+	background-color:#f5f5f9;
+	/*width:23%;*/
+}
+th.title {
+	font-weight:bolder;
+	background-color:#bababa;
+}
+
+
+</style>
   <br />
+<?php
 
+#Output
+$outputpath = "/home/inoguera/output.txt";
+$outputtt = fopen("$outputpath", 'w') or die("Unable to create output file!"."$outputname");
+
+$header = "Name\tPosition (hg18)\tEstimated Inversion size (bp)\tStatus\tGlobal frequency\tFunctional effect\n";
+fwrite($outputtt , $header);?> 
 
   <?php echo $search_inv;?>  
 
   <br />
   <div id="search_results">
-	<div class="section-title TitleA">- <?php echo "<b>$count_result</b> inversions found<br/>";?></div>
+	<div class="section-title TitleA">- <?php echo "<b>$count_result</b> inversions found";?><form method="post" action="php/invfest_finder_download_matched_inversions.php">&nbsp;&nbsp;<?php echo "<input type='image' class='download' src='img/download.png' onFocus='this.form.submit()' name='pathoutput' title='Download table' style='width:14px; height:14px'/>";?><input  type='hidden'  name='pathoutput' value="<?php echo $outputpath;?>">
+
+</form></div>
 	<div class='section-content'>
 	
 	<!-- <?php echo "<b>$count_result</b> inversions found <br/><br/>";?> -->
@@ -528,6 +816,20 @@ echo $head;
 				echo "<td>".$r_inv_freq."</td>";
 				echo "<td>".$array_effects[$row['genomic_effect']]."</td>";
 				echo "</tr>";
+				$name=$row['name'];
+				$position = $row['chr'].":".$row['range_start']."-".$row['range_end'];
+				$start = $row['range_start'];
+				$end = $row['range_end'];
+				$size = $row['size'];
+				preg_match("/>(.*?)</", $array_status[$row['status']], $output_array);
+				$status = $output_array[1];
+				if(preg_match("/>(.*?)</",$array_effects[$row['genomic_effect']], $output_array)){$effect = $output_array[1];}else{$effect = $array_effects[$row['genomic_effect']];}
+				preg_match("/>(.*?)</", $r_inv_freq, $output_array);
+				$freq = $output_array[1];
+				$inversion = "Name\tPosition (hg18)\tEstimated Inversion size (bp)\tStatus\Global freqiency\tFunctional effect\n";
+				$inversion= "$name\t$position\t$size\t$status\t$freq\t$effect\n";
+		#echo "$inversion<br>";
+		fwrite($outputtt, $inversion);
 			}
 		?>
 		</tbody></table>

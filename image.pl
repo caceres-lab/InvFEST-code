@@ -148,7 +148,7 @@ my $start = abs(int($feat_start-($end_start*0.3)));
 ### Database connection for genes in region
 
 use DBI;
-my $dbh = DBI->connect('dbi:mysql:INVFEST-DB-dev', 'invfest', 'pwdInvFEST');
+my $dbh = DBI->connect('dbi:mysql:INVFEST-DB-PUBLIC', 'invfest', 'pwdInvFEST');
 
 
 ####exons query
@@ -225,7 +225,7 @@ if ($rows >= 1) {
 $sth->finish();
 
 #### get other inversions present in the same inversion
-my $query = "SELECT DISTINCT i.name, i.id, i.name, b.inv_id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end FROM breakpoints b, inversions i WHERE b.chr = \"".$chr."\" AND i.id = b.inv_id AND ((b.bp1_start BETWEEN ".$start." AND ".($start+$len).") OR (b.bp2_end BETWEEN ".$start." AND ".($start+$len).") OR ($start BETWEEN b.bp1_start AND b.bp2_end) OR (($start+$len) BETWEEN b.bp1_start AND b.bp2_end)) GROUP BY i.id";
+my $query = "SELECT i.name, i.id, b.inv_id, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end FROM inversions i INNER JOIN breakpoints b ON b.id = (SELECT id FROM breakpoints b2 WHERE b2.inv_id=i.id ORDER BY FIELD (b2.definition_method, 'manual curation', 'default informatic definition'), b2.id DESC LIMIT 1) WHERE b.chr = \"".$chr."\" AND i.id = b.inv_id AND i.status NOT LIKE 'WITHDRAWN' AND ((b.bp1_start BETWEEN ".$start." AND ".($start+$len).") OR (b.bp2_end BETWEEN ".$start." AND ".($start+$len).") OR ($start BETWEEN b.bp1_start AND b.bp2_end) OR (($start+$len) BETWEEN b.bp1_start AND b.bp2_end));";
 
 my $sth  = $dbh->prepare($query);
 $sth->execute();
@@ -319,8 +319,9 @@ sub addFeatureotherinversions{
 							  -label     => 1,
 							  -fgcolor   => sub { 
                                                                             my $feature = shift; 
-									    return "gray" if $feature->primary_tag eq 'motif1'; 
-									    return "black" if $feature->primary_tag eq 'motif2'
+									    return "black" if $feature->primary_tag eq 'motif1'; 
+									    return "black" if $feature->primary_tag eq 'motif2';
+ 									    return 'black' if $feature->primary_tag eq 'bp1e_bigger_bp2s'
  									},
 							  -key => $track_name,
                                   			  -height => 12, 
@@ -335,6 +336,7 @@ sub addFeatureotherinversions{
                                                                             my $feature = shift; 
 									    return 'gray' if $feature->primary_tag eq 'motif1'; 
 									    return 'darkorchid' if $feature->primary_tag eq 'motif2';
+									    return 'darkorchid' if $feature->primary_tag eq 'bp1e_bigger_bp2s'
  									}  
                                 
 							 );
@@ -344,8 +346,21 @@ sub addFeatureotherinversions{
 								-score        => $score,
 							   );
 
-			if ($feature_data->{'id'} == $id){
+			if ($feature_data->{'inv_id'} == $id){
 				
+				if($feature_data->{'bp1_end'} >= $feature_data->{'bp2_start'}){
+				my $subfoo3= Bio::SeqFeature::Generic->new(
+					-start => $feature_data->{'bp1_start'},
+					-end   => $feature_data->{'bp2_end'},
+					#-source_tag => "$id",
+					-primary=>'bp1e_bigger_bp2s'
+				);
+		  
+				$foo->add_sub_SeqFeature($subfoo3,"EXPAND");
+
+
+				}
+				else{
 				my $subfoo3= Bio::SeqFeature::Generic->new(
 					-start => $feature_data->{'bp1_start'},
 					-end   => $feature_data->{'bp1_end'},
@@ -361,6 +376,7 @@ sub addFeatureotherinversions{
 		  
 				$foo->add_sub_SeqFeature($subfoo3,"EXPAND");
 				$foo->add_sub_SeqFeature($subfoo4,"EXPAND");
+				}
 			}
 
 			else{

@@ -3,15 +3,23 @@
 session_start(); //Inicio la sesión
 
 $id=$_GET["q"];
+$n=$_GET["n"];
 
 include_once('db_conexion.php');
 include_once('php/php_global_variables.php');
+
+if (isset($n)){
+$sql_id_search= "SELECT id FROM inversions WHERE name= '$n';";
+$result_idsearch=mysql_query($sql_id_search);
+$id_search = mysql_fetch_array($result_idsearch);
+$id =$id_search['id'];
+}
 
 #### Query Inversion Data  (A) 
 $sql_inv="SELECT i.name, i.chr, i.range_start, i.range_end, i.size, i.frequency_distribution, i.evo_origin, i.origin, i.status, i.comment, i.ancestral_orientation, i.age, i.comments_eh, 
 		(SELECT count(p.id) FROM predictions p WHERE p.inv_id='$id') as num_pred,
 		(SELECT count(distinct research_name) FROM validation v WHERE v.inv_id='$id') as num_val,
-		b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.GC, b.Stability, b.Mech, b.Flexibility, b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID  
+		b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.GC, b.Stability, b.Mech, b.Flexibility, b.bp1_between, b.bp2_between, b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID  
 	FROM inversions i INNER JOIN breakpoints b ON b.id = (SELECT id FROM breakpoints b2 WHERE b2.inv_id=i.id
 		ORDER BY FIELD (b2.definition_method, 'manual curation', 'default informatic definition'), b2.id DESC
 		LIMIT 1) LEFT JOIN validation val ON b.id = val.bp_id 
@@ -511,7 +519,7 @@ while($thisrow_study = mysql_fetch_array($result_val_study)){
 	(
 	SELECT id.id, (
 	CASE
-	   WHEN i.panel LIKE '%HapMap%' OR i.panel LIKE '%1000 Genomes Project%' THEN 'HapMap/1000GP'
+	   WHEN i.panel LIKE '%HapMap%' OR i.panel LIKE '%1000 Genomes Project%' OR i.panel LIKE '%1000GenomesProject%' THEN 'HapMap/1000GP'
 	   WHEN i.panel LIKE '%HGDP%' THEN 'HGDP'
 	   WHEN i.panel LIKE 'unknown' THEN 'unknown'
 	   ELSE 'Other'
@@ -565,7 +573,7 @@ WHERE pd.inv_id='$id' AND pd.validation_id='".$thisrow_study["id"]."' AND pd.val
 			
 			else {}
 			  
- 			if ($valSupport != '') { $echo_validations.="<br/>$valSupport &nbsp;<a href='php/echo_individualsVal.php?id=".$id."&val=".$thisrow_study['name']."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>"; }
+ 			if ($valSupport != '') { $echo_validations.="<br/>$valSupport &nbsp;<a href='php/echo_individualsVal.php?id=".$id."&val=".$thisrow_study['name']."&met=".$thisrow_study['method']."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>"; }
  			
 			else if ($getresult_nogenotypes['individuals']>0) { $echo_validations.= " (No genotypes available)"; }
 			
@@ -770,6 +778,7 @@ foreach ($info as $region => $value){ //para cada region
 	$addPrefix = '';
 	} elseif ($region=='Europe') {
 	$addPrefix = 'an';
+	} elseif (preg_match("/\)$/",$region)) {
 	} else {
 	$addPrefix = 'n';
 	}
@@ -1080,7 +1089,7 @@ while($origrow = mysql_fetch_array($result_ev_origin)){
 
 
 /// Apartado Effect on genes (G)
-$sql_ge="SELECT g.gene_relation, g.functional_effect, g.source, g.functional_consequence, h.symbol, h.refseq, h.chr, h.txStart, h.txEnd, h.idHsRefSeqGenes, r.year, r.pubMedID
+$sql_ge="SELECT g.gene_relation, g.functional_effect, g.source, g.functional_consequence, g.comment, h.symbol, h.refseq, h.chr, h.txStart, h.txEnd, h.idHsRefSeqGenes, r.year, r.pubMedID
 	FROM genomic_effect g
 	INNER JOIN HsRefSeqGenes h ON g.gene_id=h.idHsRefSeqGenes
 	LEFT JOIN researchs r ON r.name=g.source
@@ -1144,6 +1153,12 @@ while($thisrow = mysql_fetch_array($result_ge)){
 			
 			}
 			
+			if (($thisrow['comment'] != '') or ($_SESSION["autentificado"]=='SI')) {
+			
+			$echo_functional_effect.="<tr><td class='title' width='20%'>Comment</td><td>".ucfirst($thisrow['comment'])."</td></tr>";
+			
+			}
+			
 	$echo_symbols.="<option value='".$thisrow['idHsRefSeqGenes']."'>".$thisrow['symbol']."</option>";
 	
 	$echo_functional_effect.="</table>";
@@ -1154,7 +1169,8 @@ while($thisrow = mysql_fetch_array($result_ge)){
 			
 			$echo_functional_effect.="<table width='100%' id='".$thisrow['idHsRefSeqGenes']."'><tr><td class='title' width='20%'>Study</td><td>".$studyname."</td></tr>
 						<tr><td class='title' width='20%'>Effect</td><td>".ucfirst($thisrow['functional_effect'])."</td></tr>
-						<tr><td class='title' width='20%'>Functional consequences</td><td>".ucfirst($thisrow['functional_consequence'])."</td></tr></table>";
+						<tr><td class='title' width='20%'>Functional consequences</td><td>".ucfirst($thisrow['functional_consequence'])."</td></tr>
+						<tr><td class='title' width='20%'>Comment</td><td>".ucfirst($thisrow['comment'])."</td></tr></table>";
 			
 			}
 			

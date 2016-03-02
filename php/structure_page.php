@@ -352,12 +352,49 @@ $search_inv = "
       <a name='add_filter' id='add_filter' onclick='#add_filter'><font color='#1c4257'>< Add filter ></font></a>
      </p>
     </form>
-   <!-- </div> -->
-   </div>
+<br />
+ 
+<form name='fileform' action='invfestdb_finder_query_to_db.php' method='post' enctype='multipart/form-data'>
+
+<b>Batch query:</b>&nbsp;&nbsp;Look for multiple genomic coordinates by uploading them into a single file (<font color='grey'>ID:</font>chrN:start-end in plain text format).&nbsp;<font color='grey'><sup>*Optional</sup></font></b><br /><br /><input type='file' name='fileToUpload' id='fileToUpload'>
+<button class='default' name='submit' >Batch search</button>
+
+<p id='addbpbias'>
+
+      <a name='add_bpbias' id='add_bpbias' value='add_bpbias' onclick='changeTest()'><font color='#1c4257'>< Extend query region interval ></font></a>
+     </p>
+
+	<div id='subtype' class='content' style='display: none;'>
+				
+	Add <input type='text' name='end_bp' dir='rtl' size='10'> extra bases upstream (5') and <input type='text' name='start_bp' dir='rtl' size='10'> extra downstream (3')<br>
+   	</div>
+</form>
+	</div>
   </div>
 ";
+?>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
 
-
+<!--var file_selected = false;
+//function showNoFile() {
+//    if(!file_selected) { alert('No file selected!');} // or anything else
+//}
+-->
+<script type="text/javascript">
+        function Show_Div(Div_id) {
+            if (false == $(Div_id).is(':visible')) {
+                $(Div_id).show(250);
+            }
+            else {
+                $(Div_id).hide(250);
+            }
+        }
+    </script>
+<script>
+function changeTest() {
+	Show_Div(subtype);}
+</script>
+<?php
    #   <input type='submit' name='submit_btn' class='button' id='submit_btn' value='Search' />
  #  <BUTTON name='submit' value='submit' type='submit'>
  #   <IMG src='img/search.png' alt='Search' width='16'> Search inversions</BUTTON>

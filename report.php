@@ -228,7 +228,7 @@ session_start(); //Inicio la sesión
 //				}
 			}
 			else if (evolInfo.value == "evolution_age"){
-				$('#evolInfoForm').append("Age  <div class='compulsory'>*</div> <input type='text' name='age_age' id='age_age' > "+
+				$('#evolInfoForm').append("Age  <div class='compulsory'>*</div> <input type='text' name='age_age' id='age_age' > (in years, no thousand separators, only digits)"+
 				"<br>Method  <div class='compulsory'>*</div> <select id='method_age' name='method_age'><option value=''>-Select-</option>"+
 				"<?php echo $method_add_val ?></select> <br>Study  <div class='compulsory'>*</div>  <select id='source_age' name='source_age'>"
 				+"<option value=''>-Select-</option> <?php echo $research_name ?></select> <a class='highslide-resize' href='php/new_study.php?&t=evolAge' onclick='return hs.htmlExpand(this, {objectType: \"iframe\", objectHeight:200,  objectWidth:1000 })'> Add a new study</a>");
@@ -258,7 +258,7 @@ session_start(); //Inicio la sesión
 				"Effect  <div class='compulsory'>*</div> <input type='text' id='genomic_eff_func' name='genomic_eff_func'><br>"+
 				"Study <div class='compulsory'>*</div> <select id='source_genomic_func' name='source_genomic_func'><option value=''>"+
 				"-Select-</option><?php echo $research_name; ?></select> <a class='highslide-resize' href='php/new_study.php?&t=effGenomic' onclick='return hs.htmlExpand(this, {objectType: \"iframe\", objectHeight:200,  objectWidth:1000 })'>Add new study</a><br>"+
-				"Functional consequences  <div class='compulsory'>*</div> <input type='text' name='conseq_func' id='conseq_func'>");
+				"Functional consequences  <div class='compulsory'>*</div> <input type='text' name='conseq_func' id='conseq_func'><br>"+"Comment  <input type='text' name='genomic_conseq_comment' id='genomic_conseq_comment'>");
 			}
 			else if (functInfo.value == "eff_phenotypic"){
 				$('#functEffForm').append("Effect <div class='compulsory'>*</div> "+
@@ -925,8 +925,13 @@ Human Polymorphic Inversion DataBase
 		echo $array_effects[$r['genomic_effect']];
 		
 		?></td>
-		<td class="title">Breakpoint 1</td>
-		<td><?php echo $r['chr'].':'.$r['bp1_start'].'-'.$r['bp1_end'];?></td>
+		<td class="title">Breakpoint 1</td><td>
+		<?php 
+		if ($r['bp1_between'] == 'TRUE'){
+			echo $r['chr'].':'.$r['bp1_start'].'^'.$r['bp1_end'];}
+		else{
+			echo $r['chr'].':'.$r['bp1_start'].'-'.$r['bp1_end'];}?>
+		</td>
 	</tr>
 	<tr>
 		<td class="title">Ancestral orientation</td>
@@ -943,11 +948,16 @@ Human Polymorphic Inversion DataBase
 		echo $r['ancestral_orientation'];
 		
 		?></td>
-		<td class="title">Breakpoint 2</td>
-		<td><?php echo $r['chr'].':'.$r['bp2_start'].'-'.$r['bp2_end'];?></td>
+		<td class="title">Breakpoint 2</td><td>
+		<?php 
+		if ($r['bp2_between'] == 'TRUE'){
+			echo $r['chr'].':'.$r['bp2_start'].'^'.$r['bp2_end'];}
+		else{
+			echo $r['chr'].':'.$r['bp2_start'].'-'.$r['bp2_end'];}?>
+		</td>
 	</tr>
 	
-	<?php if (($last_com != '') or ($_SESSION["autentificado"]=='SI')) {
+	<?php if (($r['comment'] != '') or ($_SESSION["autentificado"]=='SI')) {
 	
 	echo "
 	<tr>
@@ -1075,9 +1085,14 @@ function toggle() {
 		<div class="TitleStatic">Region map 
 			</div>
 		<div class="grlsection-content ContentA">
-		
-			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb-dev/image.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
-			
+			<?php
+			if($db == 'INVFEST-DB-PUBLIC'){?>
+			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb/image_db_public.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
+			<?php;}
+			if($db == 'INVFEST-DB'){?>
+
+			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="http://158.109.215.162/mcaceres-lab/invdb/image_db_private.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit --><?php;}?>		
+	
 		</div>
 
 	</div>
@@ -1215,8 +1230,10 @@ function toggle() {
 		<div class="grlsection-content ContentA">
 			Breakpoint 1 start <input name="bp1s" id="bp1s" type="text" /><br>
 			Breakpoint 1 end <input name="bp1e" id="bp1e" type="text" /><br>
+			Breakpoint 1 between start-end <input type="checkbox" id="between_bp1" name="between_bp1" /><br />
 			Breakpoint 2 start <input name="bp2s" id="bp2s" type="text" /><br>
 			Breakpoint 2 end <input name="bp2e" id="bp2e" type="text" /><br>
+			Breakpoint 2 between start-end <input type="checkbox" id="between_bp2" name="between_bp2" /><br />
 			Description <input name="description" id="description" type="text" /><br>
 		</div>
 		</div>
@@ -1278,10 +1295,20 @@ function toggle() {
 		<div class="hidden">
 		<div class="grlsection-content ContentA">
 			<table width='100%'>
-				<tr><td class='title' width='18%'>Breakpoint 1</td><td><?php echo $r['chr'].':'.$r['bp1_start'].'-'.$r['bp1_end'];?></td>
-                    <td class='title' width='18%'>Breakpoint 2<td><?php echo $r['chr'].':'.$r['bp2_start'].'-'.$r['bp2_end'];?></td></td>
+				<tr><td class='title' width='18%'>Breakpoint 1</td><td>		<?php 
+		if ($r['bp1_between'] == 'TRUE'){
+			echo $r['chr'].':'.$r['bp1_start'].'^'.$r['bp1_end'];}
+		else{
+			echo $r['chr'].':'.$r['bp1_start'].'-'.$r['bp1_end'];}?>
+</td>
+                    <td class='title' width='18%'>Breakpoint 2<td><?php 
+		if ($r['bp2_between'] == 'TRUE'){
+			echo $r['chr'].':'.$r['bp2_start'].'^'.$r['bp2_end'];}
+		else{
+			echo $r['chr'].':'.$r['bp2_start'].'-'.$r['bp2_end'];}?></td></td>
                 </tr>
- 				
+
+			
  				<?php if (($r['studyname'] !='') or ($_SESSION["autentificado"]=='SI')) { ?>
  				
                 		<tr><td class='title'>Study</td><td colspan="3"><?php echo $r['studyname'];?></td></tr>
@@ -1311,8 +1338,8 @@ function toggle() {
 				</tr>
 				
 				<?php }
-
-				if (($r['origin'] =='') or ($_SESSION["autentificado"]=='SI') or ($r['origin'] =='ND')) { ?> 
+				$mech = ($r['origin']);
+				if (($mech =='') or preg_match('/ND/',$mech) or preg_match('/$NA/',$mech) or preg_match('/NULL/',$mech) or ($_SESSION["autentificado"]=='SI')) { ?> 
  
                 		<tr><td class='title'>Mechanism of origin<br>(predicted by BreakSeq)</td><td colspan="3"><?php echo $r['Mech'];?></td></table>
 
@@ -1332,12 +1359,12 @@ function toggle() {
 
 				if (($r['Stability'] !='') or ($_SESSION["autentificado"]=='SI')) { ?> 
  
-                		<td class='title' width="18%">Stability</td><td><?php echo $r['Stability'];?></td></tr></table>
+                		<td class='title' width="18%">Stability</td><td><?php echo $r['Stability'];?></td></tr>
 
 				<?php }
 
 
-	if ($last_com_bp != '' or $_SESSION["autentificado"]=='SI') {
+	if (($r['breakpoint_comments'] != '') or $_SESSION["autentificado"]=='SI') {
 	
 	echo "
 	<table width='100%'><tr>
@@ -1363,7 +1390,7 @@ function toggle() {
 
 				if (($bp_seq_features !='') or ($_SESSION["autentificado"]=='SI')) {
 					
-					echo "<tr><td class='title'>Sequence features</td><td colspan='3'><b>Segmental duplications:</b><br/>";
+					echo "<tr><td class='title'>Sequence features</td><td colspan='5'><b>Segmental duplications:</b><br/>";
 					echo "	<table width='100%'><tr><td class='title'>Position SD1</td><td class='title'>Size (bp)</td>
 						<td class='title'>Position SD2</td><td class='title'>Size (bp)</td>
 						<td class='title'>Identity</td><td class='title'>Relative orientation</td></tr>";
@@ -1419,7 +1446,7 @@ function toggle() {
 					<td class='title' width='18%'>Origin</td><td width='32%'><?php if ($r['evo_origin'] != '') {echo ucfirst($r['evo_origin']);} else {echo '<font color="grey">ND</font>';} ?></td>
 				</tr>
 				
-	<?php if (($last_com_eh != '') or ($_SESSION["autentificado"]=='SI')) {
+	<?php if (($r['comments_eh'] != '') or ($_SESSION["autentificado"]=='SI')) {
 	
 	echo "
 	<tr>
