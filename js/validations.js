@@ -106,7 +106,8 @@ function validate_funct() {
 		}
 	}
 	else if (type.value=='eff_phenotypic'){
-		/*phenotypic_eff_func -> effect
+		/*
+        phenotypic_eff_func -> effect
 		source_phenotypic_func -> study
 		*/
 		var effect = document.getElementById("phenotypic_eff_func");
@@ -134,11 +135,13 @@ function validate_evol() {
 		return false;
 	}
 	else if (type.value=="evolution_orientation") {
-		/*evolution_orientation
-			orientation_species
-			orientation_orientation
-			method_orientation
-			source_orientation*/
+		/*
+        evolution_orientation
+		orientation_species
+		orientation_orientation
+		method_orientation
+		source_orientation
+        */
 		var orient_sp=document.getElementById("orientation_species");
 		var orient_orient=document.getElementById("orientation_orientation");
 		var orient_method=document.getElementById("method_orientation");
@@ -166,10 +169,12 @@ function validate_evol() {
 		
 	}
 	else if (type.value=="evolution_age") {
-		/*evolution_age	
-			age_age
-			method_age
-			source_age*/
+		/*
+        evolution_age	
+		age_age
+		method_age
+		source_age
+        */
 		var age_age=document.getElementById("age_age");
 		var age_method=document.getElementById("method_age");
 		var age_source=document.getElementById("source_age");
@@ -190,10 +195,12 @@ function validate_evol() {
 		}
 	}
 	else if (type.value=="evolution_origin") {
-		/*evolution_orientation
-			origin_origin
-			method_origin
-			source_origin*/
+		/*
+        evolution_orientation
+		origin_origin
+		method_origin
+		source_origin
+        */
 		var origin=document.getElementById("origin_origin");
 		var origin_method=document.getElementById("method_origin");
 		var origin_source=document.getElementById("source_origin");

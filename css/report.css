@@ -24,7 +24,6 @@
 /*	-webkit-border-radius: 8px;*/
 }
 
-
 /*Validation Table*/
 #validation_table {
 	border: none;
@@ -251,12 +250,6 @@
 	display: none
 }
 
-/*.right, 
-.left {
-	width : 49%;
-	padding: 0;
-}
-*/
 .left {	
 	float:left; 
 }
@@ -318,4 +311,19 @@ th.title {
 	font-weight:bolder;
 	background-color:#bababa;
 }
+
+table.merge_table { 
+	display: block;
+	width: 100%;
+	overflow: auto;
+	table-layout: fixed;
+}
+td.merge_table, th.merge_table { 
+    padding: 2px;
+    min-width: 120px;
+    border-right: 1px solid #bababa;
+    border-left: 1px solid #bababa;
+    text-align: center;
+}
+
 

@@ -1,117 +1,113 @@
-<?php include('db_conexion.php');?>	
-<?if($db == 'INVFEST-DB-dev'){?>
-<div align="center">
-<table style="border:0px;">
-  	<tr style="border:0px;">
-  		<td style="border:0px;width:200px;"><a href="index.php"><img border=0 src="img/invfest_dev.png" width="200"></a></td></tr>
-</table>
-</div>
-<?}?>
-<div> 
+<?php
+/******************************************************************************
+	ECHO_MENU.PHP
+
+	Prints the header banner from InvFEST
+*******************************************************************************/
+	session_start();
+	// Connection to the database
+	include('db_conexion.php');
+?>
+
+<!-- Add an image to distinguish when the developer is working on DEV-platform -->
+<?php if($db == 'INVFEST-DB-dev') { ?>
+	<div class="classDiv_Centered">
+	    <img class="classImg_centered" src="img/invfest_dev.png" width="200">
+	</div>
+<?php } ?>
+
+<!-- Define InvFEST header -->
 <div id="wrapper">
-  <?php // echo $id_head;?> 
-  <div  id="floatingbar">
-  	
-  <table style="border:0px;">
-  	<tr style="border:0px;">
-  		<td style="border:0px;width:200px;"><a href="index.php"><img border=0 src="img/InvFEST.png" width="200"></a></td>
-  		<td style="border:0px;width:1430px;"><a href="index.php"><img border=0 src="img/longname.png" width="500"></a>
-  		
-     <div style="float: left">
-    <ul>
 
-		  <li></li>
-		   <li><a href="index.php"><button class="default">About the Project</button></a></li>
-		   <li><a href="search.php"><button class="default">Search Inversions</button></a></li>
-		<!--   <li><a href="statistics.php"><button class="default">Statistics</button></a></li>	-->	   
-		   <li><a href="download.php"><button class="default">Downloads</button></a></li>
-		   <li><a href="help.php"><button class="default">Help</button></a></li>		   
-		   <li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
-		   <li><a href="contact.php"><button class="default">Contact Us</button></a></li>
-		   <li><font color="#759bb1"><b>DB-Version: 1.0</b></font></li>
+<!-- Define a static header -->
+	<div id="floatingbar">
+	<table class="classTable_menu">
+	<tr>
 
-		 </ul>
-    </div>		
+		<!-- InvFEST logo -->
+  		<td class="classTd_logo">
+  			<a href="index.php"><img img class="classImg_centered" alt="InvFEST" src="img/InvFEST.png" width="200"></a>
   		</td>
-  		<td valign="top" align="right" style="border:0px;">
-
-  <div id="login" class='right'>
-				<?
-				if ($id=='') {$origin='index';} 
-				else {$origin='report';}
-				
-				if ($_SESSION["autentificado"]=='SI'){echo'<a href="php/logout.php?origin='.$origin.'&q='.$id.'"><img src="img/logout.png" alt="Logout" width="23"></a>';}
-				else {echo'<a id="login2" href="php/login.php?origin='.$origin.'&q='.$id.'" onclick="return hs.htmlExpand(this, {objectType: \'iframe\', width: 300, preserverContent: false })" ><img src="img/login.png" alt="Login" width="23"></a>';}?>
-				
-		</div> 		
+  		
+  		<!-- InvFEST menu -->
+  		<td class="classTd_menu">
+            <a href="index.php"><img class="classImg_centered" src="img/longname.png" width="500"></a>
+			<div class="classDiv_menu">
+				<ul>
+					<li><a href="index.php"><button class="default">About the Project</button></a></li>
+					<li><a href="search.php"><button class="default">Search Inversions</button></a></li>
+					<li><a href="download.php"><button class="default">Downloads</button></a></li>
+					<li><a href="help.php"><button class="default">Help</button></a></li>
+					<li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
+					<li><a href="contact.php"><button class="default">Contact Us</button></a></li>
+				</ul>
+			</div>
+		</td>
+		
+		<!-- 'Button' to login/logout from InvFEST -->
+		<td class="classTd_menuIcon">
+			<div id="login" class="classDiv_menuIcon">
+				<?php
+					if ($id=='') {$origin='index';} 
+					else         {$origin='report';}
+		            
+					if ($_SESSION["autentificado"]=='SI') { 
+						echo'<a href="php/logout.php?origin='.$origin.'&q='.$id.
+							'"><img src="img/logout.png" title="Logout" width="23"></a>';
+					} else {
+						echo'<a id="login2" href="php/login.php?origin='.$origin.'&q='.$id.
+							'" onclick="return hs.htmlExpand(this, {objectType: \'iframe\', width: 300, height: 161, 
+							preserverContent: false })" ><img src="img/login.png" title="Login" width="23"></a>';
+					}
+				?>
+			</div> 		
   		</td>
   	</tr>
-  </table>	
-</div>
-	
+  	</table>	
+	</div>
 
+<!-- Define a floating header for the deep pages -->
+	<div id="minibar">	
+	<table class="classTable_menu">
+   	<tr>
 
-<div  id="minibar">
-	
-   <table style="border:0px;">
-   	<tr style="border:0px;">
-   		<td style="border:0px;width:130px;"><img border=0 src="img/InvFEST.png" width="130" style="float: left;"></td>
-   		<td style="border:0px;width:1500px;"><div  id="haedtitle">&nbsp;&nbsp;Human Polymorphic Inversion DataBase</div>
-   		
-   <div style="float: left">
-    <ul>
-
-
-<?if ($r['name']==''){ ?>
-
-		  <li></li>
-		   <li><a href="index.php"><button class="default">About the Project</button></a></li>
-		   <li><a href="search.php"><button class="default">Search Inversions</button></a></li>
-	<!--	   <li><a href="statistics.php"><button class="default">Statistics</button></a></li>		-->   
-		   <li><a href="download.php"><button class="default">Downloads</button></a></li>
-		   <li><a href="help.php"><button class="default">Help</button></a></li>		   
-		   <li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
-		   <li><a href="contact.php"><button class="default">Contact Us</button></a></li>
-		   <li><font color="#759bb1"><b>DB-Version: 1.0</b></font></li>
-
-
-<?
-} else { ?>
-
-<li>&nbsp;&nbsp;&nbsp;Inversion Report: <b><?php echo $r['name'];?></b></li>
-
-<? } ?>
-           <li></li>
-
-
-		   <li></li>
-          </ul>
-         </div>   		
-   		
+   		<!-- InvFEST logo -->
+   		<td class="classTd_floatMenuLogo">
+   			<a href="index.php"><img class="classImg_centered" alt="InvFEST" src="img/InvFEST.png" width="130"></a>
    		</td>
-   		<td style="border:0px;" valign="top" align="right" >
-  
- <div id="login" class='right'>
- 
- <a href="javascript:#"><button title="Scroll" id="dirbutton" class="default">
-		   <img border=0 src="img/bottomarrow.png"></img>
-		   </button></a>
- <!--  		
-  
-				<?
-				if ($id=='') {$origin='index';} 
-				else {$origin='report';}
-				
-				if ($_SESSION["autentificado"]=='SI'){echo'<a href="php/logout.php?origin='.$origin.'&q='.$id.'"><img src="img/logout.png" alt="Logout" width="23"></a>';}
-				else {echo'<a id="login2" href="php/login.php?origin='.$origin.'&q='.$id.'" onclick="return hs.htmlExpand(this, {objectType: \'iframe\', width: 300, preserverContent: false })" ><img src="img/login.png" alt="Login" width="23"></a>';}?>
-				
-				-->
-				
-		</div>
-    </div>
-   		
-   		</td>
-        </tr>
-   </table>	
-</div>
+   		<!-- InvFEST menu -->
+   		<td class="classTd_floatMenu">
+   			<div id="haedtitle">&nbsp;&nbsp;Human Polymorphic Inversion DataBase</div>
 
+			<div class="classDiv_menu"><ul>
+
+			<?php if ($r['name']=='') { ?>
+					<li><a href="index.php"><button class="default">About the Project</button></a></li>
+					<li><a href="search.php"><button class="default">Search Inversions</button></a></li>
+					<li><a href="download.php"><button class="default">Downloads</button></a></li>
+					<li><a href="help.php"><button class="default">Help</button></a></li>
+					<li><a href="submissions.php"><button class="default">Data Submissions</button></a></li>
+					<li><a href="contact.php"><button class="default">Contact Us</button></a></li>
+			<?php } else { ?>
+					<li>&nbsp;&nbsp;Inversion Report: <b><?php echo $r['name'];?></b></li>
+			<?php } ?>
+
+			</ul></div>
+
+   		</td>
+
+   		<!-- 'Button' to scrolldown/scrollup for the deep pages -->
+   		<td class="classTd_menuIcon">
+			<div id="login" class="classDiv_menuIcon">
+				<a href="javascript:#">
+					<button title="Scroll" id="dirbutton" class="default">
+						<img src="img/bottomarrow.png"></img>
+					</button>
+				</a>
+			</div>
+		</td>
+	</tr>
+	</table>
+	</div>
+
+<!-- NOTE: Wrapper's division is closed at the end of each page's content </div> -->

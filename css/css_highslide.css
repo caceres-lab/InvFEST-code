@@ -29,7 +29,6 @@
     
     border: 2px solid white;
     border-top: none;
-    font-family: Verdana, Helvetica;
     font-size: 10pt;
     padding: 5px;
     background-color: white;
@@ -38,7 +37,6 @@
     display: block;
 	color: black;
 	font-size: 8pt;
-	font-family: sans-serif;
 	font-weight: bold;
     text-decoration: none;
 	padding: 2px;
@@ -53,14 +51,13 @@
 a.highslide-credits,
 a.highslide-credits i {
     padding: 2px;
-    color: silver;
+    color: #f0f0f0;
     text-decoration: none;
 	font-size: 10px;
 }
 a.highslide-credits:hover,
 a.highslide-credits:hover i {
-    color: white;
-    background-color: gray;
+    color: #c7c7c7;
 }
 
 a.highslide-full-expand {
@@ -87,7 +84,6 @@ a.highslide-full-expand {
     display: block;
 	color: black;
 	font-size: 8pt;
-	font-family: sans-serif;
 	font-weight: bold;
     text-decoration: none;
 	padding: 2px;
@@ -102,14 +98,13 @@ a.highslide-full-expand {
 a.highslide-credits,
 a.highslide-credits i {
     padding: 2px;
-    color: silver;
+    color: #f0f0f0;
     text-decoration: none;
 	font-size: 10px;
 }
 a.highslide-credits:hover,
 a.highslide-credits:hover i {
-    color: white;
-    background-color: gray;
+    color: #c7c7c7;
 }
 
 

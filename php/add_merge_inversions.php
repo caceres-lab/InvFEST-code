@@ -1,40 +1,183 @@
-<?php include('security_layer.php'); ?>
+<?php
+/******************************************************************************
+	ADD_MERGE_INVERSIONS.PHP
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	Merges two or multiple inversion into one new inversion.
+	It is executed when merging two or more inversions by the "Merge current inversion with another" subsection from the "Advanced inversion edition" section of the current inversion report webpage.
+	It then adds the new inversion to the database, and also changes the status of the "old" merged inversions as "Obsolete".
+	After adding the new generated inversion to the database, it executes automatically run_breakseq.sh for the inversion's BreakSeq annotation.
+*******************************************************************************/
+?>
+
 
 <?php
-$inv1=$_POST["inv1"];
-$inv2=$_POST["inv2"];
-$separado_por_comas = implode(",", $inv2);
-$new_status=$_POST["status"];
+	session_start();
+	include('security_layer.php');
+?>
 
-//comprobaciones
+<!DOCTYPE html>
+<html>
 
-	include('db_conexion.php');
-	//llamamos a la funcion add_validation:
-	$query = "SELECT merge_inv('$inv1,$separado_por_comas','".$_SESSION["userID"]."') AS new_inv_id;";
-	print $query.'<br>';
-	$result = mysql_query($query) or die("Query fail: " . mysql_error());
-	if($result){print "Merge done succesfully".'<br >';}
-	$row = mysql_fetch_array($result);
-	if ($row){print $row[0].'<br >';}
-	mysql_free_result($result);
-	mysql_close($con);
+<?php 
 
-	//if ($validation_id) HAY Q FORZAR A QUE SALGA MAL PARA SABER Q DEVUELVE!!
-	print "<br><br>BreakSeq is now performing the breakpoints annotation, results will be automatically updated on the inversion report page in a few minutes.".'<br >';
-	// CON EL SIGUIENTE BOTON SE REFRESCA LA PAGINA PRINCIPAL Y POR LO TANTO TAMBIEN SE CIERRA EL IFRAME-->
-	echo "<br /><input type='submit' value='Go to the new inversion' name='gsubmit'  onclick=\"location.href='../report.php?q=".$row[0]."'\" />";
-//header("location: search.php"
-//Breakseq gff input file generation
-//----------------------------------------------------------------------------
+
+#################################
+# IMPORT VALUES FROM report.php #
+#################################
+# Inversions (array including NAME)
+	$inv_to_merge_ids_array=$_POST["id_invs_to_merge"];
+	if(sizeof($inv_to_merge_ids_array) < 2){echo "You must select at least 2 inversions to merge";die;}
+ 
+# Name
+	if (!isset($_POST['new_name_inv'])){
+		$inv_to_merge_name_array = 'NULL';
+	}else{ 
+		$inv_to_merge_name_array=$_POST['new_name_inv']; #name id
+	}
+
+#Bps (unique ids)
+	$do_manual_bps = 'FALSE';
+
+	if (!isset($_POST["id_bp1s_invs_to_merge"])){
+		$inv_bp1s_id = 'NULL';
+	}else{ 
+		$inv_bp1s_id=$_POST["id_bp1s_invs_to_merge"]; 
+		$do_manual_bps = 'TRUE'; #bp1s id 
+	}
+	if (!isset($_POST["id_bp1e_invs_to_merge"])){
+		$inv_bp1e_id = 'NULL';
+	}else{ 
+		$inv_bp1e_id=$_POST["id_bp1e_invs_to_merge"];
+		$do_manual_bps = 'TRUE';  #bp1e id 
+	}
+	if (!isset($_POST["id_bp2s_invs_to_merge"])){
+		$inv_bp2s_id = 'NULL';
+	}else{ 
+		$inv_bp2s_id=$_POST["id_bp2s_invs_to_merge"]; 
+		$do_manual_bps = 'TRUE'; #bp2s id 
+	}
+	if (!isset($_POST["id_bp2e_invs_to_merge"])){
+		$inv_bp2e_id = 'NULL';
+	}else{ 
+		$inv_bp2e_id=$_POST["id_bp2e_invs_to_merge"];
+		$do_manual_bps = 'TRUE';  #bp2e id 
+	}
+	
+
+	if (  ($inv_bp1s_id!= 'NULL' || $inv_bp1e_id != 'NULL' ||$inv_bp2s_id != 'NULL' ||$inv_bp2e_id != 'NULL'  ) 
+			&&  ($inv_bp1s_id== 'NULL' || $inv_bp1e_id  == 'NULL' ||$inv_bp2s_id == 'NULL' ||$inv_bp2e_id == 'NULL' )){
+		echo "To manually curate breakpoints you must select all 4 coordinates";die;
+	}
+
+// #Mech
+	if (!isset($_POST['new_origin_inv'])){echo "You must specify a mechanism of origin for the new inversion";die;}
+	$inv_to_merge_mech_array=$_POST["new_origin_inv"]; #mech id
+	
+// #Evo
+	$inv_evo_id=$_POST["id_evo_invs_to_merge"]; #evolutinary id
+	if(empty($inv_evo_id)){echo "You must select the 'Evolutionary field' for the new inversion";die;}
+
+// #Functional
+	$inv_fun_id=$_POST["id_fun_invs_to_merge"]; #functional id
+
+// #Comments
+	$inv_com_id_array=$_POST["id_com_invs_to_merge"]; #comments id
+
+// #Status
+	$new_status=$_POST["status"]; #new_inv_status
+
+
+echo "All parameters were successfully imported".'<br >';
+
+
+
+// ################################
+// # CLEAN VALUES FROM report.php #
+// ################################
 include('db_conexion.php');
-exec("kill $(ps aux | grep 'breakseq-1.3' | awk '{print $2}') > /dev/null 2>&1");
-$gff_file = fopen("/home/shareddata/Bioinformatics/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
+
+# Inversions to merge
+	if ($inv_to_merge_name_array != 'NULL'){
+		$inv_to_merge_ids_array = array_diff( $inv_to_merge_ids_array, [ $inv_to_merge_name_array]);
+	}
+	$inv_ids_list=implode(",", $inv_to_merge_ids_array);
+
+# Name is ok already
+# Bps
+	if ($do_manual_bps == 'TRUE'){
+		$query = "SELECT bp1_start FROM breakpoints WHERE id = (SELECT max(id)FROM breakpoints WHERE inv_id = $inv_bp1s_id);";
+		$result = mysql_query($query);
+		while($row = mysql_fetch_array($result)) {
+			$inv_bp1s_value=$row[0];
+		}
+		$query = "SELECT bp1_end FROM breakpoints WHERE id = (SELECT max(id)FROM breakpoints WHERE inv_id = $inv_bp1e_id);";
+		$result = mysql_query($query);
+		while($row = mysql_fetch_array($result)) {
+			$inv_bp1e_value=$row[0];
+		}
+		$query = "SELECT bp2_start FROM breakpoints WHERE id = (SELECT max(id)FROM breakpoints WHERE inv_id = $inv_bp2s_id);";
+		$result = mysql_query($query);
+		while($row = mysql_fetch_array($result)) {
+			$inv_bp2s_value=$row[0];
+		}
+		$query = "SELECT bp2_end FROM breakpoints WHERE id = (SELECT max(id)FROM breakpoints WHERE inv_id = $inv_bp2e_id);";
+		$result = mysql_query($query);
+		while($row = mysql_fetch_array($result)) {
+			$inv_bp2e_value=$row[0];
+		}
+	} else{
+		$inv_bp1s_value='NULL';
+		$inv_bp1e_value='NULL';
+		$inv_bp2s_value='NULL';
+		$inv_bp2e_value='NULL';
+	}
+#Mech
+	$inv_to_merge_mech_array = array_diff( $inv_to_merge_mech_array, [ $inv_to_merge_name_array]);
+	if(sizeof($inv_to_merge_mech_array) < 1){
+		$inv_to_merge_mech_array = "NULL";
+	}else{$invs_mech_list=implode(",", $inv_to_merge_mech_array); }#String with all invs ids
+#Comments
+	$inv_com_id_array = array_diff( $inv_com_id_array, [ $inv_to_merge_name_array]);
+	$invs_comm_list=implode(",", $inv_com_id_array); #String with all invs ids
+	
+#Evo
+	if ($inv_evo_id==$inv_to_merge_name_array){$inv_evo_id = 'NULL';}
+
+#Functional
+	if ($inv_fun_id==$inv_to_merge_name_array){$inv_fun_id = 'NULL';}
+
+
+
+// ##############
+// # MERGE CALL #
+// ##############
+
+$query = "CALL merge_inversions('$inv_ids_list',".$inv_to_merge_name_array.",'$invs_mech_list', ". $inv_bp1s_value.",".$inv_bp1e_value.",".$inv_bp2s_value.",".$inv_bp2e_value.",".$inv_evo_id.",".$inv_fun_id.",'$invs_comm_list', '$new_status', '".$_SESSION["userID"]."', @newinv);";
+print "Your query: $query".'<br>';
+$result = mysql_query($query) or die("Query fails when performing merge procedure: " . mysql_error());
+while($row = mysql_fetch_array($result)) {
+	$new_inv_id=$row[0];
+}
+echo "Merge done succesfully in ". $new_inv_id.'<br >';
+// mysql_free_result($result);
+mysql_close($con);
+
+##############################################
+# Print redirection to new inversion message #
+##############################################
+echo "<br /><input type='submit' value='Go to the new inversion' name='gsubmit'  onclick=\"location.href='../report.php?q=".$new_inv_id."'\" />";	
+
+
+#######################
+# BREAKSEQ annotation #
+#######################
+// Breakseq gff input file generation
+// ----------------------------------------------------------------------------
+include('db_conexion.php');
+exec("kill $(ps aux | grep 'breakseq-1.3' | awk '{print $2}') > /dev/null 2>&1"); #If there is already a breakseq process running, kill it
+$gff_file = fopen("/home/invfest/BPSeq/breakseq_annotated_gff/input.gff", "w") or die("Unable to create gff file!");
 //Select inversions
-$sql_bp="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.chr NOT IN ('chrM') AND b.GC is null;";
+$sql_bp="SELECT i.name, b.id, b.chr, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, i.status, b.GC FROM inversions i, breakpoints b  WHERE i.id=b.inv_id AND b.chr NOT IN ('chrM') AND b.GC is null;"; #We will annotate ALL inversions that are not annotated
 #print "$sql_bp".'<br/>';
 
 $result_bp=mysql_query($sql_bp);
@@ -57,11 +200,8 @@ while($bprow = mysql_fetch_array($result_bp))
 
 fclose($gff_file);
 
-//BreakSeq execution
-//---------------------------------------------------------------------------
+// BreakSeq execution
+// ---------------------------------------------------------------------------
 exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
-//---------------------------------------------------------------------------
-$query3 = "UPDATE inversions SET status = '$new_status' WHERE id=$row[0];";
-	$result3 = mysql_query($query3) or die("Query fail: " . mysql_error());
-	$row3 = mysql_fetch_array($result3);
+// ---------------------------------------------------------------------------
 ?>

@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use lib '/home/invfest/perl5/lib/perl5';
 use strict;
 use Bio::Graphics;
 use Bio::SeqFeature::Generic;

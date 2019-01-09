@@ -1,45 +1,44 @@
 <?php
+/******************************************************************************
+	DB_CONEXION.PHP
 
-if ($_SESSION["autentificado"]=='SI') {
+	Decides how to connect to the database
+*******************************************************************************/
 
-	if ($_SESSION['MySQLuser']=="invfest") {
-	
-		// Admin user
-		$user = "invfest";
-		$password = "pwdInvFEST";
-		$db = "INVFEST-DB";
-	
-	} elseif ($_SESSION['MySQLuser']=="invfestdb-lab") {
-	
-		// Lab user
-		$user = "invfestdb-lab";
-		$password = "InvFESTLab";
-		$db = "INVFEST-DB";
-	
+	# Login
+	if ($_SESSION["autentificado"]=='SI') {
+		
+		# Admin user
+		if ($_SESSION['MySQLuser']=="invfest") {
+			$user = "invfest";
+			$password = "pwdInvFEST";
+			$db = "INVFEST-DB";
+
+		# Lab user
+		} elseif ($_SESSION['MySQLuser']=="invfestdb-lab") {
+			$user = "invfestdb-lab";
+			$password = "InvFESTLab";
+			$db = "INVFEST-DB";
+			
+		# I don't know who you are...
+		} else {
+			$user = "invfest";
+			$password = "pwdInvFEST";
+			$db = "INVFEST-DB-PUBLIC";
+		}
+
+	# No login
 	} else {
-	
-		// I don't know who you are...
 		$user = "invfest";
 		$password = "pwdInvFEST";
 		$db = "INVFEST-DB-PUBLIC";
-	
 	}
-
-} else {
-
-		// No login
-		$user = "invfest";
-		$password = "pwdInvFEST";
-		$db = "INVFEST-DB-PUBLIC";
-
-}
-
-
-$con = mysql_connect('localhost', $user, $password);
-//$con = mysql_connect('localhost', 'root', 'pwdroot');
-if (!$con) { die('Could not connect: ' . mysql_error()); }
-mysql_select_db($db, $con);
-$auth_temp=$_SESSION["autentificado"];
-#echo "<h3>$db $user -$auth_temp- </h3>"
+	
+	$con = mysql_connect('localhost', $user, $password);
+	//$con = mysql_connect('localhost', 'root', 'pwdroot');
+	if (!$con) {
+		die('Could not connect: ' . mysql_error());
+	}
+	mysql_select_db($db, $con);
 
 ?>

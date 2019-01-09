@@ -1,0 +1,73 @@
+
+
+    ########################################
+    #					   #
+    #	VALIDATION GENOTYPES INPUT HELP    #
+    #					   #
+    ########################################
+
+ In the case of a correct validation data input, the corresponding genotypes will join to the validation information. 
+
+ REQUIRED FORMAT
+-------------------------------------	
+ Tab-separated (\t) columns 
+
+ Header:
+
+	code	gender	population	region	family	relationship	genotype	allele_comment	allele_level	panel	other_code	
+	code\tgender\tpopulation\tregion\tfamily\trelationship\tgenotype\tallele_comment\tallele_level\tpanel\tother_code	
+
+ Line structure:
+
+	ID 	code	gender	population	region	family	relationship	genotype	allele_comment	allele_level	panel	other_code	
+	ID\tcode\tgender\tpopulation\tregion\tfamily\trelationship\tgenotype\tallele_comment\tallele_level\tpanel\tother_code	
+
+ Real Example line (without allele_comment, allele_level, panel, other_code): 
+
+	1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV
+	1\tNA12156\tFemale\tCEU\tEurope\t1408-13\tMaternal Grandmother\tINV/INV
+
+ EXTENDED EXAMPLE 1: two validations have some shared genotypes and one has frequencies without genotypes
+-----------------------------------------------------------------------------------------------------------	
+
+	> INDIVIDUALS FILE
+
+code	gender	population	region	family	relationship	genotype	allele_comment	allele_level											
+1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+1	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																							
+1	NA18555	Female	CHB	Asia	none	unrelated	INV/INV													
+1	NA18956	Female	JPT	Asia	none	unrelated	STD/INV													
+1	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+1	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+1	HuRef 	Male	Unknown	Europe	none	unrelated	INV/INV		
+2	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+2	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																								
+2	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+2	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+2	HutestRef 	Male	Unknown	Europe	none	unrelated	INV/INV	
+
+	> VALIDATIONS FILE
+
+1:HsInv0003:Aguado et al. 2014:PCR:TRUE:not:THIS IS A TEST:::::
+2:HsInv0006:Aguado et al. 2014:PCR:TRUE:yes::::::
+3:HsInv0030:Aguado et al. 2014:PCR:TRUE:not:THIS IS A TEST:ACB (African (AFR)):50:23:0.25:0.75
+
+ EXTENDED EXAMPLE 2: two validations have the same genotypes
+-------------------------------------------------------------
+
+	> INDIVIDUALS FILE
+
+code	gender	population	region	family	relationship	genotype	allele_comment	allele_level											
+1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+1	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																							
+1	NA18555	Female	CHB	Asia	none	unrelated	INV/INV													
+1	NA18956	Female	JPT	Asia	none	unrelated	STD/INV													
+1	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+1	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+1	HuRef 	Male	Unknown	Europe	none	unrelated	INV/INV		
+
+	> VALIDATIONS FILE
+
+1:HsInv0003:Aguado et al. 2014:PCR:TRUE:not:THIS IS A TEST:::::
+1:HsInv0006:Aguado et al. 2014:PCR:TRUE:yes::::::
+

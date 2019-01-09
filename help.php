@@ -1,1162 +1,1391 @@
-<? 
-session_start(); //Inicio la sesión
-?>
-<?php include_once('php/select_index.php');?>
-<?php include_once('php/structure_page.php');?>
+<?php
+/******************************************************************************
+    HELP.PHP
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    InvFEST user's guide ("Help" menu from the website)
+*******************************************************************************/
+?>
+
+
+<?php
+  // Session start for the PHP
+  session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+
+<?php
+  
+  // Select specific data into variables which are retrieved in other php pages
+  include_once('php/select_index.php');
+
+  // Includes HTML <head> and other settings for the page
+  include_once('php/structure_page.php');
+
+?>
 
 <?php 
-
-echo $creator;
-echo $head;
-
+  echo $creator;
+  
+  $head .= "</head>";  // Head end
+  echo $head;          // 'Print' head code
 ?>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
-
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".hidden").hide();                                  //hide all contents 
-			$(".section-title").click(function(){                 //toggle when click title
-				$(this).next(".hidden, .grlsection-content").slideToggle(600);
-				var title = $(this).html();
-
-				var regExp = /\+/;
-				if (title.match(regExp)) {
-					title = title.replace('+','-');
-					$(this).html(title);
-				} 
-				else {
-					title = title.replace('-','+');
-					$(this).html(title);
-				}
-			});			
-		});
-	</script>		
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<link rel="stylesheet" type="text/css" href="css/report.css" />
 
 
-<!-- ................................................................................................................................. -->
+<!-- **************************************************************************** -->
+<!-- BODY -->
+<!-- **************************************************************************** -->
 <body>
 
-<?php include('php/echo_menu.php');?>
-<br/>
-  
-  <div id="help-contents" class="report-section">
 
-		<div class="TitleStatic">InvFEST User's Guide 
-			</div>
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    <strong>Table of Contents:</strong>
-</p>
-<p lang="es-ES" align="JUSTIFY">
-<ul>
-    <li>
-        
-            <a href="#faq1">Where do InvFEST inversions and related information come from?</a>
+    <!-- **************************************************************************** -->
+    <!-- PAGE MENU: Print the header banner of InvFEST -->
+    <!-- **************************************************************************** --> 
+    <?php include('php/echo_menu.php'); ?>
 
-    </li>
-    <li>
 
-            <a href="#faq2">How are inversions defined in InvFEST?</a>
+    <!-- **************************************************************************** -->
+    <!-- DIVISIONS -->
+    <!-- **************************************************************************** -->
+    <br/>
+    <div id="help-contents" class="report-section">
 
-    </li>
-    <li>
-
-            <a href="#faq3">What filters have been applied to the inversions catalogued in InvFEST?</a>
-
-    </li>
-    <li>
-
-            <a href="#faq4">What do different inversion status mean?</a>
-
-    </li>
-    <li>
-
-            <a href="#faq5">What information is included in an inversion report?</a>
-
+        <div class="TitleStatic">&nbsp;&nbsp;InvFEST User's Guide</div>
+        <div class="grlsection-content ContentA">
+        <p lang="es-ES" align="justify">
+            <strong>Table of Contents:</strong>
+        </p>
+        <p lang="es-ES" align="justify">
         <ul>
             <li>
-
-                    General information
-
+                <a href="#faq1">Where do InvFEST inversions and related information come from?</a>
             </li>
             <li>
-
-                    Region map
-
+                <a href="#faq2">How are inversions defined in InvFEST?</a>
             </li>
             <li>
-
-                    Predictions
-
+                <a href="#faq3">What filters have been applied to the inversions catalogued in InvFEST?</a>
             </li>
             <li>
-
-                    Validation and genotyping
-
+                <a href="#faq4">What do different inversion status mean?</a>
             </li>
             <li>
-
-                    Frequency
-
+                <a href="#faq5">What information is included in an inversion report?</a>
+                <ul>
+                    <li>General information</li>
+                    <li>Region map</li>
+                    <li>Predictions</li>
+                    <li>Validation and genotyping</li>
+                    <li>Frequency</li>
+                    <li>Breakpoints</li>
+                    <li>Evolutionary history</li>
+                    <li>Functional effects</li>
+                    <li>Report history</li>
+                </ul>
             </li>
             <li>
-
-                    Breakpoints
-
+                <a href="#faq8">What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation)</em> mean?</a>
             </li>
-            <li>
-
-                    Evolutionary history
-
-            </li>
-            <li>
-
-                    Functional effects
-
-            </li>
-            <li>
-
-                    Report history
-
-            </li>
+            <li><a href="#faq6">Why do we not translate inversion coordinates into hg19?</a></li>
+            <li><a href="#faq7">What is the data model of InvFEST?</a></li>
         </ul>
-    </li>
-    <li>
+        </p>
+        </div>
+    </div>
 
-            <a href="#faq8">What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation)</em> mean?</a>
+    <div id="faq1" class="report-section">
+        <div class="section-title TitleA">+ Where do InvFEST inversions and related information come from?</div>
+        <div class="hidden">
+            <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                The InvFEST database stores and merges inversion predictions from healthy individuals into a non-redundant dataset. Most predictions come from mapping information of paired-end sequences (PEM) obtained by different studies of the literature, which in some cases have been reanalyzed by GRIAL, a program specifically designed to detect inversions from PEM data. Moreover, it stores information of validations and genotyping assays, frequency in different populations, association with genes and segmental duplications, and the evolutionary history of the inversions reported in peer reviewed research studies or generated in our lab.
+            </p>
+            </div>
+        </div>
+    </div>
 
-    </li>
-    <li>
+    <div id="faq2" class="report-section">
+            <div class="section-title TitleA">+ How are inversions defined in InvFEST?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                InvFEST inversions are a non-redundant dataset of inversions generated by overlapping the position of the breakpoints of each individual prediction as reported in the original publication and taking into account the resolution of the study methodology.
+            </p>
+            <p lang="es-ES" align="justify">
+                The breakpoints reported in InvFEST for each inversion may have been automatically or manually defined. Then, the parameter “Definition method” may be one of the following:
+            </p>
+            <p lang="es-ES" align="justify">
+                <ul>
+                    <li>
+                        <strong><font color='red'></strong>
+                        <strong>Default informatic definition</strong>
+                        <strong></font></strong>
+                        . The breakpoints reported are automatically computed by the InvFEST engine (OLAP), either when the inversion is initially generated or because the
+                        inversion is automatically modified by adding a new inversion prediction that merges into it. This informatic definition defines each breakpoint
+                        location as the maximum overlap between the breakpoints of all individual predictions, always taking into account the resolution of each study
+                        methodology.
+                    </li>
+                    <li>
+                        <strong><font color='green'>Manual curation</font></strong>
+                        . Breakpoints location for inversions might be manually curated after their inicial default informatic definition. These manually curated
+                        breakpoints are the most accurate breakpoint locations for an inversion and are defined through a validation assay.
+                    </li>
+                </ul>
+            </p>
+            <p lang="es-ES" align="justify">
+                It is important to keep in mind that <strong>inversions in the InvFEST database are defined relative to the NCBI Build 36.1 (hg18) human genome reference assembly</strong> (produced by the International Human Genome Sequencing Consortium on March 2006), and for simplicity <strong>the standard orientation is always the same as the reference and the inverted is the opposite one, independently of which one might be ancestral</strong>. Please read more information about reference assemblies and coordinate conversion in the section <strong><a href="#faq6">Why do we not translate inversion coordinates into hg19?</a></strong>.
+            </p>
+        </div>
+        </div>
+    </div>
 
-            <a href="#faq6">Why do we not translate inversion coordinates into hg19?</a>
+    <div id="faq3" class="report-section">
+        <div class="section-title TitleA">+ What filters have been applied to the inversions catalogued in InvFEST?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                In the InvFEST database we aim to catalogue a comprehensive, high-quality dataset of human inversions. For this reason, we apply some filters to predicted
+                inversions and categorize them accordingly. There are mainly two filtering steps that turn the inversion 'status' to 'Unreliable prediction':
+            </p>
+            <p lang="es-ES" align="justify">
+                <ul>
+                    <li>
+                        All individual predictions have more than 90% of their breakpoints overlapping simple repeats, low complexity repeats, or satellite repeats
+                    </li>
+                    <li>
+                        Inversions defined only by low-quality GRIAL predictions as reported in <em>Martinez-Fundichely et al. (2013, in preparation</em>) and described in section <a href="#faq8">“What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation</em> mean?”</a>
+                    </li>
+                </ul>
+            </p>
+            <p lang="es-ES" align="justify">
+                This systematic checking is used to label the status of all InvFEST inversions, as described in section <a href="#faq4">“What do different inversion status mean?”</a>.
+            </p>
+        </div>
+        </div>
+    </div>
 
-    </li>
-    <li>
+    <div id="faq4" class="report-section">
+        <div class="section-title TitleA">+ What do different inversion status mean?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                The status of InvFEST inversions indicate their fiability, according to different bioinformatic and/or experimental results:
+            </p>
+            <p lang="es-ES" align="justify">
+            <ul>
+                <li>
+                    <strong><font color='green'>Validated</font></strong>
+                    : At least one breakpoint of the inversion has been validated experimentally according to the published information.
+                </li>
+                <li>
+                    <strong><font color='black'>Predicted</font></strong>
+                    : These inversions have not been experimentally checked and have simply been predicted by one or more high-throughput methods.
+                </li>
+                <li>
+                    <strong><font color='grey'>Unreliable prediction</font></strong>
+                    : The inversions have not been experimentally checked, and all their predictions either do not pass the internal bioinformatic quality criteria of their own study [such as the set of scores in the GRIAL algorithm (Martínez-Fundichely et al., in preparation)], or have their breakpoints overlapping more than 90% of their length with simple repeats, low complexity repeats, or satellite repeats identified by RepeatMasker (since the presence of this kind of repeats tends to generate unreliable PEM predictions from short reads generated by next generation sequencing).
+                </li>
+                <li>
+                    <strong><font color='blue'>Ambiguous</font></strong>
+                    : This is a temporary status automatically assigned by InvFEST if the results of two or more validation assays are contradictory.
+                </li>
+                <li>
+                    <strong><font color='red'>False</font></strong>
+                    : The inversion has been invalidated experimentally or the predictions that supported the inversions are incorrect.
+                </li>
+                <li>
+                    <strong><font color='grey'>Obsolete</font></strong>
+                    : Former versions of inversions that have been manually joined or split into new inversions, and that do not appear in the inversion list anymore (although they can be searched specifically by InvFEST identifier).
+                </li>
+            </ul>
+            </p>
+        </div>
+        </div>
+    </div>
 
-            <a href="#faq7">What is the data model of InvFEST?</a>
+    <div id="faq5" class="report-section">
+        <div class="section-title TitleA">+ What information is included in an inversion report?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                Each inversion report contains the following sections:
+            </p>
+            <p lang="es-ES" align="justify">
+            <ul>
+                <li>
+                    <strong>General information: </strong>
+                    this first section is a summary of the whole report, including e.g. the accession code, the region of the inversion, the estimated inversion size (i.e. length of the inverted segment from the middle position of the two breakpoint intervals), the global inverted allele frequency, or the mechanism of origin.
+                </li>
+                <li>
+                    <strong>Region map: </strong>
+                    overview of the inversion genome region, including genes, segmental duplications, InvFEST inversion, and corresponding predictions. The image is a link to the same region at the UCSC Genome Browser.
+                </li>
+                <li>
+                    <strong>Predictions: </strong>
+                    all the individual predictions are reported in this section, including e.g. a brief description of the study, the breakpoints location, or the individuals of the study on which the inversion was predicted. The title of each subsection is a link to Pubmed for published studies.
+                </li>
+                <li>
+                    <strong>Validation and genotyping: </strong>
+                    results of experimental validations, including e.g. the validation method, the genotyping results, and the resulting status. The title of each subsection is a link to Pubmed for published studies.
+                </li>
+                <li>
+                    <strong>Frequency: </strong>
+                    population data for each continent and population analyzed, including e.g. inversion frequency and fit to the Hardy-Weinberg equilibrium. There is also an utility to generate frequency graphs for continents or specific populations.
+                </li>
+                <li>
+                    <strong>Breakpoints: </strong>
+                    information regarding the breakpoints, including e.g. the genome position, definition method (automatic or manually curated), mechanism of origin, and sequence features (e.g. segmental duplications).
+                </li>
+                <li>
+                    <strong>Evolutionary history: </strong>
+                    information regarding the orientation of the inversion in other species and estimated ancestral orientation, and the estimated age and origin of the inversion.
+                </li>
+                <li>
+                    <strong>Functional effects: </strong>
+                    genes within or close to the inversion that might be affected. Reported information includes e.g. the mechanism for which the inversion disrupts the gene and the functional consequences. The title of each subsection is a link to NCBI Genes.
+                </li>
+                <li>
+                    <strong>Report history: </strong>
+                    this section reports any manual curation performed on the inversion breakpoints since its initial automatic definition. When an inversion replaces former obsolete inversions, this is also reported here.
+                </li>
+            </ul>
+            </p>
+        </div>
+        </div>
+    </div>
 
-    </li>
-</ul>
-</p>
-		</div>
-  </div>
-  
-  <div id="faq1" class="report-section">
-		<div class="section-title TitleA">+ Where do InvFEST inversions and related information come from? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    The InvFEST database stores and merges inversion predictions from healthy individuals into a non-redundant dataset. Most predictions come from mapping
-    information of paired-end sequences (PEM) obtained by different studies of the literature, which in some cases have been reanalyzed by GRIAL, a program
-    specifically designed to detect inversions from PEM data. Moreover, it stores information of validations and genotyping assays, frequency in different
-    populations, association with genes and segmental duplications, and the evolutionary history of the inversions reported in peer reviewed research studies
-    or generated in our lab.
-</p>
-		</div>
-		</div>
-  </div>
+    <div id="faq8" class="report-section">
+        <div class="section-title TitleA">+ What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation)</em> mean?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                The definition of inversions using paired-end mapping (PEM) based on a pre-decided support (minimum number of paired-ends (PEs) supporting the inversion) introduces many false positives to the final set of predicted inversions mainly due to mapping errors, errors of the PEM technique, or other biological phenomena that may result in inversion-like PEM patterns. <em>Martinez-Fundichely et al. (2013, in preparation)</em> tries to overcome this problem by applying different scores to the set of predicted inversions. We include the results of two of these in InvFEST:
+                <ul>
+                    <li>
+                        <b>D/C Test</b>
+                        : statistical test applied to the ratio of the numbers of Discordant (D) to Concordant (C) PEs. Given that the number of concordant PEs denying the inversion is not expected to exceed the number of discordant PEs supporting it (even if the inversion is homozygote or heterozygote), a score is applied trying to quantify this. When this score is equal or lower than -1.96, the inversion does not pass the test and it is categorized with the status <font color='grey'>Unreliable prediction</font>. Scores not exceeding the minimum threshold are highlighted in red.
+                    </li>
+                    <li>
+                        <b>Disc. Mapping Prob.</b>
+                        : this test tries to quantify what is the probability that an inversion of a given size is supported by less or equal the observed number of discordant PEs. The test corrects the results based on the number, distribution, and percentage of identity of repeated sequences in the breakpoints (a kind of mappability correction). If the probability is lower than a threshold (&lt;0.001), the inversion is categorized with the status <font color='grey'>Unreliable prediction</font>. Scores not exceeding the minimum threshold are highlighted in red.
+                    </li>
+                </ul>
+                Inversions in InvFEST that have been detected by GRIAL <em>(Martinez-Fundichely et al. 2013, in preparation)</em> show the results of these two scores in the 'Predictions' section.
+            </p>
+        </div>
+        </div>
+    </div>
 
-  <div id="faq2" class="report-section">
-		<div class="section-title TitleA">+ How are inversions defined in InvFEST? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    InvFEST inversions are a non-redundant dataset of inversions generated by overlapping the position of the breakpoints of each individual prediction as
-    reported in the original publication and taking into account the resolution of the study methodology.
-</p>
-<p lang="es-ES" align="JUSTIFY">
-    The breakpoints reported in InvFEST for each inversion may have been automatically or manually defined. Then, the parameter “Definition method” may be one
-    of the following:
-</p>
-<p lang="es-ES" align="JUSTIFY">
-<ul>
-    <li>
-            <strong><font color='red'></strong>
-            <strong>Default informatic definition</strong>
-            <strong></font></strong>
-            . The breakpoints reported are automatically computed by the InvFEST engine (OLAP), either when the inversion is initially generated or because the
-            inversion is automatically modified by adding a new inversion prediction that merges into it. This informatic definition defines each breakpoint
-            location as the maximum overlap between the breakpoints of all individual predictions, always taking into account the resolution of each study
-            methodology.
+    <div id="faq6" class="report-section">
+        <div class="section-title TitleA">+ Why do we not translate inversion coordinates into hg19?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                Most studies reporting human inversions until now have been done on hg18. Lifting over coordinates to newer assemblies in the case of SVs is a difficult task, since changes from one assembly to another usually affect complex regions where inversions and other structural variants are predicted. Re-mapping and predicting inversions again should be done instead. Therefore, for a few inversions predicted in the NCBI35 (hg17) genome version, we have transferred the coordinates based on re-mapping of the breakpoint sequences. In addition, during manual curation, we compare the inversion region in newer assemblies produced by the Genome Reference Consortium (GRCh37, hg19) and patches and report the results in the InvFEST database (Figure 1A). Some inversions have been proven to be false because they were just predicted due to assembly errors in the hg18 sequence, and these cases are clearly indicated in the database. Plans are in place to migrate to the newest hg20 assembly when it becomes available, in which many of these errors should be corrected. In the mean time, <strong>a lift over tool has been implemented to facilitate the search of inversions using hg19 coordinates</strong>.
+            </p>
+        </div>
+        </div>
+    </div>
 
-    </li>
-    <li>
+    <div id="faq7" class="report-section">
+        <div class="section-title TitleA">+ What is the data model of InvFEST?</div>
+        <div class="hidden">
+        <div class="grlsection-content ContentA">
+            <p lang="es-ES" align="justify">
+                InvFEST is a data-warehouse implementation, commonly used to start schema data models. The center of the star is the “inversion” table, which is de-normalized for speed purposes. The points of the star are the dimension tables that contain related information (e.g. predictions, validations, evolutionary information, etc.). Below follows a detailed Entity-Relationship (ER) schema of InvFEST and a list enumerating all the tables of the database with a description and all relevant areas of the InvFEST processing engine they are involved in. <br/> &nbsp;
+            </p>
+            <p lang="es-ES" align="justify">
+               <img src="img/InvFESTdb-model.png" alt="InvFESTdb-model.png" width="1060">
+            </p>
 
-            <strong><font color='green'>Manual curation</font></strong>
-            . Breakpoints location for inversions might be manually curated after their inicial default informatic definition. These manually curated
-            breakpoints are the most accurate breakpoint locations for an inversion and are defined through a validation assay.
+            <table class=MsoTableLightShading border=1 cellspacing=0 cellpadding=0 
+                width=100% style='width:100%;border-collapse:collapse;border:none;
+                mso-border-top-alt:solid black 1.0pt;mso-border-top-themecolor:text1;
+                mso-border-bottom-alt:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+                mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+                <tr style='mso-yfti-irow:-1;mso-yfti-firstrow:yes'>
+                    <td width=15% valign=top style='width=15% ;border-top:solid black 1.0pt;mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:5'>
+                            <b><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Table Name<o:p></o:p>
+                            </span></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border-top:solid black 1.0pt;mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:1'>
+                            <b><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Description<o:p></o:p>
+                            </span></b>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border-top:solid black 1.0pt;mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:1'>
+                            <b><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Relevant Areas of the
+                                <span class=SpellE>
+                                    InvFEST
+                                </span>
+                                Processing Engine<o:p></o:p><br/>&nbsp;
+                            </span></b>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-</ul>
-</p>
-<p lang="es-ES" align="JUSTIFY">
-It is important to keep in mind that <strong>inversions in the InvFEST database are defined relative to the NCBI Build 36.1 (hg18) human genome reference assembly</strong> (produced by the International Human Genome Sequencing Consortium on March 2006), and for simplicity <strong>the standard orientation is always the same as the reference and the inverted is the opposite one, independently of which one might be ancestral</strong>. Please read more information about reference assemblies and coordinate conversion in the section <strong><a href="#faq6">Why do we not translate inversion coordinates into hg19?</a></strong>.
-</p>
-		</div>
-		</div>
-  </div>
+                <tr style='mso-yfti-irow:0'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                breakpoints<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Second central table of the database. Contains a summary of all basic information about all inversion breakpoints in the database (chromosome location, definition date, source, description, association with segmental duplications, association with genes, general comments, validation ID). Includes all defined breakpoints for all inversions during all the history of the database; those displayed as final breakpoints of the inversion in the inversion report are the latest manually defined breakpoints in the table if available, or the latest defined breakpoints in the table otherwise<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p>
+                                <br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-  <div id="faq3" class="report-section">
-		<div class="section-title TitleA">+ What filters have been applied to the inversions catalogued in InvFEST? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    In the InvFEST database we aim to catalogue a comprehensive, high-quality dataset of human inversions. For this reason, we apply some filters to predicted
-    inversions and categorize them accordingly. There are mainly two filtering steps that turn the inversion 'status' to 'Unreliable prediction':
-</p>
-<p lang="es-ES" align="JUSTIFY">
-<ul>
-    <li>
+                <tr style='mso-yfti-irow:1'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE>
+                                <b><i style='mso-bidi-font-style:normal'>
+                                    <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                        fosmids
+                                    </span>
+                                </i></b>
+                            </span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Stores codes and accession numbers of 
+                                <span class=SpellE>
+                                    fosmids
+                                </span>
+                                used by predictions and/or validations<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            All individual predictions have more than 90% of their breakpoints overlapping
-            simple repeats, low complexity repeats, or satellite repeats 
+                <tr style='mso-yfti-irow:2'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    fosmids_predictions
+                                </span></i></b>
+                            </span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Linking table between tables
+                                <i style='mso-bidi-font-style:normal'>
+                                    predictions
+                                </i>
+                                and 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    fosmids
+                                </i></span>
+                                <i style='mso-bidi-font-style:normal'> </i>
+                                (which 
+                                <span class=SpellE>
+                                    fosmids
+                                </span>
+                                are supporting each prediction, if applicable)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:3'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    fosmids_validation
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    Linking table between tables 
+                                <i style='mso-bidi-font-style:normal'>
+                                    validation
+                                </i>
+                                and 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    fosmids
+                                </i></span>
+                                <i style='mso-bidi-font-style:normal'> </i>
+                                (which 
+                                <span class=SpellE>
+                                    fosmids
+                                </span>
+                                are supporting each validation, if applicable)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            Inversions defined only by low-quality GRIAL predictions as reported in <em>Martinez-Fundichely et al. (2013, in preparation</em>) and described in section <a href="#faq8">“What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation</em> mean?”</a>
+                <tr style='mso-yfti-irow:4'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    genomic_effect
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Association with genes (
+                                <span class=SpellE>
+                                    RefSeq
+                                </span>
+                                genes annotated on hg18) for each defined breakpoints of the database (
+                                <span class=SpellE>
+                                    bioinformatic
+                                </span>
+                                prediction of how the breakpoints affect the gene, observed functional effects on the gene, source). Automatic associations included in the table are conservative: only shown if the gene sequence is disrupted by the inversion (not if the complete gene is inverted or is close to the inversion), and only shown if no transcripts of a gene are left unaffected; when affected, if different transcripts are affected differently, only less drastic effect is described<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                ,
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'>
+                                <span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                    Merging Engine
+                                </span>
+                            </b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-</ul>
-</p>
-<p lang="es-ES" align="JUSTIFY">
-    This systematic checking is used to label the status of all InvFEST inversions, as described in section <a href="#faq4">“What do different inversion status mean?”</a>.
-</p>
-		</div>
-		</div>
-  </div>
+                <tr style='mso-yfti-irow:5'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    HsRefSeqGenes
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span class=SpellE>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    RefSeq
+                                </span>
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                genes on hg18 as downloaded from the UCSC<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-  <div id="faq4" class="report-section">
-		<div class="section-title TitleA">+ What do different inversion status mean? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    The status of InvFEST inversions indicate their fiability, according to different bioinformatic and/or experimental results:
-</p>
-<p lang="es-ES" align="JUSTIFY">
-<ul>
-    <li>
+                <tr style='mso-yfti-irow:6'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    HsRefSeqGenes_exons
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span class=SpellE>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    Exons
+                                </span>
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                extracted from the 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    HsRefSeqGenes
+                                </i></span>
+                                <i style='mso-bidi-font-style:normal'> </i>
+                                table<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='green'>Validated</font></strong>
-            : At least one breakpoint of the inversion has been validated experimentally according to the published information.
+                <tr style='mso-yfti-irow:7'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    HsRefSeqGenes_introns
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span class=SpellE>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    Introns
+                                </span>
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                extracted from the 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    HsRefSeqGenes
+                                </i></span>
+                                <i style='mso-bidi-font-style:normal'> </i>
+                                table<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:8'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    individual_research
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Individual codes analyzed in specific studies<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='black'>Predicted</font></strong>
-            : These inversions have not been experimentally checked and have simply been predicted by one or more high-throughput methods.
+                <tr style='mso-yfti-irow:9'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    individuals<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Individual codes with associated information (nickname, gender, population, family, relationship in the family, panel)
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:10'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    individuals_detection
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Links IDs of individuals to specific predictions and/or validations <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='grey'>Unreliable prediction</font></strong>
-            : The inversions have not been experimentally checked, and all their predictions either do not pass the internal bioinformatic quality criteria of their own study [such as the set of scores in the GRIAL algorithm (Martínez-Fundichely et al., in preparation)], or have their breakpoints overlapping more than 90% of their length with simple repeats, low complexity repeats, or satellite repeats identified by RepeatMasker (since the presence of this kind of repeats tends to generate unreliable PEM predictions from short reads generated by next generation sequencing).
+                <tr style='mso-yfti-irow:11'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    inv_age
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Estimated age for inversions (source, method, estimated age)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:12'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    inv_origin
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Evolutionary origin of inversions (source, method, unique/recurrent)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='blue'>Ambiguous</font></strong>
-            : This is a temporary status automatically assigned by InvFEST if the results of two or more validation assays are contradictory.
+                <tr style='mso-yfti-irow:13'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    inversion_history
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                History report of inversions manually merged or split in the database (previous inversion ID, new inversion ID, cause)
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:14'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    inversions<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Central table of the database. Contains a summary of all basic information about all inversions in the database (name, chromosome location, size, frequency, number of predictions, number of validations, origin, status)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:#E5B8B7;mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='red'>False</font></strong>
-            : The inversion has been invalidated experimentally or the predictions that supported the inversions are incorrect.
+                <tr style='mso-yfti-irow:15'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    inversions_in_species
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Orientation of the inversion in species other than humans (species ID, source, method, orientation: standard=equal to hg18 reference assembly / inverted=opposite to hg18 reference assembly)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:16'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    phenotipic_effect
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Observed phenotypic effects of inversions in the database (source, mechanism, observed effects)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong><font color='grey'>Obsolete</font></strong>
-            : Former versions of inversions that have been manually joined or split into new inversions, and that do not appear in the inversion list anymore (although they can be searched specifically by InvFEST identifier).
+                <tr style='mso-yfti-irow:17'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    population<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Population name and region name<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-</ul>
-</p>
-		</div>
-		</div>
-  </div>
+                <tr style='mso-yfti-irow:18'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    population_distribution
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Stores population distribution information (number of analyzed individuals, number of inverted alleles, population frequency), for specific populations obtained by specific validations <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-  <div id="faq5" class="report-section">
-		<div class="section-title TitleA">+ What information is included in an inversion report? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-Each inversion report contains the following sections:
-</p>
-<p lang="es-ES" align="JUSTIFY">
-<ul>
-    <li>
+                <tr style='mso-yfti-irow:19'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    predictions<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Stores all predictions from individual studies (including coordinates, status, 
+                                <span class=SpellE>
+                                    bioinformatic
+                                </span>
+                                scores), and links to tables 
+                                <i style='mso-bidi-font-style:normal'>
+                                    inversions
+                                </i>
+                                (there is redundancy in the 
+                                <i style='mso-bidi-font-style:normal'>
+                                    predictions
+                                </i>
+                                table because the relationship is 
+                                <i style='mso-bidi-font-style:normal'>
+                                    m:n
+                                </i>
+                                ) and 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    researchs
+                                </i></span>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'>
+                                <span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                    Merging Engine
+                                </span>
+                            </b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong>General information: </strong>
-            this first section is a summary of the whole report, including e.g. the accession code, the region of the inversion, the estimated inversion size (i.e. length of the inverted segment from the middle position of the two breakpoint intervals), the global inverted allele frequency, or the mechanism of origin.
+                <tr style='mso-yfti-irow:20'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    researchs
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Information about research articles from which 
+                                <span class=SpellE>
+                                    InvFESTdb
+                                </span>
+                                information is extracted (name, description, citation, number of individuals analyzed, prediction method, prediction error, validation method)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:21'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    SD_in_BP
+                                </span>
+                            </i></b></span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Association with segmental duplications (as downloaded from the UCSC) for each defined breakpoints of the database. Also describes if the same segmental duplication affects one or both breakpoints, and in the latter case, if the segmental duplication is in direct or indirect orientation in one breakpoint versus the other<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                            Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong>Region map: </strong>
-            overview of the inversion genome region, including genes, segmental duplications, InvFEST inversion, and corresponding predictions. The image is a
-            link to the same region at the UCSC Genome Browser.
+                <tr style='mso-yfti-irow:22'>
+                    <td width=15% valign=top style='width=15% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <span class=SpellE><b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    seg_dups
+                                </span></i></b>
+                            </span>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    <o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Segmental duplications onhg18 as downloaded from the UCSC<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;mso-ansi-language:EN-US'>
+                                Predictions
+                            </span>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                , 
+                            </span>
+                            <b style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>
+                                Merging Engine
+                            </span></b>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-    </li>
-    <li>
+                <tr style='mso-yfti-irow:23'>
+                    <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:4'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    species<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                List of species other than humans (ID, species common name)<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
+                            <span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Associated information<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
 
-            <strong>Predictions: </strong>
-            all the individual predictions are reported in this section, including e.g. a brief description of the study, the breakpoints location, or the
-            individuals of the study on which the inversion was predicted. The title of each subsection is a link to Pubmed for published studies.
+                <tr style='mso-yfti-irow:24;mso-yfti-lastrow:yes'>
+                    <td width=15% valign=top style='width=15% ;border:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:68'>
+                            <b><i style='mso-bidi-font-style:normal'>
+                                <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                    validation<o:p></o:p>
+                                </span>
+                            </i></b>
+                        </p>
+                    </td>
+                    <td width=65% valign=top style='width=65% ;border:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Stores all validations from individual studies (including method, experimental conditions, status), and links to table 
+                                <span class=SpellE><i style='mso-bidi-font-style:normal'>
+                                    researchs
+                                </i></span>
+                                <o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                    <td width=20% valign=top style='width=20% ;border:none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;background:silver;mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal;mso-yfti-cnfc:64'>
+                            <span lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;mso-ansi-language:EN-US'>
+                                Validations<o:p></o:p><br/>&nbsp;
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            
+            </table>
+        </div>
+        </div>
+    </div>
 
-    </li>
-    <li>
-
-            <strong>Validation and genotyping: </strong>
-            results of experimental validations, including e.g. the validation method, the genotyping results, and the resulting status. The title of each
-            subsection is a link to Pubmed for published studies.
-
-    </li>
-    <li>
-
-            <strong>Frequency: </strong>
-            population data for each continent and population analyzed, including e.g. inversion frequency and fit to the Hardy-Weinberg equilibrium. There is
-            also an utility to generate frequency graphs for continents or specific populations.
-
-    </li>
-    <li>
-
-            <strong>Breakpoints: </strong>
-            information regarding the breakpoints, including e.g. the genome position, definition method (automatic or manually curated), mechanism of origin,
-            and sequence features (e.g. segmental duplications).
-
-    </li>
-    <li>
-
-            <strong>Evolutionary history: </strong>
-            information regarding the orientation of the inversion in other species and estimated ancestral orientation, and the estimated age and origin of
-            the inversion.
-
-    </li>
-    <li>
-
-            <strong>Functional effects: </strong>
-            genes within or close to the inversion that might be affected. Reported information includes e.g. the mechanism for which the inversion disrupts
-            the gene and the functional consequences. The title of each subsection is a link to NCBI Genes.
-
-    </li>
-    <li>
-
-            <strong>Report history: </strong>
-            this section reports any manual curation performed on the inversion breakpoints since its initial automatic definition. When an inversion replaces
-            former obsolete inversions, this is also reported here.
-
-    </li>
-</ul>
-</p>
-		</div>
-		</div>
-  </div>
-
-  <div id="faq8" class="report-section">
-		<div class="section-title TitleA">+ What do different scores by <em>Martinez-Fundichely et al. (2013, in preparation)</em> mean? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    The definition of inversions using paired-end mapping (PEM) based on a pre-decided support (minimum number of paired-ends (PEs) supporting the inversion) introduces many false positives to the final set of predicted inversions mainly due to mapping errors, errors of the PEM technique, or other biological phenomena that may result in inversion-like PEM patterns. <em>Martinez-Fundichely et al. (2013, in preparation)</em> tries to overcome this problem by applying different scores to the set of predicted inversions. We include the results of two of these in InvFEST:
-    <ul>
-    	<li><b>D/C Test</b>: statistical test applied to the ratio of the numbers of Discordant (D) to Concordant (C) PEs. Given that the number of concordant PEs denying the inversion is not expected to exceed the number of discordant PEs supporting it (even if the inversion is homozygote or heterozygote), a score is applied trying to quantify this. When this score is equal or lower than -1.96, the inversion does not pass the test and it is categorized with the status <font color='grey'>Unreliable prediction</font>. Scores not exceeding the minimum threshold are highlighted in red.
-    	</li>
-    	<li><b>Disc. Mapping Prob.</b>: this test tries to quantify what is the probability that an inversion of a given size is supported by less or equal the observed number of discordant PEs. The test corrects the results based on the number, distribution, and percentage of identity of repeated sequences in the breakpoints (a kind of mappability correction). If the probability is lower than a threshold (&lt;0.001), the inversion is categorized with the status <font color='grey'>Unreliable prediction</font>. Scores not exceeding the minimum threshold are highlighted in red.
-    	</li>
-    </ul>
-    Inversions in InvFEST that have been detected by GRIAL <em>(Martinez-Fundichely et al. 2013, in preparation)</em> show the results of these two scores in the 'Predictions' section.
-    
-</p>
-		</div>
-		</div>
-  </div>
-
-  <div id="faq6" class="report-section">
-		<div class="section-title TitleA">+ Why do we not translate inversion coordinates into hg19? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    Most studies reporting human inversions until now have been done on hg18. Lifting over coordinates to newer assemblies in the case of SVs is a difficult task, since changes from one assembly to another usually affect complex regions where inversions and other structural variants are predicted. Re-mapping and predicting inversions again should be done instead. Therefore, for a few inversions predicted in the NCBI35 (hg17) genome version, we have transferred the coordinates based on re-mapping of the breakpoint sequences. In addition, during manual curation, we compare the inversion region in newer assemblies produced by the Genome Reference Consortium (GRCh37, hg19) and patches and report the results in the InvFEST database (Figure 1A). Some inversions have been proven to be false because they were just predicted due to assembly errors in the hg18 sequence, and these cases are clearly indicated in the database. Plans are in place to migrate to the newest hg20 assembly when it becomes available, in which many of these errors should be corrected. In the mean time, <strong>a lift over tool has been implemented to facilitate the search of inversions using hg19 coordinates</strong>.
-</p>
-		</div>
-		</div>
-  </div>
-
-  <div id="faq7" class="report-section">
-		<div class="section-title TitleA">+ What is the data model of InvFEST? 
-			</div>
-		<div class="hidden">
-		<div class="grlsection-content ContentA">
-<p lang="es-ES" align="JUSTIFY">
-    InvFEST is a data-warehouse implementation, commonly used to start schema data models. The center of the star is the “inversion” table, which is
-    de-normalized for speed purposes. The points of the star are the dimension tables that contain related information (e.g. predictions, validations,
-    evolutionary information, etc.). Below follows a detailed Entity-Relationship (ER) schema of InvFEST and a list enumerating all the tables of the
-	database with a description and all relevant areas of the InvFEST processing engine they are involved in. <br/> &nbsp;
-</p>
-<p lang="es-ES" align="JUSTIFY">
-   <img src="img/InvFESTdb-model.png" alt="InvFESTdb-model.png" width="1060">
-</p>
-
-<table class=MsoTableLightShading border=1 cellspacing=0 cellpadding=0
- width=100% style='width:100%;border-collapse:collapse;border:none;
- mso-border-top-alt:solid black 1.0pt;mso-border-top-themecolor:text1;
- mso-border-bottom-alt:solid black 1.0pt;mso-border-bottom-themecolor:text1;
- mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
- <tr style='mso-yfti-irow:-1;mso-yfti-firstrow:yes'>
-  <td width=15% valign=top style='width=15% ;border-top:solid black 1.0pt;
-  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;
-  mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:5'><b><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Table Name<o:p></o:p></span></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border-top:solid black 1.0pt;
-  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;
-  mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:1'><b><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Description<o:p></o:p></span></b></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border-top:solid black 1.0pt;
-  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 1.0pt;
-  mso-border-bottom-themecolor:text1;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:1'><b><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Relevant Areas of the <span
-  class=SpellE>InvFEST</span> Processing Engine<o:p></o:p><br/>&nbsp;</span></b></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:0'>
-  <td width=15% valign=top style='width=15% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>breakpoints<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Second central table of the
-  database. Contains a summary of all basic information about all inversion
-  breakpoints in the database (chromosome location, definition date, source,
-  description, association with segmental duplications, association with genes,
-  general comments, validation ID). Includes all defined breakpoints for all inversions
-  during all the history of the database; those displayed as final breakpoints
-  of the inversion in the inversion report are the latest manually defined
-  breakpoints in the table if available, or the latest defined breakpoints in
-  the table otherwise<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><b style='mso-bidi-font-weight:normal'><span
-  lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:
-  EN-US'>Merging Engine</span></b><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:1'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>fosmids</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Stores codes and accession numbers of <span
-  class=SpellE>fosmids</span> used by predictions and/or validations<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;
-  mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>, </span><span
-  lang=EN-US style='color:#76923C;mso-themecolor:accent3;mso-themeshade:191;
-  mso-ansi-language:EN-US'>Validations</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:2'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>fosmids_predictions</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Linking table between
-  tables <i style='mso-bidi-font-style:normal'>predictions</i> and <span
-  class=SpellE><i style='mso-bidi-font-style:normal'>fosmids</i></span><i
-  style='mso-bidi-font-style:normal'> </i>(which <span class=SpellE>fosmids</span>
-  are supporting each prediction, if applicable)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:3'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>fosmids_validation</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Linking table between tables <i
-  style='mso-bidi-font-style:normal'>validation</i> and <span class=SpellE><i
-  style='mso-bidi-font-style:normal'>fosmids</i></span><i style='mso-bidi-font-style:
-  normal'> </i>(which <span class=SpellE>fosmids</span> are supporting each
-  validation, if applicable)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:4'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>genomic_effect</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Association with genes (<span
-  class=SpellE>RefSeq</span> genes annotated on hg18) for each defined
-  breakpoints of the database (<span class=SpellE>bioinformatic</span>
-  prediction of how the breakpoints affect the gene, observed functional
-  effects on the gene, source). Automatic associations included in the table
-  are conservative: only shown if the gene sequence is disrupted by the
-  inversion (not if the complete gene is inverted or is close to the inversion),
-  and only shown if no transcripts of a gene are left unaffected; when
-  affected, if different transcripts are affected differently, only less
-  drastic effect is described<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'>,</span><b style='mso-bidi-font-weight:
-  normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;
-  mso-ansi-language:EN-US'> Merging Engine</span></b><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:5'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>HsRefSeqGenes</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>RefSeq</span></span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'> genes on hg18 as downloaded from the UCSC<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;
-  mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>, </span><b
-  style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;
-  mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging Engine</span></b><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:6'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>HsRefSeqGenes_exons</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span class=SpellE><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>Exons</span></span><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'> extracted from the <span
-  class=SpellE><i style='mso-bidi-font-style:normal'>HsRefSeqGenes</i></span><i
-  style='mso-bidi-font-style:normal'> </i>table<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging
-  Engine</span></b><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:7'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>HsRefSeqGenes_introns</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Introns</span></span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'> extracted from the <span class=SpellE><i
-  style='mso-bidi-font-style:normal'>HsRefSeqGenes</i></span><i
-  style='mso-bidi-font-style:normal'> </i>table<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;
-  mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>, </span><b
-  style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;
-  mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging Engine</span></b><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:8'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>individual_research</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Individual codes analyzed
-  in specific studies<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:9'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>individuals<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Individual codes with associated information
-  (nickname, gender, population, family, relationship in the family, panel)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Associated information<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:10'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>individuals_detection</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Links IDs of individuals to
-  specific predictions and/or validations <o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:11'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>inv_age</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Estimated age for inversions (source, method,
-  estimated age)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:12'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>inv_origin</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Evolutionary origin of
-  inversions (source, method, unique/recurrent)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#76923C;mso-themecolor:
-  accent3;mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:13'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>inversion_history</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>History report of inversions manually merged or
-  split in the database (previous inversion ID, new inversion ID, cause)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:14'>
-  <td width=15% valign=top style='width=15% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>inversions<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Central table of the
-  database. Contains a summary of all basic information about all inversions in
-  the database (name, chromosome location, size, frequency, number of
-  predictions, number of validations, origin, status)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:#E5B8B7;
-  mso-background-themecolor:accent2;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'>, </span><b style='mso-bidi-font-weight:
-  normal'><span lang=EN-US style='color:#4F81BD;mso-themecolor:accent1;
-  mso-ansi-language:EN-US'>Merging Engine</span></b><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:15'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>inversions_in_species</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Orientation of the inversion in species other than
-  humans (species ID, source, method, orientation: standard=equal to hg18
-  reference assembly / inverted=opposite to hg18 reference assembly)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:16'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>phenotipic_effect</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Observed phenotypic effects
-  of inversions in the database (source, mechanism, observed effects)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#76923C;mso-themecolor:
-  accent3;mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:17'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>population<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Population name and region name<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Associated information<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:18'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>population_distribution</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Stores population
-  distribution information (number of analyzed individuals, number of inverted
-  alleles, population frequency), for specific populations obtained by specific
-  validations <o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#76923C;mso-themecolor:
-  accent3;mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:19'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>predictions<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Stores all predictions from individual studies
-  (including coordinates, status, <span class=SpellE>bioinformatic</span> scores),
-  and links to tables <i style='mso-bidi-font-style:normal'>inversions</i> (there
-  is redundancy in the <i style='mso-bidi-font-style:normal'>predictions</i>
-  table because the relationship is <i style='mso-bidi-font-style:normal'>m:n</i>)
-  and <span class=SpellE><i style='mso-bidi-font-style:normal'>researchs</i></span><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;
-  mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>, </span><b
-  style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;
-  mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging Engine</span></b><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:20'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>researchs</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Information about research
-  articles from which <span class=SpellE>InvFESTdb</span> information is extracted
-  (name, description, citation, number of individuals analyzed, prediction
-  method, prediction error, validation method)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><span lang=EN-US style='color:#76923C;mso-themecolor:accent3;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Validations</span><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>, </span><span lang=EN-US style='color:#E36C0A;
-  mso-themecolor:accent6;mso-themeshade:191;mso-ansi-language:EN-US'>Associated
-  information</span><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:21'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>SD_in_BP</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>Association with segmental duplications (as
-  downloaded from the UCSC) for each defined breakpoints of the database. Also
-  describes if the same segmental duplication affects one or both breakpoints,
-  and in the latter case, if the segmental duplication is in direct or indirect
-  orientation in one breakpoint versus the other<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#8064A2;mso-themecolor:accent4;
-  mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US style='color:
-  black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'>, </span><b
-  style='mso-bidi-font-weight:normal'><span lang=EN-US style='color:#4F81BD;
-  mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging Engine</span></b><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:22'>
-  <td width=15% valign=top style='width=15% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><span class=SpellE><b><i style='mso-bidi-font-style:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>seg_dups</span></i></b></span><b><i
-  style='mso-bidi-font-style:normal'><span lang=EN-US style='color:black;
-  mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Segmental duplications on
-  hg18 as downloaded from the UCSC<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#8064A2;mso-themecolor:
-  accent4;mso-ansi-language:EN-US'>Predictions</span><span lang=EN-US
-  style='color:black;mso-themecolor:text1;mso-themeshade:191;mso-ansi-language:
-  EN-US'>, </span><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='color:#4F81BD;mso-themecolor:accent1;mso-ansi-language:EN-US'>Merging
-  Engine</span></b><span lang=EN-US style='color:black;mso-themecolor:text1;
-  mso-themeshade:191;mso-ansi-language:EN-US'><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:23'>
-  <td width=15% valign=top style='width=15% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:4'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>species<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:
-  191;mso-ansi-language:EN-US'>List of species other than humans (ID, species
-  common name)<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=EN-US style='color:#E36C0A;mso-themecolor:accent6;
-  mso-themeshade:191;mso-ansi-language:EN-US'>Associated information<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:24;mso-yfti-lastrow:yes'>
-  <td width=15% valign=top style='width=15% ;border:none;border-bottom:solid black 1.0pt;
-  mso-border-bottom-themecolor:text1;background:silver;mso-background-themecolor:
-  text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:68'><b><i style='mso-bidi-font-style:normal'><span
-  lang=EN-US style='color:black;mso-themecolor:text1;mso-themeshade:191;
-  mso-ansi-language:EN-US'>validation<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=65% valign=top style='width=65% ;border:none;border-bottom:
-  solid black 1.0pt;mso-border-bottom-themecolor:text1;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:black;mso-themecolor:
-  text1;mso-themeshade:191;mso-ansi-language:EN-US'>Stores all validations from
-  individual studies (including method, experimental conditions, status), and
-  links to table <span class=SpellE><i style='mso-bidi-font-style:normal'>researchs</i></span><o:p></o:p><br/>&nbsp;</span></p>
-  </td>
-  <td width=20% valign=top style='width=20% ;border:none;border-bottom:
-  solid black 1.0pt;mso-border-bottom-themecolor:text1;background:silver;
-  mso-background-themecolor:text1;mso-background-themetint:63;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal;mso-yfti-cnfc:64'><span lang=EN-US style='color:#76923C;mso-themecolor:
-  accent3;mso-themeshade:191;mso-ansi-language:EN-US'>Validations<o:p></o:p><br/>&nbsp;</span></p>
-  </td>
- </tr>
-</table>
-		</div>
-		</div>
-  </div>
+    <br />
 
 
+    <!-- **************************************************************************** -->
+    <!-- FOOT OF THE PAGE -->
+    <!-- **************************************************************************** -->
+    <div id="foot">
+        <?php include('php/footer.php'); ?>
+    </div>
 
-  <br />
-  <div id="foot"><?php include('php/footer.php');?>
-  </div>
+</div> <!-- Closes the Wrapper's divison opened at 'echo_menu.php' -->
 
- </div><!--end Wrapper-->
 </body>
 </html>

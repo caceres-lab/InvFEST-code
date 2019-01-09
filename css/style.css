@@ -21,14 +21,14 @@ body {
 /*	margin: auto;
 	padding: 0;
 	max-width: 960px; */
-width:1150px;
+ width:1150px;
  margin:0 auto;
  text-align:left;
  height: 100%;
 }
 
 
-#head,
+#head
 /*#foot*/ {
 	background: rgba(204, 204, 204, 0.8);
 	border: black solid 0.1em;
@@ -103,7 +103,6 @@ width:1150px;
 	float:right;
  	display:inline-block;
 	color:black;
-/*	font-size:0.5em;*/
     padding-right: 20px;
 }
 
@@ -191,15 +190,13 @@ a:active {text-decoration:underline;color:#7e95b0;}
  padding:0px;
  font-family:Ubuntu;
  font-size:14px;
-
 }
 
 #floatingbar ul li a,#minibar ul li a{
  text-decoration:none;
-
 }
 
-#minibar { display:none;}
+#minibar { display:none; }
 
 
 
@@ -270,7 +267,7 @@ button {
     		-webkit-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
     		-moz-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
     		-o-box-shadow: 0 0 7px rgba(0,0,0,0.4), inset 0 1px 0 #fff;
-		}
+	}
 	button:active {
 		background: #ccc;
 		background: -webkit-gradient(linear, left top, left bottom, from(#c3c3c3), to(#ebebeb));
@@ -284,7 +281,7 @@ button {
     		-webkit-box-shadow: inset 0 -1px 0 #fff;
     		-moz-box-shadow: inset 0 -1px 0 #fff;
     		-o-box-shadow: inset 0 -1px 0 #fff;
-		}
+	}
 button.default {
 	color: #1c4257;
 	background: #a3cde3;
@@ -305,7 +302,7 @@ button.default {
     		-moz-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
     		-o-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
 			
-		}
+	}
 	button.default:active {
 		background: #8abcd7;
 		background: -webkit-gradient(linear, left top, left bottom, from(#81afc8), to(#b7def4));
@@ -321,7 +318,7 @@ button.default {
     		-o-box-shadow: inset 0 -1px 1px #fff;
 		
 		
-		}
+	}
 button[disabled],
 button[disabled]:active {
 	color: #a7a7a7;
@@ -339,8 +336,56 @@ button[disabled]:active {
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
 		-o-box-shadow: none;
-		}
-		
-		#dirbutton img { margin-top:-3px;}
-		
-	
+	}
+	#dirbutton img { margin-top:-3px;}
+
+span.classSpan_button {
+    cursor: copy;
+} a#idA_popup {
+    cursor: copy;
+}
+
+
+/* Styles applied in HighSlide popups and "Add prediction" section */
+/*@import url('http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic');*/
+body.classBody_login {
+    text-align: center;
+    vertical-align: middle;
+    font-family: "Ubuntu";
+    font-size: 11pt;
+} table.classTable_left {
+    padding-left: 1.3em;
+    border-spacing: 2px;
+    border-collapse: separate;
+    border: 0px;
+} table.classTable_login {
+    margin: auto;
+    text-align: center;
+    border-spacing: 2px;
+    border-collapse: separate;
+    border: 0px;
+} table.classTable_login td {
+    vertical-align: top;
+    border: 0;
+    padding: 2px;
+    text-align: center;
+} table td.classTd_right {
+    text-align: right;
+} table td.classTd_left {
+    text-align: left;
+} p.classP {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+} .class_italic {
+    font-size: 10pt;
+    font-style: italic;
+    color: black;
+} .class_error {
+    font-size: 10pt;
+    font-style: italic;
+    color: red;
+} textarea.classTextarea {
+    width: 320px;
+    resize: vertical;
+}

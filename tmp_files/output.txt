@@ -1,0 +1,1 @@
+Query_ID	Name	Query_position	Position_hg18	Size	Status	Global_freq	Functional_effect
