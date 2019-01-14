@@ -291,7 +291,7 @@
 					    <a name='add_bpbias' id='add_bpbias' value='add_bpbias' onclick='changeTest2()'><font color='#1c4257'>< Extend query region interval ></font></a>
 					</p>
 					<div id='subtype2' class='content' style='display: none;'>
-							Add a <input type='text' name='add_bp' dir='rtl' size='10'>  bp confidence interval to each side of the breakpoints
+							Add a <input type='text' name='add_bp' dir='rtl' size='10'>  bp confidence interval to each side of your query breakpoints
 						</b><br /><br />
 					</div>
 					
