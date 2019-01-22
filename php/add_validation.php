@@ -62,7 +62,7 @@ function addvalidation() {
     $indiv_array = $_POST["indiv"];
 	// }
 
-    $message=""; $warning_ind='';
+    $message=""; $warning_ind='no';
 
 
     //Comprobaciones
@@ -236,6 +236,7 @@ function addvalidation() {
 							        mysql_query("CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');");
 	                            	// $a="CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');";
 		                            // echo "CALL add_individual_genotipy('$code','$inv_id','$genotype','$validation_id');";
+		                            $warning_ind = "no";
 							    } else {
 								    $warning_ind="yes";
 							    }
@@ -300,7 +301,7 @@ function addvalidation() {
 
 		    mysql_close($con);
 
-		   if ($warning_ind != '') {
+		   if ($warning_ind != 'no') {
 			 
 		    //if ($validation_id) HAY Q FORZAR A QUE SALGA MAL PARA SABER Q DEVUELVE!!
 	        //echo "Validation added succesfully<br />".$message;
@@ -311,6 +312,7 @@ function addvalidation() {
   				 // $message.="Some individuals have not been correctly introduced <br />";
 		    }else{
 		    header('Location: ../report.php?q='.$inv_id.'&o=add_val#validations'.$validation_id);	
+		    	# Validation added successfully
 		}
 
 	    } else { //Fin if que ha funcionado bien el add_validation

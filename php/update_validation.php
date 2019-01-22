@@ -291,7 +291,7 @@ function deletevalidation(){
 
    	# Delete validation
 	   
-	mysql_query("CALL DELETE_validation('$validation_id', '".$_SESSION["userID"]."');");
+	mysql_query("CALL delete_validation('$validation_id', '".$_SESSION["userID"]."');");
 		
 	# Delete fosmids
 		
