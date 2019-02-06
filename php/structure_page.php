@@ -205,6 +205,7 @@
 			    }
 		    }
 
+
 		// 2016/03/29 Batch query
 	        function Show_Div(Div_id) {
 
@@ -219,10 +220,14 @@
 				Show_Div(subtype);}
 			function changeTest2() {
 				Show_Div(subtype2);} 
+			function changeTest3() {
+				Show_Div(subtype3);}
 			function changeTest_accutare_filter() {
 				Show_Div(accutare_filter);}
 				
+				
 	    </script>
+
     ";
 
     // **************************************************************************** //
@@ -264,12 +269,51 @@
 
 		
 
-				<!-- BATCH QUERY v.3.5 -RGG- -->
+							
+				<!-- BATCH QUERY v.4 -RGG- -->
 
 		   		<form id='Batchquery' method='POST' action='tool_batch_query.php' enctype='multipart/form-data'>
 		    	    <p id='batchsearch'>
 			    	    <b>Batch query:</b>&nbsp;&nbsp;Look for multiple genomic coordinates by uploading them into a single file (<font color='grey'>ID:</font>chrN:start1<font color='grey'>,end1</font>-start2<font color='grey'>,end2</font> in plain text format).&nbsp;<font color='grey'><sup>*Optional</sup></font></b>
-					<br /><br />";
+					<br /><br />
+
+					";
+
+
+
+
+	// if (isset($query_inv)){
+	// 	$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";					
+	// 	foreach($query_inv as $value){
+ //  			$search_inv.='<input type="hidden" name="result[]" value="'. $value. '">';
+	// 	}
+	// }else{
+	// 	$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";
+	// }
+	// $search_inv.="
+ //  					<button class='default' name='submit' title='Inversions overlapping these intervals'>Region match</button>
+	// 				<button class='default' name='accutare_filter_value' value='accutare_filter_value' title='Only inversions with breakpoints overlapping these intervals'>Breakpoint match</button>
+	// 			" ;
+	// if (isset($query_inv)){
+	// 	$search_inv.="<br /> <input type='checkbox' name='fileAlready' id='fileAlready' value='yes' checked/> Use previous file";
+	// }
+	
+	// $search_inv.="	<p id='addbpbias2'>
+	// 				    <a name='add_bpbias' id='add_bpbias' value='add_bpbias' onclick='changeTest2()'><font color='#1c4257'>< Extend query region interval ></font></a>
+	// 				</p>
+	// 				<div id='subtype2' class='content' style='display: none;'>
+	// 						Add a <input type='text' name='add_bp' dir='rtl' size='10'>  bp confidence interval to each side of your query breakpoints
+	// 					</b><br /><br />
+	// 				</div>
+					
+				
+	// 			</form>
+
+	// 		    <!-- </div> -->
+	// 	    </div>
+	//     </div>
+    // ";
+
 
 	if (isset($query_inv)){
 		$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";					
@@ -280,9 +324,9 @@
 		$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";
 	}
 	$search_inv.="
-  					<button class='default' name='submit' title='Inversions overlapping these intervals'>Region match</button>
-					<button class='default' name='accutare_filter_value' value='accutare_filter_value' title='Only inversions with breakpoints overlapping these intervals'>Breakpoint match</button>
-				" ;
+  					<button class='default' name='submit' title='Inversions overlapping this intervals'>Region match</button>
+					<button class='default' name='accutare_filter_value' value='accutare_filter_value' title='Only inversions with breakpoints overlapping this intervals, not the whole inversion region'>Breakpoint match</button>
+					<button class='default' name='overlap_search' value='overlap_search' title='Search for reciprocal overlap'>Overlap match</button>" ;
 	if (isset($query_inv)){
 		$search_inv.="<br /> <input type='checkbox' name='fileAlready' id='fileAlready' value='yes' checked/> Use previous file";
 	}
@@ -294,14 +338,23 @@
 							Add a <input type='text' name='add_bp' dir='rtl' size='10'>  bp confidence interval to each side of your query breakpoints
 						</b><br /><br />
 					</div>
-					
+					<p id='addbpbias3'>
+					    <a name='add_bpbias' id='add_bpbias' value='add_bpbias' onclick='changeTest3()'><font color='#1c4257'>< Add modifiers to Overlap match ></font></a>
+					</p>
+					<div id='subtype3' class='content' style='display: none;'>
+							Add a <input type='text' name='add_bp3' dir='rtl' size='10'>  bp confidence interval to each side of your query breakpoints.
+						</b><br /><br />
+						Search for a <input type='text' name='overlap_percent' dir='rtl' size='1'>  % of reciprocal overlap. 
+						</b><br /><br />
+						<input type='checkbox' id='internal' name='internal' value = 'TRUE' /> Take into account only the internal part of the inversion. 
+					</div>
 				
 				</form>
 
 			    <!-- </div> -->
 		    </div>
 	    </div>
-    ";
+	    ";
 
 
       include_once('help_messages.php');

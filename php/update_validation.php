@@ -331,7 +331,7 @@ function deletevalidation(){
 
     //BreakSeq execution
     //---------------------------------------------------------------------------
-    exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
+    #exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
 
 
 	# Delete fng

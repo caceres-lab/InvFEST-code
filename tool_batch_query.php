@@ -202,25 +202,40 @@
         	continue; }
 
 				
-		if (isset( $_POST['accutare_filter_value'])){ 
+		// if (isset( $_POST['accutare_filter_value'])){ 
 			
-			$accurate_filer = "YES";
-		}else{
+		// 	$accurate_filer = "YES";
+		// }else{
 		
-			$accurate_filer = "NO";
-		}
+		// 	$accurate_filer = "NO";
+		// }
 		
-		if ($accurate_filer == "NO"){
+		// if ($accurate_filer == "NO"){
 			
-			$match_condition = "(($q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ($q_bp2_end + $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ( $q_bp1_start - $Err1 <= b.bp1_start AND $q_bp2_end + $Err1 >= b.bp2_end))";
-		} else if ($accurate_filer == "YES"){
+		// 	$match_condition = "(($q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ($q_bp2_end + $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ( $q_bp1_start - $Err1 <= b.bp1_start AND $q_bp2_end + $Err1 >= b.bp2_end))";
+		// } else if ($accurate_filer == "YES"){
 
-			$match_condition = "(( ($q_bp1_start - $Err1 <= b.bp1_start OR $q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp1_end ) 
+		// 	$match_condition = "(( ($q_bp1_start - $Err1 <= b.bp1_start OR $q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp1_end ) 
+		// 		AND ( $q_bp1_end + $Err1 >= b.bp1_end OR $q_bp1_end + $Err1 BETWEEN b.bp1_start AND b.bp1_end) )
+		// 		AND  (($q_bp2_start - $Err1 <= b.bp2_start OR $q_bp2_start - $Err1 BETWEEN b.bp2_start AND b.bp2_end ) 
+		// 		AND ( $q_bp2_end + $Err1 >= b.bp2_end OR $q_bp2_end + $Err1 BETWEEN b.bp2_start AND b.bp2_end)))";
+		// }
+
+   if (isset( $_POST['accutare_filter_value'])){ # error can be 0
+       		$match_condition = "(( ($q_bp1_start - $Err1 <= b.bp1_start OR $q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp1_end ) 
 				AND ( $q_bp1_end + $Err1 >= b.bp1_end OR $q_bp1_end + $Err1 BETWEEN b.bp1_start AND b.bp1_end) )
 				AND  (($q_bp2_start - $Err1 <= b.bp2_start OR $q_bp2_start - $Err1 BETWEEN b.bp2_start AND b.bp2_end ) 
 				AND ( $q_bp2_end + $Err1 >= b.bp2_end OR $q_bp2_end + $Err1 BETWEEN b.bp2_start AND b.bp2_end)))";
-		}
-
+	   }elseif (isset($_POST['submit']) ){
+	   		$match_condition = "(($q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ($q_bp2_end + $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ( $q_bp1_start - $Err1 <= b.bp1_start AND $q_bp2_end + $Err1 >= b.bp2_end))";
+	   }elseif(isset( $_POST['overlap_search'])){
+	   		if ($internal == TRUE){
+	   			$match_condition = "(($q_bp1_end + $Err1 BETWEEN b.bp1_end AND b.bp2_start) OR ($q_bp2_start - $Err1 BETWEEN b.bp1_end AND b.bp2_start) OR ( $q_bp1_end + $Err1 <= b.bp1_end AND $q_bp2_start - $Err1 >= b.bp2_start))";
+	   		}else{
+	   			$match_condition = "(($q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ($q_bp2_end + $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ( $q_bp1_start - $Err1 <= b.bp1_start AND $q_bp2_end + $Err1 >= b.bp2_end))";
+	   		}
+	   		
+	   }
 
 
 		$sq_query= "SELECT  i.frequency_distribution, i.name, i.chr, i.status, b.inv_id,  b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.definition_method, b.genomic_effect 

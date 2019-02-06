@@ -667,7 +667,7 @@
     while ($thisrow = mysql_fetch_array($result_freq)) {
     */
 	    /*
-        funcion inv_frequency
+        funcion inv_frequencyindependent in
 	        inv_id_val INT, 
 	        population_val VARCHAR(255),  -> puede ser all
 	        region_val VARCHAR(255),  -> puede ser all NUNCA buscare all
