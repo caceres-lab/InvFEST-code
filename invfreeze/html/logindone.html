@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <!-- Site settings -->
+	    <title>Autentification done</title>
+	    
+        <!-- Include styles -->
+        <style>
+            @import url('http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic');
+            body.classBody_login {
+                text-align: center;
+                vertical-align: middle;
+                font-family: "Ubuntu";
+                font-size: 10pt;
+            }
+        </style>
+
+        <!-- Include JQuery from a CDN (or locally if the site is offline) -->
+        <script src="https://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script>
+			$(window).jQuery || $(document).write('<script src="js/jquery-1.4.2.min.js" async><\/script>')
+		</script>
+	    
+        <!-- Script -->
+        <script>
+		    $(document).ready(function(){
+			    var area = document.getElementById("area");
+			    if (parent.window.hs) {
+				    var exp = parent.window.hs.getExpander("login2");
+				    if (exp) {
+					    area.innerHTML += "<br/><br/><em>This page will close automatically</em>";
+					    setTimeout(function() {
+						    parent.location.reload();
+						    <!-- exp.close();-->
+					    }, 2000);
+				    }
+			    }
+		    });
+	    </script>
+
+    </head>
+
+    <body class="classBody_login">
+	    <div id="area">
+	        <p>Login done succesfully</p>
+	    </div>
+    </body>
+
+</html>
+

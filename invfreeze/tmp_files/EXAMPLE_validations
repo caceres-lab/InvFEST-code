@@ -1,0 +1,149 @@
+
+
+    ########################################
+    #					   #
+    #	MULTIPLE VALIDATIONS INPUT HELP   #
+    #					   #
+    ########################################
+ 
+ In the case of a correct data input, all the validations in the table will be added to InvFEST database. 
+
+ REQUIRED FORMAT
+-------------------------------------	
+
+	Validation ID:Inversion name:Study Name:Method:Status:Force status:Comments:Population:Analyzed individuals:Inverted alleles:Standard frequency:Inverted frequency
+
+Real Example (without frequencies):
+
+	1:HsInv0003:INVFEST curation:PCR:TRUE:not:Testing line:::::
+
+Real Example (without comments):
+
+	1:HsInv0003:INVFEST curation:PCR:TRUE:not::ACB (African (AFR)):50:23:0.25:0.75
+
+Real Example (complete):
+
+	1:HsInv0003:INVFEST curation:PCR:TRUE:not:Testing line:ACB (African (AFR)):50:23:0.25:0.75
+
+Extended examples in 'Individuals table' documentation
+	
+  FIELD SPECIFICATIONS
+-------------------------------------	
+
+ Those marked with a * are mandatory:	
+	
+      > GENERAL INFORMATION
+
+	Validation ID *		ID necessary to identify the corresponding genotyped individuals. It can be repeated if individuals are shared between different validations.
+	Inversion name *	HsInvNNNN format. 
+	Study Name *	 	Make sure that the studies in your table already exist and are written exactly the same way as they appear in the database. 
+	Method *		Make sure that the methods in your table already exist and are written exactly the same way as they appear in the database.
+	Status *		Make sure that the status in your table already exist and are written exactly the same way as they appear in the database.
+	Force status *		Either yes or not, it will stablish automatically the new status until another status is forced.
+	Comments
+
+      > FREQUENCY WITHOUT GENOTYPES --> These values are not mandatory but if specified, all of them must be present.
+
+	Population		Make sure that the populations in your table already exist and are written exactly the same way as they appear in the database.
+	Analyzed individuals	A natural number.
+	Analyzed individuals	A natural number.
+	Inverted alleles	A natural number.
+	Standard frequency	Standard alleles/Total alleles.
+	Inverted frequency	Inverted alleles/Total alleles.
+
+
+
+  FIELD OPTIONS - Study Name
+-------------------------------------
+An updated list with the available studies is provided. 
+New studies can be added using the 'Add new study' form in the 'Search inversions' page.  
+
+
+	Aguado et al. 2014
+	Ahn et al. 2009
+	Antonacci et al. 2009
+	Antonacci et al. 2010
+	Becker et al. 2018
+	Caceres et al. 2007
+	Chaisson et al. 2015
+	de Jong et al. 2012
+	Donnelly et al. 2010
+	Feuk et al. 2005
+	Frohnauer et al. 2010
+	Genome Reference Consortium
+	Giglio et al. 2002
+	Gilling et al. 2006
+	Gimelli et al. 2003
+	Hasin et al. 2008
+	Hehir-Kwa et al. 2016
+	Hobart et al. 2010
+	INVFEST curation
+	Kehr et al. 2017
+	Koolen et al. 2006
+	Korbel et al. 2007
+	Levy et al. 2007
+	Lucas-Lledo et al. 2014
+	Martin et al. 2004
+	Martinez-Fundichely et al. 2014 (in preparation)
+	McKernan et al. 2009
+	Osborne et al. 2001
+	Pang et al. 2010
+	Pang et al. 2013
+	Puig et al. 2015
+	Salm et al. 2012
+	Small et al. 1997
+	Stefansson et al. 2005
+	Steinberg et al. 2012
+	Sudmant et al. 2015
+	Szamalek et al. 2006
+	Teague et al. 2010
+	Turner et al. 2006
+	Vicente-Salvador et al. 2017
+	Wang et al. 2008
+	Young et al. 2008
+	Zody et al. 2008
+
+
+  FIELD OPTIONS - Method
+-------------------------------------
+An updated list with the available methods is provided. 	
+
+
+Chromosome-specific assembly
+	Comparative analysis
+	Fluorescence in situ hybridization (FISH)
+	Fosmid sequence analysis
+	Genome sequence assembly update
+	Genome sequence comparison
+	Genotype predicted by tag-SNPs
+	Haplotype definition by microsatellite loci genotyping
+	Haplotype-fusion PCR (HF-PCR)
+	Inverse polymerase chain reaction (iPCR)
+	Karyotype analysis
+	Multiplex ligation-dependent probe amplification (MLPA)
+	Optical mapping
+	Polymerase chain reaction (PCR)
+	Pulsed field gel electrophoresis (PFGE)
+	Sequence analysis
+	Southern blot analysis
+
+
+  FIELD OPTIONS - Status
+-------------------------------------
+An updated list with the available status is provided. 	
+
+
+	Ambiguous/FALSE
+	Breakpoint refinement
+	FALSE
+	Genotyping
+	Inconclusive
+	TRUE
+
+
+  FIELD OPTIONS - Population
+-------------------------------------
+An updated list with the available populations is provided. 	
+
+
+	

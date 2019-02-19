@@ -1,0 +1,19 @@
+Primer	A1	2899	2920	+
+Gene	CTRB2-Transcript	2903	8771	-
+CDS	CTRB2-CDS	2968	8752	-
+Primer	A2	3419	3437	+
+SD	SD1	3474	5020	+
+Direct_Repeat	DR1	3520	3530	+
+Indel	574-bp polymorphic deletion	3530	4104	+
+Direct_Repeat	DR2	4104	4114	+
+Inversion	BP1	4449	5008	+
+Primer	C1	5418	5439	-
+Gap	.	17089	17215	+
+Gene	CTRB1-Transcript	20679	23817	+
+CDS	CTRB2-CDS	20712	23759	+
+Primer	B2	20713	20732	+
+Primer	B1	21400	21421	+
+Primer	B3	21516	21534	+
+SD	SD2	21639	23187	-
+Inversion	BP2	21653	22212	+
+Primer	D1	23373	23394	-

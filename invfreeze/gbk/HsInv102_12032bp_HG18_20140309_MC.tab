@@ -1,0 +1,25 @@
+Primer	HsInv102-A1	2763	2784	+
+Primer	HsInv102-A2	4668	4689	+
+Primer	HsInv102-A4	4892	4913	+
+Primer	HsInv102-A3	4969	4989	+
+SNP	.	4981	4982	+
+Primer	HsInv102-B3	4999	5024	+
+Microhomology	MH1-1	5000	5002	+
+Inversion	BP1	5000	5002	+
+SNP	.	5000	5001	+
+Primer	HsInv102_B4	5471	5490	-
+Repeat_region	VNTR	5523	5558	+
+Indel	VNTR extra copies in HG18	5523	5533	+
+Primer	HsInv102-B1	5574	5595	-
+Primer	HsInv102_B2	5866	5887	-
+Primer	HsInv102_B6	5867	5886	+
+Primer	HsInv102_B5	5970	5991	-
+Primer	HsInv102-C1	6489	6510	+
+Primer	HsInv102-C2	6625	6647	+
+Primer	HsInv102_C3	6726	6753	-
+Microhomology	MH1-2	7032	7034	+
+Inversion	BP2	7032	7034	+
+Primer	HsInv102-D4	7098	7117	-
+Primer	HsInv102-D1	7462	7483	-
+Primer	HsInv102_D3	8029	8050	-
+Primer	HsInv102-D2	9362	9383	-

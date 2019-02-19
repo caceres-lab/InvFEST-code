@@ -1,0 +1,20 @@
+Gene	SPINK5L2 Exon1	600	667	+
+Primer	SPINK14-1	603	624	+
+Gene	SPINK5L2 Exon2	1797	1841	+
+Primer	A4	4036	4056	+
+Primer	A1	4257	4277	+
+Complex_inversi	BP1	4344	5544	+
+Indel	1200-bp deletion in Celera	4344	5544	+
+Gene	SPINK5L2 Exon3	5101	5238	+
+Primer	A2	5319	5339	+
+Complex_inversi	Inverted Region	5544	5920	+
+Primer	B1	5591	5612	+
+Primer	C1	5790	5809	+
+Primer	B2	5790	5809	-
+Primer	C2	5867	5887	-
+Primer	C3	5867	5887	+
+Complex_inversi	BP2	5920	6083	+
+Indel	163-bp deletion in Celera	5920	6083	+
+Gene	SPINK5L2 Exon4	6220	6266	+
+Primer	SPINK14-2	6221	6244	-
+Primer	D1	6322	6342	-

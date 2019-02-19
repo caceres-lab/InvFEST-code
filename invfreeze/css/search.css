@@ -1,0 +1,53 @@
+/* Filter */
+div.classFilter{
+    display:inline;
+}
+
+/* Paragraph-HighSlide */
+p.classP_HS{
+    display:inline-block;
+}
+
+/* Paragraph-Justified */
+p.classP_justified{
+    text-align: justify;
+}
+
+/* Division, centered content */
+div.classDiv_Centered{
+    text-align: center;
+}
+
+/* Image, centered with the text */
+img.classImg_centered{
+    margin:auto;
+    vertical-align:middle;
+}
+
+/* Menu */
+table.classTable_menu{
+    border:0px;
+}table.classTable_menu tr,td{
+    border:0px;
+}table td.classTd_logo{
+    width:200px;
+}table td.tdclassTd_menu{
+    width:1430px;
+}table td.classTd_menuIcon{
+    vertical-align: top;
+    text-align: right;
+}table td.classTd_floatMenuLogo{
+    width:130px;
+}table td.classTd_floatMenu{
+    width:1500px;
+}
+
+div.classDiv_menuIcon{
+    vertical-align: top;
+    text-align: right;
+}
+
+div.classDiv_menu{
+    float: left;
+}
+

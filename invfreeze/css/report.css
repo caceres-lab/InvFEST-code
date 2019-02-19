@@ -1,0 +1,329 @@
+/*
+	2009 Miquel Ràmia <miquel.ramia@uab.cat>
+	Lab. de Bioinformàtica de la variació genètica
+	Grup de Genòmica, Bioinformàtica i Evolució
+	Departament de Genètica i Microbiolgia
+	Universitat Autònoma de Barcelona   
+
+	2012 Raquel Egea <raquel.egea@uab.cat>
+	Servei de Genomica i Bioinformatica
+	Institut de Biologia i Biotecnologia
+	Universitat Autonoma de Barcelona
+*/
+
+
+/* REPORT ROUND CORNERS*/
+
+#report_title,
+.report-section,
+.section-title,
+.bkp,
+.section-content p:hover,
+.ContentA p:hover {
+/*	-moz-border-radius: 8px;*/
+/*	-webkit-border-radius: 8px;*/
+}
+
+/*Validation Table*/
+#validation_table {
+	border: none;
+	font-size: 0.7em;
+	background-color: #000;
+}
+#validation_table td {
+	background-color: #EBF5FF;
+}
+#validation_table td:nth-child(odd) {
+	background-color: #BDCDDC;
+}
+
+/* REPORT SECTIONS */
+
+#report_title {
+	margin:0;
+	font-size:0.7em;
+	color: white;
+    padding-top: 0.0px;
+    padding-bottom: 0.0px;
+	padding-left: 25.5em;
+	background: #405BA2;
+	/*width: 30em;*/
+    position: fixed;
+    top: 62px;
+    left: 0;
+    height: 20px;
+    width: 100%;
+}
+
+#report {
+/*	margin: 1em 6% 1.5em 6%;*/
+	padding: 0;
+	background-color:#f5f5f9;/*#444444*/
+}
+
+.report-section {
+	margin: 0.5em 0.0em 0.5em 0.0em;
+	/*width: 90%;*/
+	/*border: solid gray 2px;*/
+	/*margin-bottom: 0.5em;*/
+	background-color: rgba(255, 255, 255, 0.6);
+	/*border:1px solid #F1F1F1;*/
+}
+.section-content,
+.grlsection-content{
+		padding: 0.5em 3em ;
+		border:1px solid #F1F1F1;
+		font-family:Ubuntu;
+		font-size: 14px;
+}
+
+.floating {
+	width: 48%;
+	float: left;
+	margin: 0.4em;
+	font-size: 0.8em;
+}
+
+.TitleA,.TitleB,.TitleOther {
+	padding: 0 0.2em 0 0.4em;
+	color:white; 
+}
+
+.TitleStatic {
+    color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+}
+
+.TitleA {
+	/*font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #405BA2;*/
+    
+    color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+}
+
+.TitleA:hover,
+.TitleA:focus {
+	box-shadow: 0 0 7px #53a6d5;
+	
+		
+		     box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px #53a6d5, inset 0 1px 0 #fff;
+			
+		}
+.TitleA:active {
+		background: #8abcd7;
+		background: -webkit-gradient(linear, left top, left bottom, from(#81afc8), to(#b7def4));
+		background: -moz-linear-gradient(top, #81afc8, #b7def4);
+		border-color: #6e94a9;
+		border-top-color: #567c91;
+		border-bottom-color: #88aec4;
+
+		box-shadow: inset 0 -1px 1px #fff;
+    		-webkit-box-shadow: inset 0 -1px 1px #fff;
+    		-moz-box-shadow: inset 0 -1px 1px #fff;
+    		-o-box-shadow: inset 0 -1px 1px #fff;
+		
+		
+		}
+
+/*.TitleB {
+	font-size: 1.2em;
+	border: solid #9A9999 1px;
+	background-color: #96A9E4;
+}*/
+
+.TitleB {
+	/*font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #405BA2;*/
+    
+    color: #57261c;  
+	background: #e3b4a3;   
+	background: -webkit-gradient(linear, left top, left bottom, from(#f5c1b9), to(#cb9185));    
+	background: -moz-linear-gradient(top, #f5c1b9, #cb9185);
+	border: 1px solid #b17d75;  
+	border-top-color: #c6928a;  
+	border-bottom-color: #935d58;  
+		text-shadow: 0 1px 1px #fff;
+		font-size: 14px;
+	font-weight: bold;
+	font-family:Ubuntu;
+}
+
+.TitleB:hover,
+.TitleB:focus {
+	box-shadow: 0 0 7px #d56a53;   
+	
+		
+		     box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-webkit-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-moz-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+    		-o-box-shadow: 0 0 7px #d56a53, inset 0 1px 0 #fff;
+			
+		}
+.TitleB:active {
+		background: #d7948a;  
+		background: -webkit-gradient(linear, left top, left bottom, from(#c88a81), to(#f4bcb7));    
+		background: -moz-linear-gradient(top, #c88a81, #f4bcb7);
+		border-color: #a9736e;  
+		border-top-color: #915e56;  
+		border-bottom-color: #c48d88;  
+
+		box-shadow: inset 0 -1px 1px #fff;
+    		-webkit-box-shadow: inset 0 -1px 1px #fff;
+    		-moz-box-shadow: inset 0 -1px 1px #fff;
+    		-o-box-shadow: inset 0 -1px 1px #fff;
+		
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+.TitleOther {
+	font-size: 1.4em;
+	border: solid white 1px;
+	background-color: #B7C6FF;
+}
+.section-title small {
+	float:right;
+	font-size: 0.6em;
+}
+.section-title:hover {
+	cursor: s-resize;
+}
+
+/*.section-content,*/
+.ContentA {
+	padding: 0.5em 3em ;
+	background-color: white;
+    /*border: solid 1px;
+    border-collapse: collapse;
+    border-color: #405BA2;*/
+}
+
+.section-content p:hover,
+.ContentA p:hover{
+/*	background-color: rgba(175,175,175, 0.4);*/
+
+}
+
+.prova:hover{
+	background-color: rgba(175,175,175, 0.4);
+	-moz-border-radius: 8px;
+}
+
+.ContentA li {
+	padding-top: 0.5em;
+}
+
+.hidden {
+	display: none
+}
+
+.left {	
+	float:left; 
+}
+
+.right { 
+	float: right; 
+}
+
+.bkp {
+	font-size: 0.9em;
+	border: solid gray 1px;
+	margin: 1em;
+	padding: 1em;
+	width: 40%;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.bkp h4{
+	margin-top: 0;
+}
+
+.field {
+	margin: 0;
+	padding: 0.3em 0.3em;
+}	
+
+/*IFRAME*/
+iframe {
+	display:block;
+	margin: auto;
+	width: 90%;
+}
+
+#region {
+	display:block;
+	margin: auto;
+	padding-bottom: 1em;
+}
+
+/**/
+.invalid_pred {
+	color:#808080;
+	font-style:italic;
+}
+
+table,tr,td {
+	border: 1px solid black;
+	border-collapse:collapse;
+    border-color: #dcdcea;
+    font-family: Ubuntu;
+    font-size: 14px;
+}
+td.title {
+	font-weight:bolder;
+	background-color:#f5f5f9;
+	/*width:23%;*/
+}
+th.title {
+	font-weight:bolder;
+	background-color:#bababa;
+}
+
+table.merge_table { 
+	display: block;
+	width: 100%;
+	overflow: auto;
+	table-layout: fixed;
+}
+td.merge_table, th.merge_table { 
+    padding: 2px;
+    min-width: 120px;
+    border-right: 1px solid #bababa;
+    border-left: 1px solid #bababa;
+    text-align: center;
+}
+
+

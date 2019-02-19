@@ -1,0 +1,84 @@
+
+    #######################################
+    #					  #
+    #	MULTIPLE PREDICTIONS INPUT HELP   #
+    #					  #
+    #######################################
+ 
+ In the case of a correct data input, all the predictions in the table will be added to InvFEST database. 
+
+ REQUIRED FORMAT
+-------------------------------------	
+
+	Prediction ID:Chromosome:Breakpoint 1 start:Breakpoint 1 end:Breakpoint 1 between start-end:Breakpoint 2 start:Breakpoint 2 end:Breakpoint 2 between start-end:Study Name:Prediction name
+	
+Real example:
+
+	1:chr10:127180574:127180574:FALSE:127187215:127187215:FALSE:INVFEST curation:CINV_delly_INV00003655
+
+  FIELD SPECIFICATIONS
+-------------------------------------	
+
+ Those marked with a * are mandatory:
+
+
+	Prediction ID *		ID necessary to identify the corresponding individuals. It can be repeated if individuals are shared between different predictions.
+	Chromosome * 		 		In format chrN (being 'N' a number, Y, X or MT). 	
+	Breakpoint 1 start *  			A natural number corresponding to a position in the sequence.	
+	Breakpoint 1 end *  			A natural number corresponding to a position in the sequence.	
+	Breakpoint 1 between start-end * 	TRUE or FALSE. TRUE means taht the real breakpoint is located between the two provided coordinates.	
+	Breakpoint 2 start * 			A natural number corresponding to a position in the sequence.
+	Breakpoint 2 end * 			A natural number corresponding to a position in the sequence.
+	Breakpoint 2 between start-end * 	TRUE or FALSE. TRUE means that the real breakpoint is located between the two provided coordinates.
+	Study Name * 				Make sure that the studies in your table already exist and are written exactly the same way as they appear in the database. 
+	Prediction name 			The name or ID of the inversion in the original article. 
+
+  FIELD OPTIONS - Study Name
+-------------------------------------
+An updated list with the available studies is provided. 
+New studies can be added using the 'Add new study' form in the 'Search inversions' page.  
+
+
+	Aguado et al. 2014
+	Ahn et al. 2009
+	Antonacci et al. 2009
+	Antonacci et al. 2010
+	Becker et al. 2018
+	Caceres et al. 2007
+	Chaisson et al. 2015
+	de Jong et al. 2012
+	Donnelly et al. 2010
+	Feuk et al. 2005
+	Frohnauer et al. 2010
+	Genome Reference Consortium
+	Giglio et al. 2002
+	Gilling et al. 2006
+	Gimelli et al. 2003
+	Hasin et al. 2008
+	Hehir-Kwa et al. 2016
+	Hobart et al. 2010
+	INVFEST curation
+	Kehr et al. 2017
+	Koolen et al. 2006
+	Korbel et al. 2007
+	Levy et al. 2007
+	Lucas-Lledo et al. 2014
+	Martin et al. 2004
+	Martinez-Fundichely et al. 2014 (in preparation)
+	McKernan et al. 2009
+	Osborne et al. 2001
+	Pang et al. 2010
+	Pang et al. 2013
+	Puig et al. 2015
+	Salm et al. 2012
+	Small et al. 1997
+	Stefansson et al. 2005
+	Steinberg et al. 2012
+	Sudmant et al. 2015
+	Szamalek et al. 2006
+	Teague et al. 2010
+	Turner et al. 2006
+	Vicente-Salvador et al. 2017
+	Wang et al. 2008
+	Young et al. 2008
+	Zody et al. 2008

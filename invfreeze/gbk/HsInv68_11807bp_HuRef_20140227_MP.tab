@@ -1,0 +1,15 @@
+Primer	A1	4833	4856	+
+Complex_inversi	BP1	4999	5001	+
+Microhomology	MH1-1	4999	5001	+
+Indel	1231-bp deletion in HG18	5001	6232	+
+Complex_inversi	BP2	6228	6232	+
+Microhomology	MH2-1	6228	6232	+
+Complex_inversi	Inverted sequence	6232	6481	+
+Primer	C1	6258	6279	-
+Primer	B1	6455	6479	+
+Complex_inversi	BP3	6481	6483	+
+Microhomology	MH1-2	6481	6483	-
+Indel	325-bp deletion in HG18	6481	6806	+
+Complex_inversi	BP4	6806	6810	+
+Microhomology	MH2-2	6806	6810	-
+Primer	D1	7149	7173	-

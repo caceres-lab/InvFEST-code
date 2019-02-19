@@ -1340,10 +1340,11 @@
     //}
 
     // Historial de breakpoints (E)
-    $sql_bp="SELECT b.id, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.definition_method, b.description, b.date, v.research_name as v_research_name, r.year, r.pubMedID 
-	    FROM  breakpoints b LEFT JOIN validation v ON (v.bp_id = b.id) LEFT JOIN researchs r ON r.name=v.research_name WHERE b.inv_id ='$id' 
-	    ORDER BY b.date DESC ;"; //FIELD (b.definition_method, 'manual curation', 'default informatic definition'), 
+     $sql_bp="SELECT b.id, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.definition_method, b.description, b.date, v.research_name as v_research_name, r.year, r.pubMedID , b.assembly
+        FROM  breakpoints b LEFT JOIN validation v ON (v.bp_id = b.id) LEFT JOIN researchs r ON r.name=v.research_name WHERE b.inv_id ='$id' 
+        ORDER BY b.date DESC ;"; //FIELD (b.definition_method, 'manual curation', 'default informatic definition'), 
     $result_bp=mysql_query($sql_bp);
+
     while($bprow = mysql_fetch_array($result_bp)) {
 	    //tambien se muestran las duplicaciones segmentales y los efectos genomicos
 	    $seq_feat_hist='';$gen_eff_hist='';
@@ -1379,7 +1380,9 @@
                 }
             	$bp_history.= '<tr><td class="title" width="20%">Study</td><td colspan="3">'.$studyname.'</td></tr>';
             }
-
+            if (($bprow['assembly'] != '') or ($_SESSION["autentificado"]=='SI')) {
+                 $bp_history.= '<tr><td class="title" width="20%">Assembly</td><td colspan="3">'.$bprow['assembly'].'</td></tr>';
+            }
    		    if (($bprow['description'] != '') or ($_SESSION["autentificado"]=='SI')) {
 		        $bp_history.= '<tr><td class="title" width="20%">Description</td><td colspan="3">'.ucfirst($bprow['description']).'</td></tr>';
 		    }

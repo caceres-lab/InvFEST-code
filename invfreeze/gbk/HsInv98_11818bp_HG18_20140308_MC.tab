@@ -1,0 +1,19 @@
+Primer	A1	5238	5258	+
+SINE	AluSz	5273	5580	+
+Microhomology	MH1-1	5286	5290	+
+Inverted_Repeat	IR1 (86% id.)	5286	5583	+
+Complex_inversi	BP1	5290	5309	+
+Microhomology	MH3-1	5290	5309	+
+Complex_inversi	Inverted region	5309	6259	+
+Primer	B1	5657	5679	-
+Primer	C1	5751	5771	+
+Microhomology	MH2-1	6232	6236	+
+Indel	14-bp duplication in ABC10	6236	6250	+
+Microhomology	MH1-2	6250	6254	-
+Microhomology	MH2-2	6256	6260	+
+Complex_inversi	BP2	6259	6953	+
+Indel	694-bp deletion in ABC10	6259	6953	+
+Inverted_Repeat	IR2 (86% id.)	6660	6957	-
+SINE	AluSz6	6694	6970	-
+Microhomology	MH3-2	6934	6953	-
+Primer	D1	7404	7425	-

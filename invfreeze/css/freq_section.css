@@ -1,0 +1,63 @@
+/* START - Icon, centered with the text */
+image.custom_icon{
+    margin:auto;
+    vertical-align:middle;
+}
+/* END   - Icon, centered with the text */
+
+/* START - Populations table in "Frequency" section */
+	table.popTable{
+		margin:0px;
+		padding:0px;
+		width:100%;
+		border-collapse: collapse;
+	
+	}table.popTable table{
+		border-spacing: 0;
+	
+	}table.popTable th{
+        vertical-align: middle;
+        background-color: #f5f5f9;
+        border: 1px solid #cccccc;
+        text-align: center;
+        font-size: 1.02em;
+        font-weight: bolder;
+        color: #000000;
+
+    }table.popTable th:nth-child(1){
+		text-align:right;
+	
+	}table.popTable tr:hover td{
+		background-color:#f5f5f9;
+	
+	}table.popTable td{
+		vertical-align:middle;
+		background-color:#ffffff;
+		border: 1px solid #cccccc;
+		text-align:center;
+		padding:0.08em;
+		font-size: 1em;
+		font-weight:normal;
+		color:#000000;
+        
+	}table.popTable td.popName{
+		background-color:#f5f5f9;
+        font-weight:bold;
+        text-align:right;
+	
+	}table.popTable tr td:nth-child(1) {
+		width:19%;
+	}table.popTable tr td:nth-child(2) {
+		width:18%;
+	}table.popTable tr td:nth-child(3) {
+		width:9%;
+	}table.popTable tr td:nth-child(4) {
+		width:9%;
+	}table.popTable tr td:nth-child(5) {
+		width:9%;
+	}table.popTable tr td:nth-child(6) {
+		width:9%;
+	}table.popTable tr td:nth-child(7) {
+		width:27%;
+	}
+/* END   - Populations table in "Frequency" section */

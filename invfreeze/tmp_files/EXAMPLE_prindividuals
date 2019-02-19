@@ -1,0 +1,73 @@
+
+
+    ########################################
+    #					   #
+    #	PREDICTION INDIVIDUALS INPUT HELP  #
+    #					   #
+    ########################################
+
+ In the case of a correct prediction data input, the corresponding individuals will join to the prediction information. 
+
+ REQUIRED FORMAT
+-------------------------------------	
+ Tab-separated (\t) columns 
+
+ Header:
+
+	code	gender	population	region	family	relationship	genotype	allele_comment	allele_level	panel	other_code	
+	code\tgender\tpopulation\tregion\tfamily\trelationship\tgenotype\tallele_comment\tallele_level\tpanel\tother_code	
+
+ Line structure:
+
+	ID 	code	gender	population	region	family	relationship	genotype	allele_comment	allele_level	panel	other_code	
+	ID\tcode\tgender\tpopulation\tregion\tfamily\trelationship\tgenotype\tallele_comment\tallele_level\tpanel\tother_code	
+
+ Real Example line (without allele_comment, allele_level, panel, other_code): 
+
+	1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV
+	1\tNA12156\tFemale\tCEU\tEurope\t1408-13\tMaternal Grandmother\tINV/INV
+
+ EXTENDED EXAMPLE 1: two out of three predictions have some shared individuals 
+-------------------------------------------------------------------------------
+
+	> INDIVIDUALS FILE
+
+code	gender	population	region	family	relationship	genotype	allele_comment	allele_level											
+1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+1	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																							
+1	NA18555	Female	CHB	Asia	none	unrelated	INV/INV													
+1	NA18956	Female	JPT	Asia	none	unrelated	STD/INV													
+1	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+1	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+1	HuRef 	Male	Unknown	Europe	none	unrelated	INV/INV		
+2	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+2	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																								
+2	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+2	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+2	HutestRef 	Male	Unknown	Europe	none	unrelated	INV/INV	
+
+	> PREDICTIONS FILE
+
+1:chr10:127180574:127180574:FALSE:127187215:127187215:FALSE:INVFEST curation:CINV_delly_INV00003655
+2:chr10:127180623:127180623:FALSE:127188511:127188511:FALSE:INVFEST curation:CINV_delly_INV00003656
+3:chr10:127180222:127180222:FALSE:127187999:127187999:FALSE:INVFEST curation:CINV_delly_INV00003657
+
+ EXTENDED EXAMPLE 2: two predictions have exactly the same individuals
+------------------------------------------------------------------------
+
+	> INDIVIDUALS FILE
+
+code	gender	population	region	family	relationship	genotype	allele_comment	allele_level											
+1	NA12156	Female	CEU	Europe	1408-13	Maternal Grandmother	INV/INV													
+1	NA12878	Female	CEU	Europe	1463-2	Mother	STD/INV																							
+1	NA18555	Female	CHB	Asia	none	unrelated	INV/INV													
+1	NA18956	Female	JPT	Asia	none	unrelated	STD/INV													
+1	NA19129	Female	YRI	Africa	Y077	Child	STD/INV													
+1	NA19240	Female	YRI	Africa	Y117	Child	INV/INV													
+1	HuRef 	Male	Unknown	Europe	none	unrelated	INV/INV		
+
+	> PREDICTIONS FILE
+
+1:chr10:127180574:127180574:FALSE:127187215:127187215:FALSE:INVFEST curation:CINV_delly_INV00003655
+1:chr10:127180623:127180623:FALSE:127188511:127188511:FALSE:INVFEST curation:CINV_delly_INV00003656
+

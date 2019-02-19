@@ -1,0 +1,17 @@
+Primer	A1	30598	30618	+
+Complex_inversi	BP1	30715	30718	+
+Microhomology	MH1-1	30715	30718	+
+Indel	14-bp deletion in ABC7	30718	30732	+
+Complex_inversi	BP2	30732	30737	+
+Microhomology	MH2-1	30732	30737	+
+Complex_inversi	Inverted region	30737	32568	+
+Primer	B1	31596	31616	-
+Primer	C2	31805	31825	+
+Primer	C1	32094	32114	+
+Complex_inversi	BP3	32568	32573	+
+Microhomology	MH2-2	32568	32573	-
+Indel	980-bp inverted duplication in ABC7	32568	33548	+
+Primer	D1	33494	33516	-
+Complex_inversi	BP4	33548	33551	+
+Microhomology	MH1-2	33548	33551	-
+Primer	D2	33684	33704	-

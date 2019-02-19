@@ -1,0 +1,19 @@
+Primer	A1	24075	24095	+
+Complex_inversi	BP1	24192	24195	+
+Inverted_repeat	IR1 100% id.	24192	25176	+
+Indel	981-bp inverted duplication	24195	25176	+
+Indel	14-bp deletion	24195	24195	+
+Primer	D1	24228	24250	+
+Complex_inversi	Inverted region	25176	27005	+
+Primer	C1	25628	25648	-
+Primer	C2	25917	25937	-
+Primer	B1	26126	26146	+
+Alu	AluSx	26400	26603	-
+Indel	613-bp deletion in NA12878	26427	27040	+
+LINE	L1PB4	26604	26732	-
+LINE	L1PA16	26733	27010	-
+Complex_inversi	BP2	27005	27010	+
+Inverted_repeat	IR2 100% id.	27005	27988	-
+Alu	AluYi6	27010	27079	-
+Primer	D1	27931	27953	-
+Primer	D2	28121	28141	-

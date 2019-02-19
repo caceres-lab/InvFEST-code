@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+
+        <script src="../js/autocomplete/jquery.js"></script>
+	    <script src="../js/autocomplete/dimensions.js"></script>
+	    <script src="../js/autocomplete/autocomplete.js"></script>
+
+	    <link rel="stylesheet" type="text/css" href="../css/autocomplete.css" media="screen" />
+	    <script>
+		    $(function(){
+			    setAutoComplete("searchValMethod", "results", "autocomplete_valmethod.php?part=");  
+                //setAutoComplete("searchValMethod", "results", "php/fosmids_autocomplete.php?part=");  
+	            //ID of input field + ID of the div that will hold the returned data + URL
+		    });
+	    </script>
+
+        <!--
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="http://jqueryui.com/progressbar/resources/demos/style.css" />
+
+	    <script>
+            $(function() {
+                var availableTags = [
+                "ActionScript",
+                "AppleScript",
+                "Asp",
+                "BASIC",
+                "C",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+                ];
+                $( "#searchValMethod" ).autocomplete({
+                    source: availableTags
+                });
+            });
+	    </script>
+        -->
+
+    </head>
+    <body>
+        
+    </body>
+</html>

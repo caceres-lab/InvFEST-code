@@ -1,0 +1,13 @@
+LTR	.	22288	22738	+
+LTR	LTR/HERV-H	22288	26481	+
+Primer	Primer A2	23868	23889	+
+Primer	Primer A1	25437	25461	+
+Inversion	BP1	26497	26498	+
+Primer	Primer B2	26515	26537	-
+Primer	Primer B1	27159	27181	-
+LTR	.	36407	36854	-
+LTR	LTR/HERV-H	36407	38033	-
+Primer	Primer C1	37150	37173	+
+Inversion	BP2	38033	38033	+
+Indel	2-bp deletion	38033	38033	+
+Primer	Primer D1	38044	38068	-

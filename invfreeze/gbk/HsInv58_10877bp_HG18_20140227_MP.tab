@@ -1,0 +1,21 @@
+LTR	MLT1E3	3048	3333	-
+LTR	MLT1D	3384	3579	+
+SINE	AluSg4	3579	3876	+
+LTR	MLT1D	3876	4171	+
+LTR	ERVL-E-int	4171	4554	-
+Primer	A1	4557	4577	+
+LTR	LTR33B	4894	5002	-
+Complex_inversi	BP1	4999	5002	+
+Microhomology	.	4999	5002	+
+Complex_inversi	Inverted region	5002	5876	+
+DNAtransposon	MER63C	5072	5119	+
+Primer	B1	5447	5467	-
+Primer	C1	5447	5467	+
+SINE	Aluy	5506	5832	-
+SINE	PB1D11	5835	5886	-
+Complex_inversi	BP2	5876	5876	+
+Indel	2818-bp deletion	5876	5876	+
+SINE	AluSg	6073	6381	-
+Repeat_element	L3	6987	7094	-
+Repeat_element	L3	7140	7229	-
+SINE	AluSz6	7673	7968	-

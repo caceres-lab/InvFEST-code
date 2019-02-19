@@ -1,0 +1,11 @@
+Primer	A1	32443	32465	+
+Inverted_repeat	IR1	32740	32780	+
+Inversion	BP1	32780	32780	+
+Primer	B1	32861	32881	-
+Primer	C1	33132	33152	+
+Direct_repeat	DR2	33797	33817	-
+Inverted_repeat	IR2	33817	33857	-
+Direct_repeat	DR1	33857	33874	-
+Inversion	BP2	33874	33874	+
+Indel	2-bp deletion	33874	33874	+
+Primer	D1	34027	34049	-

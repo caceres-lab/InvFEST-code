@@ -1,0 +1,9 @@
+Primer	A1	4775	4799	+
+Complex_inversi	BP1	4994	5003	+
+Indel	Inverted duplication	5001	5003	-
+Complex_inversi	Inverted region	5003	5309	+
+Primer	B1	5019	5040	-
+Primer	C1	5077	5100	+
+Complex_inversi	BP2	5309	5318	+
+Indel	Inverted duplication	5309	5316	+
+Indel	618-bp deletion	5318	5318	+
