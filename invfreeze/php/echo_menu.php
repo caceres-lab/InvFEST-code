@@ -10,14 +10,16 @@
 ?>
 
 <!-- Add an image to distinguish when the developer is working on DEV-platform -->
-<?php if($db == 'INVFEST-DB-dev') { ?>
-	<div class="classDiv_Centered">
-	    <img class="classImg_centered" src="img/invfest_dev.png" width="200">
-	</div>
-<?php } ?>
+<?php #if($db == 'INVFEST-DB-dev') { ?>
+	<!-- <div class="classDiv_Centered"> -->
+	    <!-- <img class="classImg_centered" src="img/invfest_dev.png" width="200"> -->
+	<!-- </div> -->
+<?php #} ?>
 	<div class="classDiv_Centered">
 	    <img class="classImg_centered" src="img/invfest_freeze.png" width="200">
 	</div>
+
+	<a href="../index.php"><button class="default">Return to InvFEST</button></a></li>
 <!-- Define InvFEST header -->
 <div id="wrapper">
 
