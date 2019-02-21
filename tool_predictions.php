@@ -419,7 +419,7 @@
 
 			            //BreakSeq execution
 			            //---------------------------------------------------------------------------
-				            exec("nohup ./run_breakseq.sh > /dev/null 2>&1 &");
+				            exec("nohup ./php/run_breakseq.sh > /dev/null 2>&1 &");
            			
 					?>
 		    	</tbody>
