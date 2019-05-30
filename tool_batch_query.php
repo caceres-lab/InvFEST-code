@@ -52,20 +52,19 @@
 	if(!isset($outputname) || trim($outputname) == ''){$outputname="output.txt";}
 
 
-	if (isset( $_POST['add_bp'])){$Err1 = $_POST['add_bp'];}
-	if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
+	// if (isset( $_POST['add_bp'])){$Err1 = $_POST['add_bp'];}
+	// if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
 
-	// if (isset ($_POST['accutare_filter_value']) || isset($_POST['submit']) ) {
-	// 	if (isset( $_POST['add_bp'])){$Err1 = $_POST['add_bp'];}
-	// 	if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
-	// } else if isset($_POST['overlap_search']){
-	// 	if (isset( $_POST['add_bp3'])){$Err1 = $_POST['add_bp3'];}
-	// 	if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
-	// 	if (isset($_POST['overlap_percent'])){
-	// 		$overlap_percent = 	$_POST['overlap_percent'];	
-	// 	}
-	// 	if (isset($_POST['internal'])){$internal == TRUE; }
-	// }
+	if (isset ($_POST['accutare_filter_value']) || isset($_POST['submit']) ) { # If is button 1 or 2
+		if (isset( $_POST['add_bp'])){$Err1 = $_POST['add_bp'];}
+		if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
+	} elseif (isset($_POST['overlap_search']) ) { # If it is button 3
+		if (isset( $_POST['add_bp3'])){$Err1 = $_POST['add_bp3'];}
+		if(!isset($Err1) || trim($Err1) == ''){$Err1="0";}
+			if (isset($_POST['overlap_percent'])){$overlap_percent = $_POST['overlap_percent'];	
+		}else{$overlap_percent = 100;}
+		if (isset($_POST['internal'])){$internal = TRUE;}else{$internal = FALSE;}
+	}
 
 
 	//Input file parsing//
@@ -90,7 +89,7 @@
 	fwrite($output, $header);
 
 	$array_results= array();
-	$rowCount="0";
+	// $rowCount="0";
 	$echoarray = array();
 	
 	foreach ($query_inv as $line) {
@@ -321,7 +320,7 @@
 			
 			
 
-			$rowCount++;
+			// $rowCount++;
 			$name=$row[name];
 			$chr=$row[chr];
 			$bp1_start=$row[bp1_start];
@@ -352,14 +351,41 @@
 			
 			}
 
+			
+			if (isset($_POST['overlap_search'])){
+				if ($internal == TRUE){
+					
+					
+					$length_overlap = min(($q_bp2_start - $Err1),$bp2_start) - max($bp1_end, ($q_bp1_end + $Err1)) ;
+					$length_query = ($q_bp2_start - $Err1) - ($q_bp1_end + $Err1);
+					$length_inversion = $bp2_start-$bp1_end;
+					$overlap_query = $length_overlap/$length_query*100;
+					$overlap_inversion = $length_overlap/$length_inversion*100;
 
+					if ($overlap_query >= $overlap_percent && $overlap_inversion >= $overlap_percent){
+						$permission = TRUE;
+					}else{$permission = FALSE;}
+	   			}else{
+	   				// $match_condition = "(($q_bp1_start - $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ($q_bp2_end + $Err1 BETWEEN b.bp1_start AND b.bp2_end) OR ( $q_bp1_start - $Err1 <= b.bp1_start AND $q_bp2_end + $Err1 >= b.bp2_end))";
+	   				$length_overlap = min(($q_bp2_end + $Err1),$bp2_end) - max($bp1_start, ($q_bp1_start - $Err1)) ;
+					$length_query = ($q_bp2_end + $Err1) - ($q_bp1_start - $Err1);
+					$length_inversion = $bp2_end-$bp1_start;
+					$overlap_query = $length_overlap/$length_query*100;
+					$overlap_inversion = $length_overlap/$length_inversion*100;
+					if ($overlap_query >= $overlap_percent && $overlap_inversion >= $overlap_percent){
+						$permission = TRUE;
+					}else{$permission = FALSE;}
+	   			}
+			}else{$permission = TRUE;}
 		
-			$inversion= "$ID\t$name\t$query_position\t$position_hg18\t$size\t$status\t$freq\t$effect\n";
-			$inversion2 =  $ID."|".$row[name]."|".$row[inv_id]."|".$query_position."|".$position_hg18."|".$size."|".$row[status]."|".$freq."|".$row[genomic_effect];
-			// echo $inversion2;
-			$array_results[] = $inversion2;
-			// $array_results[] = $ID.",".$row[name].",".$row[inv_id].",".$query_position.",".$position_hg18.",".$size.",".$row[status].",".$freq.",".$row[genomic_effect];
-			fwrite($output, $inversion);
+			if ($permission == TRUE){
+				$inversion= "$ID\t$name\t$query_position\t$position_hg18\t$size\t$status\t$freq\t$effect\n";
+				$inversion2 =  $ID."|".$row[name]."|".$row[inv_id]."|".$query_position."|".$position_hg18."|".$size."|".$row[status]."|".$freq."|".$row[genomic_effect];
+				// echo $inversion2;
+				$array_results[] = $inversion2;
+				// $array_results[] = $ID.",".$row[name].",".$row[inv_id].",".$query_position.",".$position_hg18.",".$size.",".$row[status].",".$freq.",".$row[genomic_effect];
+				fwrite($output, $inversion);
+			}
 		}
 	}
 
@@ -398,7 +424,7 @@
 <!-- **************************************************************************** -->
 <br />
 <div id="search_results">
-	<div class="section-title TitleA">-  <b> <?php echo $rowCount; ?></b> inversions found <form style="display: inline;" method="post" action="php/invfest_finder_download_matched_inversions.php"><input type="image" class='download'  src="img/download.png" name='pathoutput' title='Download table' alt="Submit Form" width='14' height='14' > <input  type='hidden'  name='pathoutput' value="<?php echo $outputpath;?>"></div>
+	<div class="section-title TitleA">-  <b> <?php echo(sizeof($array_results)); ?></b> inversions found <form style="display: inline;" method="post" action="php/invfest_finder_download_matched_inversions.php"><input type="image" class='download'  src="img/download.png" name='pathoutput' title='Download table' alt="Submit Form" width='14' height='14' > <input  type='hidden'  name='pathoutput' value="<?php echo $outputpath;?>"></div>
 	<div class='section-content'>
 	    <div id="results_table">
 		    <table id="sort_table2" width="100%">

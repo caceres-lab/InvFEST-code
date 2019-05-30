@@ -74,13 +74,16 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	Giglio et al. 2002
 	Gilling et al. 2006
 	Gimelli et al. 2003
+	Giner-Delgado et al. 2018
 	Hasin et al. 2008
 	Hehir-Kwa et al. 2016
 	Hobart et al. 2010
 	INVFEST curation
+	InvFEST Preliminary Updates
 	Kehr et al. 2017
 	Koolen et al. 2006
 	Korbel et al. 2007
+	Lerga et al. in prep.
 	Levy et al. 2007
 	Lucas-Lledo et al. 2014
 	Martin et al. 2004
@@ -90,6 +93,7 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	Pang et al. 2010
 	Pang et al. 2013
 	Puig et al. 2015
+	Puig et al. 2019
 	Salm et al. 2012
 	Small et al. 1997
 	Stefansson et al. 2005
@@ -99,6 +103,8 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	Teague et al. 2010
 	Turner et al. 2006
 	Vicente-Salvador et al. 2017
+	Villatoro et al. 2013a
+	Villatoro et al. 2013b
 	Wang et al. 2008
 	Young et al. 2008
 	Zody et al. 2008
@@ -111,6 +117,7 @@ An updated list with the available methods is provided.
 
 Chromosome-specific assembly
 	Comparative analysis
+	Droplet digital PCR (ddPCR)
 	Fluorescence in situ hybridization (FISH)
 	Fosmid sequence analysis
 	Genome sequence assembly update
@@ -118,6 +125,7 @@ Chromosome-specific assembly
 	Genotype predicted by tag-SNPs
 	Haplotype definition by microsatellite loci genotyping
 	Haplotype-fusion PCR (HF-PCR)
+	Inverse multiplex ligation-dependent probe amplification (iMLPA)
 	Inverse polymerase chain reaction (iPCR)
 	Karyotype analysis
 	Multiplex ligation-dependent probe amplification (MLPA)
@@ -126,6 +134,7 @@ Chromosome-specific assembly
 	Pulsed field gel electrophoresis (PFGE)
 	Sequence analysis
 	Southern blot analysis
+	Various
 
 
   FIELD OPTIONS - Status
@@ -146,109 +155,4 @@ An updated list with the available status is provided.
 An updated list with the available populations is provided. 	
 
 
-	Adygei (Europe (EUR))
-	African American (Africa (AFR))
-	African Caribbeans (Africa (AFR))
-	Bakola (Africa (AFR))
-	Balochi (South Asia (SAS))
-	Bantu Kenya (Africa (AFR))
-	Bantu South Africa (Africa (AFR))
-	Bedouin (Middle East/North Africa (MENA))
-	Beja (Africa (AFR))
-	Bengali (South Asia (SAS))
-	Biaka (Africa (AFR))
-	Boni (Africa (AFR))
-	Borana (Africa (AFR))
-	Brahui (South Asia (SAS))
-	British (Europe (EUR))
-	Bulala (Africa (AFR))
-	Burusho (South Asia (SAS))
-	Cambodian (East Asia (EAS))
-	Caucasian (Europe (EUR))
-	Chagga (Africa (AFR))
-	Colombia natives (America - Natives (AMN))
-	Colombian (America - Admixed (AMR))
-	Dai Chinese (East Asia (EAS))
-	Danish (Europe (EUR))
-	Datog (Africa (AFR))
-	Daur (East Asia (EAS))
-	Druze (Middle East/North Africa (MENA))
-	Esan (Africa (AFR))
-	Finnish (Europe (EUR))
-	French (Europe (EUR))
-	French Basque (Europe (EUR))
-	Fulani (Africa (AFR))
-	Gambian (Africa (AFR))
-	Gujarati Indians (South Asia (SAS))
-	Hadza (Africa (AFR))
-	Han Chinese South (East Asia (EAS))
-	Han Chinese (East Asia (EAS))
-	Hazara (South Asia (SAS))
-	Hezhen (East Asia (EAS))
-	Hungarian (Europe (EUR))
-	Iberian (Europe (EUR))
-	Iraqw (Africa (AFR))
-	Japanese (East Asia (EAS))
-	Kachari (South Asia (SAS))
-	Kalash (South Asia (SAS))
-	Karitiana (America - Natives (AMN))
-	Lahu (East Asia (EAS))
-	Lemande (Africa (AFR))
-	Luhya (Africa (AFR))
-	Luo (Africa (AFR))
-	Maasai (Africa (AFR))
-	Makrani (South Asia (SAS))
-	Malay (East Asia (EAS))
-	Mandara (Africa (AFR))
-	Mandenka (Africa (AFR))
-	Maya (America - Natives (AMN))
-	Mbuti (Africa (AFR))
-	Melanesian (Oceania (OCE))
-	Mende (Africa (AFR))
-	Mexican (America - Admixed (AMR))
-	Miaozu (East Asia (EAS))
-	Mongola (East Asia (EAS))
-	Mozabite (Middle East/North Africa (MENA))
-	Naxi (East Asia (EAS))
-	North Italian (Europe (EUR))
-	Northwestern European (Europe (EUR))
-	Orcadian (Europe (EUR))
-	Oroqen (East Asia (EAS))
-	Palestinian (Middle East/North Africa (MENA))
-	Papuan (Oceania (OCE))
-	Pathan (South Asia (SAS))
-	Peruvian (America - Admixed (AMR))
-	Pima (America - Natives (AMN))
-	Puerto Ricans (America - Admixed (AMR))
-	Punjabi (South Asia (SAS))
-	Quechua (America - Natives (AMN))
-	Russian (Europe (EUR))
-	Samaritan (Middle East/North Africa (MENA))
-	Sandawe (Africa (AFR))
-	San (Africa (AFR))
-	Sardinian (Europe (EUR))
-	Sengwer (Africa (AFR))
-	She (East Asia (EAS))
-	Sindhi (South Asia (SAS))
-	Sri Lankan (South Asia (SAS))
-	Surui (America - Natives (AMN))
-	Taiwan Chinese (East Asia (EAS))
-	Telugu Indians (South Asia (SAS))
-	Toscan (Europe (EUR))
-	Tu (East Asia (EAS))
-	Tujia (East Asia (EAS))
-	Unknown (Unknown)
-	Uygur (East Asia (EAS))
-	Vietnamese (East Asia (EAS))
-	Xibo (East Asia (EAS))
-	Yakut (Central Asia (CAS))
-	Yizu (East Asia (EAS))
-	Yoruba (Africa (AFR))
-	CEU (Europe)
-	YRI (Africa)
-	CHB (Asia)
-	JPT (Asia)
-	CDX (East Asia)
-	GIH (South Asia)
-	LWK (Africa)
-	TSI (Europe)
+	
