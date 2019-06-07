@@ -1,0 +1,14 @@
+
+		<div class="grlsection-content ContentA">
+			<?php
+			if($db == 'INVFEST-DB-PUBLIC'){?>
+				<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="image_db_public.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit -->
+			<?php
+				; }
+				if($db == 'INVFEST-DB'){
+			?>
+
+			<a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgS_doOtherUser=submit&hgS_otherUserName=InvFEST&hgS_otherUserSessionName=InvFEST&db=hg18&position=<?php echo $r['chr'];?>:<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>" target="_blank"><img id="region" src="image_db_private.pl<?php echo $perlurl; ?>" /> </a>  <!-- http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=<?php echo $r['chr'];?>%3A<?php echo $start_image; #$pos['inicio']?>-<?php echo $end_image; #$pos['fin']?>&Submit=submit --><?php ; } ?>		
+	
+		</div>
+		
