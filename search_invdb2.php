@@ -173,11 +173,11 @@
 	
 	    if (($matches[2] != "") and ($matches[3] != "")) {  //chrX:1-200
 	
-		    $where[] = "(inversions.chr='$matches[1]' AND ((inversions.range_start BETWEEN $matches[2] AND $matches[3]) OR (range_end BETWEEN $matches[2] AND $matches[3])))";
+		    $where[] = "(inversions.chr='$matches[1]' AND ((inversions.range_start BETWEEN $matches[2] AND $matches[3]) OR (inversions.range_end BETWEEN $matches[2] AND $matches[3])))";
 		
 	    } else if ($matches[2] != "") {  //chrX:1-
 	
-		    $where[] = "(inversions.chr='$matches[1]' AND range_end >= $matches[2])";	
+		    $where[] = "(inversions.chr='$matches[1]' AND inversions.range_end >= $matches[2])";	
 	
 	    } else if ($matches[3] != "") {  //chrX:-200
 	
@@ -222,7 +222,7 @@
     //		echo "cytoband start_coord: $cytoband_chromStart <br>";
     //		echo "cytoband end_coord: $cytoband_chromEnd <br><br>";	
 	
-		    $where[] = "(inversions.chr='$cytoband_chrom' AND ((inversions.range_start BETWEEN $cytoband_chromStart AND $cytoband_chromEnd) OR (range_end BETWEEN $cytoband_chromStart AND $cytoband_chromEnd)))";
+		    $where[] = "(inversions.chr='$cytoband_chrom' AND ((inversions.range_start BETWEEN $cytoband_chromStart AND $cytoband_chromEnd) OR (inversions.range_end BETWEEN $cytoband_chromStart AND $cytoband_chromEnd)))";
 	    }
 	
 	    $where[] = "(LOWER(inversions.`status`) != 'withdrawn')";

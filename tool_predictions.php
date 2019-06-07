@@ -198,22 +198,25 @@
 					        user_id_val INT)
 					        */
 
-				            // $f="CALL setup_pred_to_inv_merge('$chr', '$bp1s', '$bp1e', '$bp2s', '$bp2e','$study_name', '".$_SESSION["userID"]."')";
+				            // $f="CALL add_prediction('$chr', '$bp1s', '$bp1e', '$bp2s', '$bp2e','$study_name', '".$_SESSION["userID"]."')";
 				            // echo $f;
 
-
-			        		$add_prediction = mysql_query("CALL setup_pred_to_inv_merge('$chr', '$bp1s', '$bp1e', '$bp2s', '$bp2e','$study_name', '".$_SESSION["userID"]."')");
-		          		
-							if (!$add_prediction) {
-				           	
-				           		die('Error when adding prediction: ' . mysql_error());
-				        	}
+			        		$query="CALL add_prediction('$chr', '$bp1s', '$bp1e', '$bp2s', '$bp2e','$study_name', '".$_SESSION["userID"]."',@split);";
+		          			
+			        		$result = mysql_query($query) or die("Query fails when performing add_prediction procedure: " . mysql_error());
+							while($row = mysql_fetch_array($result)) {
+								$splitmess=$row[0];
+							}
+							
+							if ($splitmess != '') {
+								echo ('Some of the merged inversions had undergone a split event previously: '.$splitmess);
+							}
 
 					        $sql_get_inv = "SELECT i.id
 						          FROM inversions AS i JOIN predictions AS p ON i.id = p.inv_id where  p.research_name = '$study_name' and p.research_id = 
 						         (SELECT max(research_id) FROM predictions WHERE research_name = '$study_name');";
 					       
-			       			 // echo "$sql_get_inv<br>";
+			       			// echo "$sql_get_inv<br>";
 
 			        		$result_get_inv = mysql_query($sql_get_inv);
 			        		sleep(1);
@@ -230,7 +233,7 @@
 					        $sql_between = "UPDATE breakpoints SET bp1_between='$betweenbp1', bp2_between = '$betweenbp2' WHERE inv_id = $inv_id;";
 					        $result_between = mysql_query($sql_between);
 					        
-					         // echo "$sql_between <br>";
+					        // echo "$sql_between <br>";
 				        
 				        	if (!$result_between) {
 				           	
@@ -238,17 +241,18 @@
 				        	}
 				
 				        	//  Add "prediction name" information to the database //	
-				        	 $sql_get_id = "SELECT id FROM predictions AS p where  p.research_name = '$study_name'  and inv_id = '$inv_id' and p.research_id = 
+				        	
+
+						        $sql_get_id = "SELECT id FROM predictions AS p where  p.research_name = '$study_name'  and inv_id = '$inv_id' and p.research_id = 
 						         (SELECT max(research_id) FROM predictions WHERE research_name = '$study_name') ;";
 						        
 						        $result_get_id = mysql_query($sql_get_id);
 						        while ($id = mysql_fetch_array($result_get_id)){
 						        	$pred_id = $id['id'];
 						        }	
+						    if ($prediction_name != ""){
 
-				        	if ($prediction_name != ""){
-
-						       						        $sql_name = "UPDATE predictions SET prediction_name='$prediction_name' WHERE id = $pred_id;";
+						        $sql_name = "UPDATE predictions SET prediction_name='$prediction_name' WHERE id = $pred_id;";
 						        $result_name = mysql_query($sql_name);
 						        if (!$result_name) {		           	
 					           		die('Error when inserting PREDICTION NAME from the input box to the db: ' . mysql_error());
@@ -256,8 +260,7 @@
 				       		}
 
 
-				       		// Add individuals associated to the prediction			
-       		
+				       		// Add individuals associated to the prediction				       		
 
 							if ($individuals_array != ""){
 								$indiv_array = array();
@@ -385,7 +388,7 @@
 					        echo "<tr>"; 
 
 					        	// sleep(1); 
-				   		}
+				        }
             			
             			fclose($fh);
 

@@ -9,3 +9,4 @@ sql/MySQL_permissions.sql
 sql/mysqldump_InvFESTdb_public.sh
 old_invdb/*
 jbrowse/*
+mysql_procedures/INVFEST-DB.sql
