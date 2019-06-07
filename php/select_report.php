@@ -201,10 +201,11 @@
 
             $echo_predictions.= "<table width='100%'".$change_format.">";
 
-         
+            //if ($thisrow['prediction_name'] != ""){
+
                 $echo_predictions.="<tr><td class='title' width='18%'>Name</td><td colspan='3'>".$thisrow['prediction_name']."</td></tr>
                             <tr>";
-         
+            //} 
 
            $echo_predictions.=" <tr><td class='title' width='18%'>Breakpoint 1</td><td>".$thisrow['chr'].":".$thisrow['BP1s']."-".$thisrow['BP1e']."</td>
                 <td class='title' width='18%'>Breakpoint 2</td><td>".$thisrow['chr'].":".$thisrow['BP2s']."-".$thisrow['BP2e']."</td></tr>";
@@ -1063,6 +1064,119 @@
         $checkpoint_fngpopulation[] = $thisrow['name'].' ('.$thisrow['region'].')';
     }
 
+
+
+  //   ## POPULATION GENOMICS
+    $echo_popgenom='
+        <table width="100%">
+  <tr>
+    <td align="center" class="title" colspan=2>Statistic</th>
+    <td align="center" class="title">AFR<br></th>
+    <td align="center" class="title">EUR<br></th>
+    <td align="center" class="title">SAS<br></th>
+    <td align="center" class="title">EAS<br></th>
+    <td align="center" class="title">AMR<br></th>
+  </tr>';
+
+
+ 
+    $sql_popgenom = "SELECT * FROM pophuman_data p WHERE inv_id = ".$id."  ORDER BY    FIELD (p.statistic, 'Pi', 'Tajima_D', 'FayWu_H', 'iHS', 'recomb') , FIELD (p.value, 'mean','pvalue_pop','pvalue')";
+    $result_popgenom=mysql_query($sql_popgenom);
+
+
+    while($thisrow = mysql_fetch_array($result_popgenom)){
+
+        $format_pre="";
+        $format_post="";
+
+        $statistic=$thisrow['statistic'];
+        $value=$thisrow['value'];
+        $afr=$thisrow['afr'];
+        $amr=$thisrow['amr'];
+        $eas=$thisrow['eas'];
+        $eur=$thisrow['eur'];
+        $sas=$thisrow['sas'];
+        $general=$thisrow['general'];
+
+        if ($statistic == "recomb" & $value == "mean"){
+            $special = "print";
+        }else if ( $statistic == "recomb" & $value  != "mean"){
+            $special = "noprint";
+        }else{
+            $special="normal";
+        }
+
+
+        if($statistic == "FayWu_H"){
+            $statistic="Fay and Wu's H";
+        }else if($statistic == "Tajima_D"){
+            $statistic="Tajima's D";
+       }else if ($statistic == "recomb"){
+            $statistic = "Recombination  (Bherer et al. 2017)";
+       }
+
+
+        if($value == "mean"){
+            $value="Metapopulation mean";
+     
+        }else if($value == "pvalue_pop"){
+            $value="Population with the most extreme window p-value";
+        }else{
+            $value = "Most extreme window p-value";
+            $format_pre='<font color="orange"> ';
+            $format_post='</font>';
+        }
+
+
+       
+        if(($statistic_current != $statistic) & ($statistic != "Pi"  )){         
+             $echo_popgenom.='  <tr height="10"><td></td></tr>
+                                <tr> <td align="center" class="title" rowspan=3>'.$statistic.'</td>';
+            $statistic_current=$statistic;
+        }else  if(($statistic_current != $statistic) & ($statistic == "Pi"  )){
+            $echo_popgenom.=' <tr> <td align="center" class="title" rowspan=3>'.$statistic.'</td>';
+             $statistic_current=$statistic;
+        }   else{
+            $echo_popgenom.='<tr>';
+        } 
+ 
+        if ($special == "print"){
+                $echo_popgenom.='
+                         <td class="title" align = "center">Mean</td>
+                        <td align="center" colspan=5>'.$general.'</td>
+                         </tr>';
+                     
+
+        } else if ($special == "normal") {   
+            $echo_popgenom.=' <td class="title" align = "center">'.$value.'</td>';
+            $array_pops=array($afr, $eur, $sas, $eas, $amr);
+
+            foreach ($array_pops as $key => $content) {
+                if ($content < 0.05) {
+                    $echo_popgenom.='<td align="center">'.$format_pre.$content.$format_post.'</td>';
+                }else{
+                 $echo_popgenom.='<td align="center">'.$content.'</td>';
+                }
+            }
+            // $echo_popgenom.='
+            //             <td class="title" align = "center">'.$value.'</td>
+            //             <td align="center">'.$afr.'</td>
+            //             <td align="center">'.$eur.'</td>
+            //             <td align="center">'.$sas.'</td>
+            //             <td align="center">'.$eas.'</td>
+            //             <td align="center">'.$amr.'</td>';
+            
+
+            $echo_popgenom.='</tr>';
+
+        }
+
+     
+
+
+    }
+
+    $echo_popgenom.="</table>";
 
     //###Breakpoints
     //los campos de esta seccion ya estan incluidos en la busqueda (A)

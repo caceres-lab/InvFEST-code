@@ -18,9 +18,9 @@
 
 
 # PREDICTIONS HELP
-
+	$pred_path = "/var/www/html/invdb/tmp_files";
 	$pred_name = "EXAMPLE_predictions";
-	$pred_path = "tmp_files/".$pred_name;
+	$pred_path = $path.$pred_name;
 	$pred_text = "
     #######################################
     #					  #
@@ -73,7 +73,7 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 # PREDICTION INDIVIDUALS HELP
 
 	$prind_name = "EXAMPLE_prindividuals";
-	$prind_path = "tmp_files/".$prind_name;
+	$prind_path = $path.$prind_name;
 	$prind_text = "
 
     ########################################
@@ -156,7 +156,7 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 #  VALIDATIONS HELP
 
 	$val_name = "EXAMPLE_validations";
-	$val_path = "tmp_files/".$val_name;
+	$val_path = $path.$val_name;
 	$val_text = "
 
     ########################################
@@ -268,7 +268,7 @@ An updated list with the available populations is provided.
 # VALIDATION INDIVIDUALS HELP
 
 	$ind_name = "EXAMPLE_individuals";
-	$ind_path = "tmp_files/".$ind_name;
+	$ind_path = $path.$ind_name;
 	$ind_text = "
 
     ########################################

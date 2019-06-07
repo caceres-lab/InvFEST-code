@@ -90,7 +90,12 @@
 
 	    //Llamamos a la funcion add_validation:
         #$f="SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id";
-	    $sql_validation_id = mysql_query("SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id");
+	   
+
+	    $sql_validation_id = mysql_query("SELECT update_validation('ADD', '$inv_id', '$research_name', NULL, '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id;");
+
+
+	    
         #echo $f;
 	    $r= mysql_fetch_array($sql_validation_id);
 	    $validation_id = $r['id'];

@@ -8,3 +8,4 @@ sql/InvFESTdb.private.backup.sql.gz
 sql/MySQL_permissions.sql
 sql/mysqldump_InvFESTdb_public.sh
 old_invdb/*
+jbrowse/*

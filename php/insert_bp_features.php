@@ -1,6 +1,7 @@
 <?php
 
- session_start();
+	include('db_conexion.php');
+
 	#Save query information
 	$inv_id = $_POST['inversionid'];
 	$type = $_POST['type'];
@@ -56,10 +57,7 @@ include('db_conexion.php');
 
 	#TE
 	if($type == "TE"){
-		// $query2= "CALL  `INVFEST-DB`.`add_TE`('$inv_id', '$subtype', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
-		$query2="INSERT INTO TE_in_BP (inv_id, subtype, chrom,chromStart,chromEnd,size,otherChrom,otherStart,otherEnd,otherSize,fracMatch, strand) VALUES
-		('$inv_id', '$subtype', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
-
+		$query2= "CALL add_TE('$inv_id', '$subtype', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
 		$result2 = mysql_query($query2);
 		if (!$result2) {die('Invalid query: ' . mysql_error());}
 		echo"TE added successfully!";
@@ -67,10 +65,7 @@ include('db_conexion.php');
 
 	#IR
 	if($type == "IR"){
-		// $query3= "CALL  `INVFEST-DB`.`add_IR`('$inv_id', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
-		$query3="INSERT INTO IR_in_BP (`inv_id`, `chrom`, `chromStart`,`chromEnd`,`size`,`otherChrom`,`otherStart`,`otherEnd`,`otherSize`,`fracMatch`, `strand`) VALUES
-		('$inv_id', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
-
+		$query3= "CALL add_IR('$inv_id', '$chr1', '$position1s', '$position1e', '$size1', '$chr2', '$position2s', '$position2e', '$size2', '$identity', '$relativeorientation');";
 		$result3 = mysql_query($query3);
 		if (!$result3){
 			die('Invalid query: ' . mysql_error());

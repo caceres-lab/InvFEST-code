@@ -120,10 +120,12 @@ function addvalidation() {
 	    //mysql_query('SELECT miFunction()');
 
 	    //Llamamos a la funcion add_validation:
-        $a="SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id;";
-	    $sql_validation_id = mysql_query("SELECT add_validation('$inv_id', '$research_name', '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id;");
+        $a="SELECT update_validation('ADD', '$inv_id', '$research_name', NULL, '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id;";
+	    $sql_validation_id = mysql_query("SELECT update_validation('ADD', '$inv_id', '$research_name', NULL, '$status', '$method', '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."') AS id;");
 	    $r= mysql_fetch_array($sql_validation_id);
 	    $validation_id = $r['id'];
+
+	
 
 	    if ($validation_id != '') {
 	        //echo "validacion: ".$r['id']."<br />"; 
@@ -315,7 +317,7 @@ function addvalidation() {
 		    	# Validation added successfully
 		}
 
-	    } else { //Fin if que ha funcionado bien el add_validation
+	    } else { //Fin if que NO ha funcionado bien el add_validation
 		    mysql_close($con);
 		    header('Location: ../report.php?q='.$inv_id.'&o=add_valError#validations');
 	    }

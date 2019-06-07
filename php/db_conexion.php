@@ -12,13 +12,13 @@
 		if ($_SESSION['MySQLuser']=="invfest") {
 			$user = "invfest";
 			$password = "pwdInvFEST";
-			$db = "INVFEST-DB";
+			$db = "INVFEST-DB-dev";
 
 		# Lab user
 		} elseif ($_SESSION['MySQLuser']=="invfestdb-lab") {
 			$user = "invfestdb-lab";
 			$password = "InvFESTLab";
-			$db = "INVFEST-DB";
+			$db = "INVFEST-DB-dev";
 			
 		# I don't know who you are...
 		} else {

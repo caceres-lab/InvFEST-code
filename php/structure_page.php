@@ -54,9 +54,12 @@
 		
 		    var selectAOA= '<select name=\"boolean[]\" id=\"boolean';
 		    var selectAOB= '\"><option selected value=\"direct\">direct</option><option value=\"inverted\">inverted</option></select>';
+   
+   			var selectASA= '<select name=\"boolean[]\" id=\"boolean';
+		    var selectASB= '\"><option selected value=\"hg38\">hg38</option><option value=\"Other\">Other</option></select>';
 		
 		    var selectFieldA='<select name=\"field[]\" id=\"field';
-		    var selectFieldB='\" onchange=\"displayFields(this)\"><option selected value=\"foo\" disabled=\"disabled\">-Select-</option><option value=\"size\">Size</option><option value=\"inv_status\">Inversion Status</option><option value=\"pred_name\">Prediction Name</option><option value=\"pred_study\">Prediction Study</option><option value=\"pred_method\">Prediction Method</option><option value=\"pred_ind\">Predicted Individuals</option><option value=\"val_study\">Validation Study</option><option value=\"val_method\">Validation Method</option><option value=\"val_status\">Validation Status</option><option value=\"val_fosmids\">Validation with Fosmids</option> <option value=\"val_ind\">Validated Individuals</option><option value=\"freq_pop\">Frequency in Populations</option><option value=\"seg_dup\">Segmental Duplications in Breakpoints</option><option value=\"aff_gene\">Affected Gene</option><option value=\"inv_sp\">Ancestral Orientation</option></select>';
+		    var selectFieldB='\" onchange=\"displayFields(this)\"><option selected value=\"foo\" disabled=\"disabled\">-Select-</option><option value=\"size\">Size</option><option value=\"inv_status\">Inversion Status</option><option value=\"assembly_inv\">Assembly</option><option value=\"pred_name\">Prediction Name</option><option value=\"pred_study\">Prediction Study</option><option value=\"pred_method\">Prediction Method</option><option value=\"pred_ind\">Predicted Individuals</option><option value=\"val_study\">Validation Study</option><option value=\"val_method\">Validation Method</option><option value=\"val_status\">Validation Status</option><option value=\"val_fosmids\">Validation with Fosmids</option> <option value=\"val_ind\">Validated Individuals</option><option value=\"freq_pop\">Frequency in Populations</option><option value=\"seg_dup\">Segmental Duplications in Breakpoints</option><option value=\"aff_gene\">Affected Gene</option><option value=\"inv_sp\">Ancestral Orientation</option></select>';
 		
 
 	    //	<option value=\"size\">Size</option>
@@ -66,6 +69,12 @@
 	    //	<option value='inv_status'>Inversion Status</option>
 		    var invStatusA= '<select name=\"field_value[]\" id=\"inversion_status';
 		    var invStatusB= '\" ><option value=\"\" selected disabled=\"disabled\">-Select-</option> $inversion_status_option </select>&nbsp;<img src=\"img/alert.png\" class=\"masterTooltip\" title=\"Joins to other [Inversion Status] filters with [OR]\" width=\"18\"/>&nbsp;';
+
+	
+ 		//	<option value=\"assembly_inv\">Assembly</option>
+		    var AssemblyInvA='<input type=\"hidden\" value=\"\" name=\"field_value[]\" id=\"assembly_inv';
+		    var AssemblyInvB='\" size=25>';
+
 
 		//	<option value='pred_name'>Prediction Name</option>
 		    var predNameA='<input text=\"text\" name=\"field_value[]\" id=\"pred_name';
@@ -79,6 +88,10 @@
         //	<option value='pred_method'>Prediction Method</option>
 		    var predMethodA='<select name=\"field_value[]\" id=\"prediction_method';
 		    var predMethodB='\" ><option value=\"\" selected disabled=\"disabled\">-Select-</option> $prediction_method_option </select>&nbsp;<img src=\"img/alert.png\" class=\"masterTooltip\" title=\"Joins to other [Prediction Method] filters with [OR]   ///   Will retrieve [validated] inversions only!\" width=\"18\"/>&nbsp;';
+		
+		//	<option value='pred_ind'>Predicted Individuals</option>
+	    	var predIndividualsA='<select name=\"field_value[]\" id=\"prediction_individual';
+	        var predIndividualsB='\" ><option value=\"\" selected disabled=\"disabled\">-Select-</option> $individuals_option </select>&nbsp;<img src=\"img/alert.png\" class=\"masterTooltip\" title=\"Joins to other [Predicted Individuals] filters with [OR]   ///   Will retrieve [validated] inversions only!\" width=\"18\"/>&nbsp;';
 
 	    //	<option value='val_study'>Validation Study</option>
 		    var valStudyA='<select name=\"field_value[]\" id=\"research';
@@ -133,6 +146,10 @@
 			    else if (field.value== 'inv_status') { 
 				    $('#'+pos).html(field_value2_hiddenA+pos+field_value2_hiddenB+selectBooleanA+pos+selectBooleanB+invStatusA+pos+invStatusB);
 			    }
+
+   				 else if (field.value== 'assembly_inv') { 
+				    $('#'+pos).html(field_value2_hiddenA+pos+field_value2_hiddenB+selectASA+pos+selectASB+AssemblyInvA+pos+AssemblyInvB);
+			    }
 			    
 			    else if (field.value== 'pred_name') { 
 				    $('#'+pos).html(field_value2_hiddenA+pos+field_value2_hiddenB+selectBooleanA+pos+selectBooleanB+predNameA+pos+predNameB);
@@ -148,7 +165,7 @@
 			    else if (field.value== 'pred_ind') { 
 				    $('#'+pos).html(field_value2_hiddenA+pos+field_value2_hiddenB+selectBooleanA+pos+selectBooleanB+predIndividualsA+pos+predIndividualsB);
 			    }
-
+			    
 			    else if (field.value== 'val_study') { 
 				    $('#'+pos).html(field_value2_hiddenA+pos+field_value2_hiddenB+selectBooleanA+pos+selectBooleanB+valStudyA+pos+valStudyB);
 			    }
@@ -275,45 +292,7 @@
 		   		<form id='Batchquery' method='POST' action='tool_batch_query.php' enctype='multipart/form-data'>
 		    	    <p id='batchsearch'>
 			    	    <b>Batch query:</b>&nbsp;&nbsp;Look for multiple genomic coordinates by uploading them into a single file (<font color='grey'>ID:</font>chrN:start1<font color='grey'>,end1</font>-start2<font color='grey'>,end2</font> in plain text format).&nbsp;<font color='grey'><sup>*Optional</sup></font></b>
-					<br /><br />
-
-					";
-
-
-
-
-	// if (isset($query_inv)){
-	// 	$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";					
-	// 	foreach($query_inv as $value){
- //  			$search_inv.='<input type="hidden" name="result[]" value="'. $value. '">';
-	// 	}
-	// }else{
-	// 	$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";
-	// }
-	// $search_inv.="
- //  					<button class='default' name='submit' title='Inversions overlapping these intervals'>Region match</button>
-	// 				<button class='default' name='accutare_filter_value' value='accutare_filter_value' title='Only inversions with breakpoints overlapping these intervals'>Breakpoint match</button>
-	// 			" ;
-	// if (isset($query_inv)){
-	// 	$search_inv.="<br /> <input type='checkbox' name='fileAlready' id='fileAlready' value='yes' checked/> Use previous file";
-	// }
-	
-	// $search_inv.="	<p id='addbpbias2'>
-	// 				    <a name='add_bpbias' id='add_bpbias' value='add_bpbias' onclick='changeTest2()'><font color='#1c4257'>< Extend query region interval ></font></a>
-	// 				</p>
-	// 				<div id='subtype2' class='content' style='display: none;'>
-	// 						Add a <input type='text' name='add_bp' dir='rtl' size='10'>  bp confidence interval to each side of your query breakpoints
-	// 					</b><br /><br />
-	// 				</div>
-					
-				
-	// 			</form>
-
-	// 		    <!-- </div> -->
-	// 	    </div>
-	//     </div>
-    // ";
-
+					<br /><br />";
 
 	if (isset($query_inv)){
 		$search_inv.="	<input type='file' name='fileToUpload' id='fileToUpload'> ";					
