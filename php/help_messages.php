@@ -18,7 +18,7 @@
 
 
 # PREDICTIONS HELP
-	$pred_path = "/var/www/html/invdb/tmp_files";
+	$pred_path = "/var/www/html/invdb/tmp_files/";
 	$pred_name = "EXAMPLE_predictions";
 	$pred_path = $path.$pred_name;
 	$pred_text = "
@@ -66,7 +66,7 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	$arr = implode("\n\t", $checkpoint_research);
 	$pred_text.=  "\n\t".$arr;
 
-	$pred_output = fopen("$pred_path", 'w') or die("Unable to create output file!".$pred_name);
+	 $pred_output = fopen("$pred_path", 'w');// or die("Unable to create output file!".$pred_name);
 	fwrite($pred_output, $pred_text);
 	fclose($pred_ouput);
 
@@ -149,9 +149,9 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 ";
 
-	$prind_output = fopen("$prind_path", 'w') or die("Unable to create output file!".$prind_name);
-	fwrite($prind_output, $prind_text);
-	fclose($prind_ouput);
+	$prind_output = fopen("$prind_path", 'w'); //or die("Unable to create output file!".$prind_name);
+	 fwrite($prind_output, $prind_text);
+	 fclose($prind_ouput);
 
 #  VALIDATIONS HELP
 
@@ -261,7 +261,7 @@ An updated list with the available populations is provided.
 
 
 
-	$val_output = fopen("$val_path", 'w') or die("Unable to create output file!".$val_name);
+	$val_output = fopen("$val_path", 'w') ;//or die("Unable to create output file!".$val_name);
 	
 	fwrite($val_output, $val_text);
 
@@ -344,7 +344,7 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 ";
 
-	$ind_output = fopen("$ind_path", 'w') or die("Unable to create output file!".$ind_name);
+	 $ind_output = fopen("$ind_path", 'w');// or die("Unable to create output file!".$ind_name);
 	fwrite($ind_output, $ind_text);
 	fclose($ind_ouput);
 
