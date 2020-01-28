@@ -4,6 +4,17 @@
 
 	Decides how to connect to the database
 *******************************************************************************/
+    error_reporting(E_ERROR );
+    ini_set('display_errors',1);
+
+
+	$whoami= getcwd();
+
+	if ($whoami == "/var/www/html/invdb") {
+		$datb = "INVFEST-DB";
+	}else{
+		$datb = "INVFEST-DB-dev";
+	}
 
 	# Login
 	if ($_SESSION["autentificado"]=='SI') {
@@ -12,13 +23,13 @@
 		if ($_SESSION['MySQLuser']=="invfest") {
 			$user = "invfest";
 			$password = "pwdInvFEST";
-			$db = "INVFEST-DB";
+			$db = $datb;
 
 		# Lab user
 		} elseif ($_SESSION['MySQLuser']=="invfestdb-lab") {
 			$user = "invfestdb-lab";
 			$password = "InvFESTLab";
-			$db = "INVFEST-DB";
+			$db = $datb;
 			
 		# I don't know who you are...
 		} else {
