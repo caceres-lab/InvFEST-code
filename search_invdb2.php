@@ -565,7 +565,7 @@ if ($direct_query == TRUE & $count_result == 1) {
 				
 					    if ($_SESSION["autentificado"]=='SI') {
 					
-						    $r_freq = mysql_query("SELECT inv_frequency('".$row['id']."','all','all','all') AS res_freq");
+						    $r_freq = mysql_query("SELECT inv_frequency('".$row['id']."','all','all','all', 'all') AS res_freq");
 						    $r_freq = mysql_fetch_array($r_freq);
 						    $d_freq = explode(";", $r_freq['res_freq']);
 						    $r_inv_freq=$d_freq[2];
