@@ -2,6 +2,7 @@ hits.txt
 stats/hits.txt
 stats/*xday.txt
 stats/*bz2
+php/db_conexion.php
 sql/InvFESTdb.FREEZE1.sql.gz
 sql/Database.sql
 sql/InvFESTdb.private.backup.sql.gz
@@ -11,3 +12,7 @@ old_invdb/*
 jbrowse/*
 mysql_procedures/INVFEST-DB.sql
 tmp_files/*
+jbrowse/JBrowse-1.12.1/files/*
+php/say_directory.php
+mysql_procedures/database-dev.sql
+mysql_procedures/database.sql
