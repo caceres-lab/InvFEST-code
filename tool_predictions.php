@@ -59,7 +59,7 @@
     	if (isset($_POST['between_bp2'])) { $betweenbp2="TRUE"; } else {$betweenbp2="FALSE";}
     	$query = "null:".$_POST["pred_chr"].":".$_POST["pred_bp1s"].":".$_POST["pred_bp1e"].":".$betweenbp1.":".$_POST["pred_bp2s"].":".$_POST["pred_bp2e"].":".$betweenbp2.":".$_POST["pred_study_name"].":".$POST["pred_name"];
     	
-    	$outputpath = "/var/www/html/invdb/tmp_files/tmp";
+    	$outputpath = getcwd()."/tmp_files/tmp";
 		$output = fopen("$outputpath", 'w') or die("Unable to create tmp file in"."$outputpath");
 		fwrite($output, $query);
 		$fh = fopen($outputpath, 'rb') or die ("Could not upload tmp file"); 

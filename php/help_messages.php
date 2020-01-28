@@ -1,10 +1,12 @@
    
 <?php
 /******************************************************************************
-	SEARCH_INVDB2.PHP
+	HELP_MESSAGES.PHP
 	Creates updated temporary files to help the user with the search page tools. 
 
 *******************************************************************************/
+// error_reporting(E_ALL);
+// ini_set('display_errors',1);
 ?>
 
 <?php
@@ -16,11 +18,10 @@
 
 <?php
 
-
 # PREDICTIONS HELP
-
+	$path = getcwd()."/tmp_files/";
 	$pred_name = "EXAMPLE_predictions";
-	$pred_path = "tmp_files/".$pred_name;
+	$pred_path = $path.$pred_name;
 	$pred_text = "
     #######################################
     #					  #
@@ -66,14 +67,14 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	$arr = implode("\n\t", $checkpoint_research);
 	$pred_text.=  "\n\t".$arr;
 
-	$pred_output = fopen("$pred_path", 'w') or die("Unable to create output file!".$pred_name);
+	$pred_output = fopen("$pred_path", 'w') or die("Unable to create output file!".$pred_path);
 	fwrite($pred_output, $pred_text);
-	fclose($pred_ouput);
+	fclose($pred_output);
 
 # PREDICTION INDIVIDUALS HELP
 
 	$prind_name = "EXAMPLE_prindividuals";
-	$prind_path = "tmp_files/".$prind_name;
+	$prind_path = $path.$prind_name;
 	$prind_text = "
 
     ########################################
@@ -151,12 +152,12 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 	$prind_output = fopen("$prind_path", 'w') or die("Unable to create output file!".$prind_name);
 	fwrite($prind_output, $prind_text);
-	fclose($prind_ouput);
+	fclose($prind_output);
 
 #  VALIDATIONS HELP
 
 	$val_name = "EXAMPLE_validations";
-	$val_path = "tmp_files/".$val_name;
+	$val_path = $path.$val_name;
 	$val_text = "
 
     ########################################
@@ -268,7 +269,7 @@ An updated list with the available populations is provided.
 # VALIDATION INDIVIDUALS HELP
 
 	$ind_name = "EXAMPLE_individuals";
-	$ind_path = "tmp_files/".$ind_name;
+	$ind_path = $path.$ind_name;
 	$ind_text = "
 
     ########################################
@@ -346,6 +347,6 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 	$ind_output = fopen("$ind_path", 'w') or die("Unable to create output file!".$ind_name);
 	fwrite($ind_output, $ind_text);
-	fclose($ind_ouput);
+	fclose($ind_output);
 
 ?>

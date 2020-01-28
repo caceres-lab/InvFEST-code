@@ -69,8 +69,9 @@
 
 	//Input file parsing//
 	
-	$outputpath = "/var/www/html/invdb/tmp_files/".$outputname;
-	// echo "$outputpath<br>";
+	// $outputpath = "/var/www/html/invdb/tmp_files/".$outputname;
+	$outputpath = getcwd()."/tmp_files/".$outputname;
+	echo "$outputpath<br>";
 
     // Includes HTML <head> and other settings for the page
     include_once('php/structure_page.php');
