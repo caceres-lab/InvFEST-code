@@ -1505,16 +1505,21 @@
 		                <td width='30%'><?php echo $r['chr'].':'.$r['bp1_start'].'-'.$r['bp2_end'];?></td>
 	                </tr>
 	                <tr>
-		                <td class="title">Estimated Inversion Size</td>
-		                <td><?php echo number_format($r['size']);?> bp</td>
-		                <td class="title">Supporting predictions</td>
-		                <td><?php echo $r['num_pred'];?></td>
+                        <td class="title">Status</td>
+                        <td><?php echo $array_status[$r['status']]; ?></td>
+                        <td class="title">Prediction type</td>
+                        <?php 
+                       
+                            if ($r['complexity'] == NULL) {$r['complexity'] = 'Simple';}
+                            echo '<td>'.$r['complexity'].'</td>';
+                       
+                        ?>
 	                </tr>
 	                <tr>
-		                <td class="title">Status</td>
-		                <td><?php echo $array_status[$r['status']]; ?></td>
-		                <td class="title">Number of validations</td>
-		                <td><?php echo $r['num_val'];?></td>
+                        <td class="title">Estimated Inversion Size</td>
+                        <td><?php echo number_format($r['size']);?> bp</td>
+                        <td class="title">Supporting predictions</td>
+                        <td><?php echo $r['num_pred'];?></td>
 	                </tr>
 	                <tr>
 		                <td class="title">Inverted allele frequency</td>
@@ -1588,16 +1593,9 @@
                             ?>
                         </td>
 	                </tr>
-	                <tr>
-	                	 <td class="title">Complexity</td>
-		                <td><?php
-		                	if ($r['complexity'] == NULL) {
-		                		$r['complexity'] = 'Simple';
-		                	}
-
-		                	echo $r['complexity'];
-		                 ?></td>
-		            </tr> 
+                    <tr>
+                         
+                    </tr> 
 
 	                <?php if (($last_com != '') or ($_SESSION["autentificado"]=='SI')) {
 	

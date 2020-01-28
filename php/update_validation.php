@@ -93,7 +93,7 @@ function updatevalidation(){
 
     	include_once('db_conexion.php');
 	   
-		mysql_query("CALL update_validation('UPDATE', NULL, NULL, $validation_id', '$status', NULL,  '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."');");
+		mysql_query("CALL update_validation('$validation_id', '$status',  '$experimental_conditions', '$primers','$commentE','$checked', '".$_SESSION["userID"]."');");
 		
 		# FOSMIDS EDITION
 		
@@ -344,7 +344,6 @@ function deletevalidation(){
 		
 
 }
-
 
 if (isset($_POST["Update"])){
 	updatevalidation();

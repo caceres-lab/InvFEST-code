@@ -13,7 +13,7 @@
 	# ???? Is it important to connect with the 'invfest' user instead of 'invfestdb-lab' ????
     $user = "invfest";
     $password = "pwdInvFEST";
-    $db = "INVFEST-DB-dev";
+    $db = "INVFEST-DB";
 
     $con = mysql_connect('localhost', $user, $password);
     if (!$con) { die('Could not connect: ' . mysql_error()); }

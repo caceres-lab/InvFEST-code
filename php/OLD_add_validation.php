@@ -62,7 +62,7 @@ function addvalidation() {
     $indiv_array = $_POST["indiv"];
 	// }
 
-    $message=""; $warning_ind='no';
+    $message=""; $warning_ind='';
 
 
     //Comprobaciones
@@ -165,7 +165,7 @@ function addvalidation() {
 		    if ($indiv_array != "" || $indiv_array != NULL){ 
 			    foreach ($indiv_array as $line) {
 				    	
-				    	if( !strncmp($line, '#', 1) ){continue;}
+				    	if( !strncmp($line, '#', 1) )continue;
 					    
 	                    //Eliminamos los saltos de linea del final
 					    $line=trim($line, "\n");
@@ -231,12 +231,10 @@ function addvalidation() {
 			                    $panel= ($info[8] == "" ? NULL : $info[8]);
 			                    $other_code= ($info[9] == "" ? NULL : $info[9]);
 
-							    // if ($code !="" && ($genotype=="INV/INV" || $genotype=="STD/INV" || $genotype=="STD/STD" || $genotype=="STD" || $genotype=="INV" || $genotype=="NA" || $genotype=="ND"  )) {
-			                     if($code != "" &&  (   preg_match('/^[A-Z]{3}\/[A-Z]{3}$/', $genotype) ||  preg_match('/^[A-Z]{3}$/', $genotype) || $genotype=="NA" || $genotype=="ND"  )){
+							    if ($code !="" && ($genotype=="INV/INV" || $genotype=="STD/INV" || $genotype=="STD/STD" || $genotype=="STD" || $genotype=="INV" || $genotype=="NA" || $genotype=="ND")) {
 							        mysql_query("CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');");
 	                            	// $a="CALL add_individual_genotype('$code' , '$geder', '$population', '$region', '$family', '$relationship', '$genotype', '$allele_comment', '$allele_level', '$panel', '$other_code', '$inv_id', '$validation_id', '".$_SESSION["userID"]."');";
 		                            // echo "CALL add_individual_genotipy('$code','$inv_id','$genotype','$validation_id');";
-		                            $warning_ind = "no";
 							    } else {
 								    $warning_ind="yes";
 							    }
@@ -301,19 +299,16 @@ function addvalidation() {
 
 		    mysql_close($con);
 
-		   if ($warning_ind != 'no') {
-			 
+		    if ($warning_ind != '') {
+			    $message.="Some individuals have not been correctly introduced <br />";
+		    }
 		    //if ($validation_id) HAY Q FORZAR A QUE SALGA MAL PARA SABER Q DEVUELVE!!
 	        //echo "Validation added succesfully<br />".$message;
 
 		    //Con el siguiente botón se refresca la página principal y por lo tanto, también se cierra el iframe -->
 	        //echo "<br /><input type='submit' value='Close' name='gsubmit'  onclick='parent.location.reload();' />";
-		    header('Location: ../report.php?q='.$inv_id.'&o=add_val_inderror#validations'.$validation_id);	
-  				 // $message.="Some individuals have not been correctly introduced <br />";
-		    }else{
+
 		    header('Location: ../report.php?q='.$inv_id.'&o=add_val#validations'.$validation_id);	
-		    	# Validation added successfully
-		}
 
 	    } else { //Fin if que ha funcionado bien el add_validation
 		    mysql_close($con);

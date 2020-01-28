@@ -16,28 +16,27 @@
     include_once('db_conexion.php');
     include_once('php/php_global_variables.php');
 
-    #### Query Inversion Data   
-        $sql_inv="SELECT i.name, i.chr, i.range_start, i.range_end, i.size, i.frequency_distribution, i.evo_origin, i.origin, i.status, i.comment, i.ancestral_orientation, i.age, i.comments_eh, i.complexity,
-                (SELECT count(p.id) FROM predictions p WHERE p.inv_id='$id') as num_pred,
-                (SELECT count(distinct research_name) FROM validation v WHERE v.inv_id='$id') as num_val,
-                b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.GC, b.Stability, b.Mech, b.Flexibility, b.bp1_between, b.bp2_between, b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID  
-            FROM inversions i INNER JOIN breakpoints b ON b.id = (SELECT id FROM breakpoints b2 WHERE b2.inv_id=i.id
-                ORDER BY FIELD (b2.definition_method, 'manual curation', 'default informatic definition'), b2.id DESC
-                LIMIT 1) LEFT JOIN validation val ON b.id = val.bp_id 
-                LEFT JOIN researchs r ON val.research_name = r.name 
-            WHERE i.id ='$id';";
-  
+    #### Query Inversion Data  (A) 
+    $sql_inv="SELECT i.name, i.chr, i.range_start, i.range_end, i.size, i.frequency_distribution, i.evo_origin, i.origin, i.status, i.comment, i.ancestral_orientation, i.age, i.comments_eh, i.complexity,
+		    (SELECT count(p.id) FROM predictions p WHERE p.inv_id='$id') as num_pred,
+		    (SELECT count(distinct research_name) FROM validation v WHERE v.inv_id='$id') as num_val,
+		    b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.GC, b.Stability, b.Mech, b.Flexibility, b.bp1_between, b.bp2_between, b.genomic_effect, b.definition_method, b.description, b.id as breakpoint_id, b.comments as breakpoint_comments, val.research_name AS studyname, r.year, r.pubMedID
+	    FROM inversions i INNER JOIN breakpoints b ON b.id = (SELECT id FROM breakpoints b2 WHERE b2.inv_id=i.id
+		    ORDER BY FIELD (b2.definition_method, 'manual curation', 'default informatic definition'), b2.id DESC
+		    LIMIT 1) LEFT JOIN validation val ON b.id = val.bp_id 
+		    LEFT JOIN researchs r ON val.research_name = r.name 
+	    WHERE i.id ='$id';";
     
 
     $result_inv = mysql_query($sql_inv);
     $r= mysql_fetch_array($result_inv);
 
-    // #Recalculate size & range
+    #Recalculate size & range
     $middle_bp1 = number_format(($r['bp1_start']+$r['bp1_end'])/2, 0, '.', '');
     $middle_bp2 = number_format(($r['bp2_start']+$r['bp2_end'])/2, 0, '.', '');
     $r['size'] = $middle_bp2-$middle_bp1+1;
-    // $r['range_start'] = $r['bp1_start'];
-    // $r['range_end'] = $r['bp2_end'];
+    $r['range_start'] = $r['bp1_start'];
+    $r['range_end'] = $r['bp2_end'];
 
     #Este codigo se podria eliminar cunado se actualice el campo ancestral_orientation en la tabla inversions
    $sql_inv_ancestral_orientation = "SELECT 1 n, orientation FROM inversions_in_species WHERE inversions_id ='$id' and result_value = 1;";
@@ -64,7 +63,7 @@
         $r['studyname']=ucfirst($r['studyname']);
     }
 
-    $r_freq = mysql_query("SELECT inv_frequency('$id','all','all','all','all') AS res_freq");
+    $r_freq = mysql_query("SELECT inv_frequency('$id','all','all','all') AS res_freq");
 	    $r_freq = mysql_fetch_array($r_freq);
 	    $d_freq = explode(";", $r_freq['res_freq']); //->analyzed individuals;independent alleles; inverted freq; HWE
 	    $r_inv_freq=$d_freq[2];
@@ -103,7 +102,6 @@
     $sql_img="SELECT (SELECT BP1s FROM predictions WHERE inv_id='$id' ORDER BY BP1s LIMIT 1) as inicio, 
 		    (SELECT BP2e FROM predictions WHERE inv_id='$id' ORDER BY BP2e DESC LIMIT 1) as fin 
 	    FROM predictions LIMIT 1;";
-    // echo 'image '. $sql_img;
     $result_img=mysql_query($sql_img);
     $pos= mysql_fetch_array($result_img);
     $all_bp1s = ""; $all_bp1e = ""; $all_bp2s = ""; $all_bp2e = ""; $all_id  = ""; $all_name = "";
@@ -115,26 +113,16 @@
                         FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
                          WHERE p.inv_id='$id' ORDER BY r.pubMedID DESC;"; 
     $result_pred_study = mysql_query($sql_pred_study);
-
-    // echo 'studies '. $sql_pred_study;
-
     while($thisstudy = mysql_fetch_array($result_pred_study)) {
     
         //Creo la seccion
-          if ($db == "INVFEST-DB") {
-            $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
-    	        r.prediction_method, r.pubMedID, r.description, r.individuals,p.prediction_name
-    	        FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
-    	        WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';"; //ID y name van juntos!
-         }else{
-            $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
-                r.prediction_method, r.pubMedID, r.description, r.individuals
-                FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
-                WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';";
-          }
+        $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
+	        r.prediction_method, r.pubMedID, r.description, r.individuals,p.prediction_name
+	        FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
+	        WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';"; //ID y name van juntos!
         //$sql_pred="SELECT p.id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support_bp1, p.support_bp2, p.pred_name, p.accuracy FROM predictions p WHERE p.inv_id='$id' ORDER BY p.pred_name;";
         $result_pred = mysql_query($sql_pred);
-    // echo 'prediction each'. $sql_pred;
+
         $echo_predictions.="<div class='report-section'>
 			        <div class='section-title TitleA'>- ";
 	    if ($thisstudy['pubMedID'] != "") {
@@ -201,10 +189,11 @@
 
             $echo_predictions.= "<table width='100%'".$change_format.">";
 
-         
+            if ($thisrow['prediction_name'] != ""){
+
                 $echo_predictions.="<tr><td class='title' width='18%'>Name</td><td colspan='3'>".$thisrow['prediction_name']."</td></tr>
                             <tr>";
-         
+            } 
 
            $echo_predictions.=" <tr><td class='title' width='18%'>Breakpoint 1</td><td>".$thisrow['chr'].":".$thisrow['BP1s']."-".$thisrow['BP1e']."</td>
                 <td class='title' width='18%'>Breakpoint 2</td><td>".$thisrow['chr'].":".$thisrow['BP2s']."-".$thisrow['BP2e']."</td></tr>";
@@ -271,9 +260,9 @@
 		            $echo_predictions.="<td style='border-color:#FFFFFF;'>";
 	                if ($numindividuals>0) {
                     
-                       $echo_predictions.="&nbsp;&nbsp;
-                     <a href='php/echo_individuals.php?pred=".$thisrow['p_id']."&invid=".$id ."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>";
-                      
+                       $echo_predictions.="&nbsp;&nbsp;<form style='display: inline;' method='post' action='php/echo_individuals.php?get=".$thisrow['p_id']."'>
+                       <input type='image' class='download'  src='img/download.png' name='pathoutput' title='Download table' alt='Submit Form' width='23' height='23' > 
+                       <input  type='hidden'  name = 'ind[".$thisrow['p_id']."]'   value='".$individuals."'></form>";//".$numindividuals." individuals
 	                }
 
 	                $echo_predictions.="</td></tr></table>";
@@ -283,9 +272,12 @@
 	            	// $echo_predictions.="<td style='border-color:#FFFFFF;'>";
 	                if ($numindividuals>0) {
                        $echo_predictions.=count($individuals_ar)." out of ".count($indResearch_ar)." individuals &nbsp;&nbsp;
-                        <a href='php/echo_individuals.php?pred=".$thisrow['p_id']."&invid=".$id ."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>";
-                      
-                        }
+                       <form style='display: inline;' method='post' action='php/echo_individuals.php?get=".$thisrow['p_id']."'>
+                       <input type='image' class='download'  src='img/download.png' name='pathoutput' title='Download table' alt='Submit Form' width='23' height='23' > 
+                       <input  type='hidden'  name = 'ind[".$thisrow['p_id']."]'   value='".$individuals."'></form>";//".$numindividuals." individuals
+
+                        // $echo_predictions.= count($individuals_ar)." out of ".count($indResearch_ar)." individuals &nbsp;&nbsp;<form style='display: inline;' method='post' action='php/echo_individuals.php'><input type='image' class='download'  src='img/download.png' name='pathoutput' title='Download table' alt='Submit Form' width='23' height='23' > <input  type='hidden'  name='ind' value='".$individuals."'</div>";
+		            }
 	            }
             	
             	
@@ -463,7 +455,7 @@
     $end_image = number_format(($greatest_bp+($length_image*0.3)), 0, '.', '');
 
 
-    //### Apartado validaciones (D) field change r.validation_method
+    // //### Apartado validaciones (D) field change r.validation_method
 
     // #$sql_val="SELECT v.id, GROUP_CONCAT(DISTINCT v.status SEPARATOR ' ;') status, GROUP_CONCAT(DISTINCT v.comment SEPARATOR ' ;') comment,
     // #	r.name, GROUP_CONCAT(DISTINCT v.method SEPARATOR ' ;') validation_method, r.pubMedID, r.description
@@ -627,29 +619,28 @@
 	    WHERE pd.inv_id ='$id';";
     */
 
- $sql_freq="(SELECT distinct p.region AS region, ind.population AS population_name, CONCAT(p.id, ';', p.sampling, ' (', v.research_name, ')') AS description
-        FROM validation v 
-            INNER JOIN individuals_detection ind2 ON ind2.validation_id=v.id
-            INNER JOIN individuals ind ON ind2.individuals_id=ind.id 
-            INNER JOIN population p ON ind.population_id=p.id
-        WHERE v.inv_id='$id')
-    
-        UNION ALL
-    
-        (SELECT   p.region , pd.population_name, CONCAT( pd.population_id,  ';', p.sampling, ' (', pd.validation_research_name, ')') FROM population_distribution pd, population p 
-        WHERE inv_id='$id' AND pd.population_id=p.id)
-    
-        ORDER BY  FIELD (region, 'Africa (AFR)', 'Middle East/North Africa (MENA) ','Europe (EUR)', 'Central Asia (CAS)', 'South Asia (SAS)', 'East Asia (EAS)', 'Oceania (OCE)', 'America - Admixed (AMR)', 'America - Natives (AMN)', 'Unknown'), population_name, description;";
+    $sql_freq="(SELECT distinct ind.population AS population, v.research_name AS research_name, p.region AS region 
+	    FROM validation v 
+		    INNER JOIN individuals_detection ind2 ON ind2.validation_id=v.id
+		    INNER JOIN individuals ind ON ind2.individuals_id=ind.id 
+		    INNER JOIN population p ON ind.population=p.name 
+	    WHERE v.inv_id='$id')
+	
+	    UNION ALL
+	
+	    (SELECT pd.population_name, pd.validation_research_name, p.region FROM population_distribution pd, population p 
+	    WHERE inv_id='$id' AND pd.population_name=p.name)
+	
+	    ORDER BY region, population, research_name;";
 
     $result_freq=mysql_query($sql_freq);
     $info= array();
     
     while ($thisrow = mysql_fetch_array($result_freq)) {
         //if ($thisrow["population"] != 'unknown') {
-        $info[$thisrow['region']][$thisrow['population_name']][$thisrow['description']]=$thisrow['description'];
+        $info[$thisrow['region']][$thisrow['population']][$thisrow['research_name']]=$thisrow['research_name'];
         //}
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////
     /*
@@ -667,7 +658,7 @@
     while ($thisrow = mysql_fetch_array($result_freq)) {
     */
 	    /*
-        funcion inv_frequencyindependent in
+        funcion inv_frequency
 	        inv_id_val INT, 
 	        population_val VARCHAR(255),  -> puede ser all
 	        region_val VARCHAR(255),  -> puede ser all NUNCA buscare all
@@ -719,7 +710,7 @@
             <tr><td>
                 &nbsp;&nbsp;
                 <select id='typeChart' name='typeChart' onchange=\"isCanvasSupported('divMap')\">
-                    <option value='one' selected='selected'>Populations aggregated by origin</option>
+                    <option value='one' selected='selected'>Populations aggregated by region</option>
                     <option value='all'>Separated charts for each population</option>
 				</select>
                             
@@ -742,21 +733,14 @@
     ";
 
     foreach ($info as $region => $value) { // Para cada region
- 
-	    $result_freq = mysql_query("SELECT inv_frequency('$id','all','all','$region','all') AS res_freq");
+    //	//$results_freq .= mysql_query("SELECT inv_frequency('$id','population','region','research_name') AS res_freq");
+	
+	    $result_freq = mysql_query("SELECT inv_frequency('$id','all','$region','all') AS res_freq");
 	    $results_freq = mysql_fetch_array($result_freq);
 	    
 	    $download_genotypes='';
 	    if ($results_freq['res_freq'] == '') {
-		    $result_freq = mysql_query("SELECT CONCAT(IFNULL(population_distribution.individuals,'NA'), 
-                                                ';', IFNULL(population_distribution.inverted_alleles,'NA'), 
-                                                ';', IFNULL(population_distribution.inv_frequency,'NA'), ';NA;NA')
-                                                 AS res_freq 
-                                                 FROM population_distribution, population 
-                                                 WHERE population_distribution.population_name=population.name 
-                                                        AND population_distribution.inv_id='$id' 
-                                                        AND population.region='$region' 
-                                                ORDER BY population_distribution.individuals DESC LIMIT 1;");
+		    $result_freq = mysql_query("SELECT CONCAT(IFNULL(population_distribution.individuals,'NA'), ';', IFNULL(population_distribution.inverted_alleles,'NA'), ';', IFNULL(population_distribution.inv_frequency,'NA'), ';NA;NA') AS res_freq FROM population_distribution, population WHERE population_distribution.population_name=population.name AND population_distribution.inv_id='$id' AND population.region='$region' ORDER BY population_distribution.individuals DESC LIMIT 1;");
 		    $results_freq = mysql_fetch_array($result_freq);
 	    } else {
 		    $download_genotypes="
@@ -776,8 +760,6 @@
 	    $hwe=$data_freq[3];
 	    $noninv_alleles = $data_freq[4];
 	
-          $hwe= preg_replace('/chi\-square = .*, p\-value/', '',$hwe);
-
 	    if ($inv_alleles=='NA' && $noninv_alleles=='NA') {
 	
 		    if ($anal_ind=='NA') {
@@ -821,17 +803,16 @@
 		    //No hauria de passar mai
 	    }
 	    
-        $indep_alleles = $inv_alleles;
         //$std_freq='0.5';
         //$inv_freq='0.5';
         
-	    // if ($region=='Asia' || $region=='America' || $region=='Oceania' || $region=='Africa')   { $addPrefix = 'n'; }
-	    // elseif ($region=='Europe')  { $addPrefix = 'an'; }
-	    // else                        { $addPrefix = ''; }
+	    if ($region=='Asia' || $region=='America' || $region=='Oceania' || $region=='Africa')   { $addPrefix = 'n'; }
+	    elseif ($region=='Europe')  { $addPrefix = 'an'; }
+	    else                        { $addPrefix = ''; }
 	    
 	    $echo_frequency.="
             <div class='report-section'>
-		    <div class='section-title TitleA'>+ ".ucfirst($region)."$addPrefix </div>
+		    <div class='section-title TitleA'>+ ".ucfirst($region)."$addPrefix Population</div>
             <div class='hidden'>
 		        <div class='grlsection-content'>
 		";
@@ -848,70 +829,36 @@
 		$echo_frequency.="
 			<table class='popTable' id='popTable$regionSimple'>
 				<tr>
-					<th  >Population&nbsp&nbsp</th>
-					<th width='30%' >Sample and Study</th>
-					<th width='11%'>Independent individuals</th>
-					<th width='10%'>Inverted alleles</th>
-					<th width='10%'>Standard frequency</th>
-					<th width='10%'>Inverted frequency</th>
-					<th width='10%'>HWE p-value</th>
-				</tr>
-		";
-
-         $echo_frequency_aftertable="
-                        <tr id='tableStudy$region'>
-                            <th >$region $download_genotypes 
-                              <input type='checkbox' class='regChkbox' value='$regionSimple' checked
+					<th>
+                        Population $download_genotypes 
+                        <input type='checkbox' class='regChkbox' value='$regionSimple' checked
                             title='Show/Hide this information in the frequency map'>
                         <!-- La següent línia ¿? -->
-                        <input type='hidden' name='NewGraphs_".$regionSimple."[]' value='0;0;hidden'  class='$regionSimple' checked>
-
-                            </th>
-                            <th width='30%'> $region summary </th>
-                            <th width='11%'>".$anal_ind."</th>
-                            <th width='10%'>".$indep_alleles."</th>
-                            <th width='10%'>".number_format($std_freq,4)."</th>
-                            <th width='10%'>".number_format($inv_freq,4)."</th>
-                            <th width='10%'>".$hwe."</th>
-                        </tr>
-            ";
-
-
-
-
-                 // <th width='2%'>Hardy-Weinberg eq.</th>
+				        <input type='hidden' name='NewGraphs_".$regionSimple."[]' value='0;0;hidden'  class='$regionSimple' checked>
+                    </th>
+					<th>Study</th>
+					<th>Independent individuals</th>
+					<th>Inverted alleles</th>
+					<th>Standard frequency</th>
+					<th>Inverted frequency</th>
+					<th>Hardy-Weinberg eq.</th>
+				</tr>
+		";
+	    
         foreach ($info[$region] as $population =>$study_ar) {
 		    $num_studies=count($study_ar);
 		    if ($num_studies>1) { 
-			    $result_freq = mysql_query("SELECT inv_frequency('$id','$population','all','$region','all') AS res_freq");
+			    $result_freq = mysql_query("SELECT inv_frequency('$id','$population','$region','all') AS res_freq");
 		    } else {
-
-                $data_lines = explode(";", key($study_ar)); // id; description (paper)
-                $popid=$data_lines[0]; # population id
-                $desc = $data_lines[1]; # description (paper) <- menu unit
-                $study_test= preg_replace('/.*\(/', '',$desc);
-                $study =  preg_replace('/\)/', '', $study_test); # paper only
-                
-                if ($study == 'in preparation'){
-                    $study = "Martinez-Fundichely et al. 2014 (in preparation)";
-                    // $study_query = "Martinez\-Fundichely et al\. 2014 \(in preparation\)";
-                }
-
-
-			    $result_freq = mysql_query("SELECT inv_frequency('$id','$population','$popid','$region','$study') AS res_freq");
+			    $study=key($study_ar);
+			    $result_freq = mysql_query("SELECT inv_frequency('$id','$population','$region','$study') AS res_freq");
 		    }
 		    $results_freq = mysql_fetch_array($result_freq);
 		
 		    // Si no he trobat dades amb genotips, busco sense genotips. En aquest cas només mostro l'estudi amb més individus analitzats, ja que no puc sumar-los perquè no sé si són els mateixos individus
 		    $download_genotypes='';
 		    if (($results_freq['res_freq'] == '') || ($results_freq['res_freq'] == 'NA;NA;NA;NA;NA')) {
-			    $result_freq = mysql_query("SELECT CONCAT(IFNULL(individuals,'NA'), 
-                                            ';', IFNULL(inverted_alleles,'NA'), 
-                                            ';', IFNULL(inv_frequency,'NA'), ';NA;NA') 
-                                            AS res_freq 
-                                            FROM population_distribution 
-                                            WHERE inv_id='$id' AND population_name='$population' 
-                                            ORDER BY individuals DESC LIMIT 1;");
+			    $result_freq = mysql_query("SELECT CONCAT(IFNULL(individuals,'NA'), ';', IFNULL(inverted_alleles,'NA'), ';', IFNULL(inv_frequency,'NA'), ';NA;NA') AS res_freq FROM population_distribution WHERE inv_id='$id' AND population_name='$population' ORDER BY individuals DESC LIMIT 1;");
 			    $results_freq = mysql_fetch_array($result_freq);
 		    } else {
 			    $download_genotypes="
@@ -931,11 +878,6 @@
 		    $hwe=$data_freq[3];
 		    $noninv_alleles = $data_freq[4];
 	        
-            $hwe= preg_replace('/chi\-square = .*, p\-value/', '',$hwe);
-            // $hwe =  substr(strrchr($hwe, "e"), 1);
-            // echo "$hwe";
-
-
 		    if ($inv_alleles=='NA' && $noninv_alleles=='NA') {
 	
 			    if ($anal_ind=='NA') {
@@ -996,22 +938,17 @@
 							</td>
 							<td>";
 								if ($num_studies>1) {       //Si hay >1 estudio, creamos un desplegable
-                                    $echo_frequency.="All samples and studies"; 
 									$echo_frequency.="
-									</br><select id='selectStudy' style='width: 180px' onchange=\"changeFreqs(this,'tableStudy$population','$id','$population','$region')\"> 
-                                            <option disabled selected value>Select sample/study</option>
-                                            <option value='all'>All samples and studies</option>";
-										foreach($info[$region][$population] as $description => $value) {
-                                            $data_lines = explode(";", $description); // id; description (paper)
-                                            $popid=$data_lines[0]; # population id
-                                            $desc = $data_lines[1]; # description
-                                            $echo_frequency.="
-                                            <option value='$desc'>$desc</option>";
+									<select id='selectStudy' onchange=\"changeFreqs(this,'tableStudy$population','$id','$population','$region')\">
+											<option value='all'>All studies</option>";
+										foreach($info[$region][$population] as $study => $value) {
+											$echo_frequency.="
+											<option value='$study'>$study</option>";
 										}
 										$echo_frequency.="
 									</select>";
 								} else {                    //Si solo hay 1 estudio, lo mostramos tal cual
-									$echo_frequency.=$desc;
+									$echo_frequency.=key($study_ar);
 								}
 			$echo_frequency.="
 							</td>
@@ -1032,10 +969,7 @@
 	    }
 	
 	    // 	HERE I FINISH THE TABLE
-	    $echo_frequency .= "</table>
-                    </br>
-                    <table class='popTable' id='popTable$regionSimple'>
-                    ".$echo_frequency_aftertable."
+	    $echo_frequency .= "
                     </table>
                 </div>
             </div>
@@ -1328,7 +1262,20 @@
 		    WHERE new_inv_id='$id';";
     */
     $sql_history="SELECT * FROM inversion_history
-		    WHERE previous_inv_id='$id' or new_inv_id='$id' GROUP BY new_inv_id;";
+		     WHERE previous_inv_id='$id' or new_inv_id='$id' GROUP BY cause;";
+    // $sqlvar = "SET @num := 0;";
+    // $sql_history=#"SET @num := 0;
+    //              "SELECT * 
+    //              FROM (
+    //                 SELECT  cause
+    //                 FROM
+    //                     (SELECT *, @num := (@num + 1) AS row_number
+    //                     FROM inversion_history
+    //                     WHERE previous_inv_id='$id' or new_inv_id='$id'  
+    //                     ORDER BY row_number DESC) AS t1
+    //                 GROUP BY new_inv_id) AS t2
+    //             GROUP BY cause;";
+    // mysql_query( $sqlvar);
     $result_history=mysql_query($sql_history);
     $history='';
     while($historyrow = mysql_fetch_array($result_history)) {
@@ -1340,11 +1287,10 @@
     //}
 
     // Historial de breakpoints (E)
-     $sql_bp="SELECT b.id, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.definition_method, b.description, b.date, v.research_name as v_research_name, r.year, r.pubMedID , b.assembly
-        FROM  breakpoints b LEFT JOIN validation v ON (v.bp_id = b.id) LEFT JOIN researchs r ON r.name=v.research_name WHERE b.inv_id ='$id' 
-        ORDER BY b.date DESC ;"; //FIELD (b.definition_method, 'manual curation', 'default informatic definition'), 
+    $sql_bp="SELECT b.id, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end, b.definition_method, b.description, b.date, v.research_name as v_research_name, r.year, r.pubMedID 
+	    FROM  breakpoints b LEFT JOIN validation v ON (v.bp_id = b.id) LEFT JOIN researchs r ON r.name=v.research_name WHERE b.inv_id ='$id' 
+	    ORDER BY b.date DESC ;"; //FIELD (b.definition_method, 'manual curation', 'default informatic definition'), 
     $result_bp=mysql_query($sql_bp);
-
     while($bprow = mysql_fetch_array($result_bp)) {
 	    //tambien se muestran las duplicaciones segmentales y los efectos genomicos
 	    $seq_feat_hist='';$gen_eff_hist='';
@@ -1380,9 +1326,7 @@
                 }
             	$bp_history.= '<tr><td class="title" width="20%">Study</td><td colspan="3">'.$studyname.'</td></tr>';
             }
-            if (($bprow['assembly'] != '') or ($_SESSION["autentificado"]=='SI')) {
-                 $bp_history.= '<tr><td class="title" width="20%">Assembly</td><td colspan="3">'.$bprow['assembly'].'</td></tr>';
-            }
+
    		    if (($bprow['description'] != '') or ($_SESSION["autentificado"]=='SI')) {
 		        $bp_history.= '<tr><td class="title" width="20%">Description</td><td colspan="3">'.ucfirst($bprow['description']).'</td></tr>';
 		    }
@@ -1458,16 +1402,16 @@
         $method_add_val.="<option value='".$thisrow["method"]."'>".$thisrow["method"]."</option>";
     }
 
-    $sql_status="select distinct status from validation where status is not null order by status;";
-    $result_status = mysql_query($sql_status);
-    while($thisrow = mysql_fetch_array($result_status)) {
-      $status_add_val.="<option value='".$thisrow["status"]."'>".$thisrow["status"]."</option>\n";
-    }
-    // $status_add_val.="
-    //     <option value='Breakpoint refinement'>Breakpoint refinement</option>\n
-    //     <option value='Genotyping'>Genotyping</option>\n
-    //     <option value='TRUE'>TRUE</option>\n
-    //     <option value='FALSE'>FALSE</option>\n";
+    #$sql_status="select distinct status from validation where status is not null order by status;";
+    #$result_status = mysql_query($sql_status);
+    #while($thisrow = mysql_fetch_array($result_status)) {
+    #   $status_add_val.="<option value='".$thisrow["status"]."'>".$thisrow["status"]."</option>\n";
+    #}
+    $status_add_val.="
+        <option value='Breakpoint refinement'>Breakpoint refinement</option>\n
+        <option value='Genotyping'>Genotyping</option>\n
+        <option value='TRUE'>TRUE</option>\n
+        <option value='FALSE'>FALSE</option>\n";
         //<option value='possible_TRUE'>possible_TRUE</option>\n
 
     //Add evolutionary information
@@ -1546,12 +1490,12 @@
         }
     }
 
-     //////////////////////
+    //////////////////////
     // Merge inversions //
     //////////////////////
     $array_inv_to_merge=array();
     if ($_SESSION["autentificado"]=='SI') {
-        $chr_inv1 = $r['chr'];
+	    $chr_inv1 = $r['chr'];
         $start_inv1 = $r['range_start'];
         $end_inv1 = $r['range_end'];
         //$sql_inv="select distinct id, name from inversions WHERE chr = '$chr_inv1' order by name, id;";
@@ -1567,8 +1511,8 @@
 
         $result_inv = mysql_query($sql_inv);
 
-        $inv2='<option value="">-Select-</option>\n';
-        while($thisrow = mysql_fetch_array($result_inv)) {
+	    $inv2='<option value="">-Select-</option>\n';
+	    while($thisrow = mysql_fetch_array($result_inv)) {
             $namee_inv=$thisrow['name'];
             if ($thisrow['id'] != $id) {
                 $inv2.="<option value='".$thisrow["id"]."'>";
@@ -1624,7 +1568,6 @@
     $inversions_name_checkbox.="</tr>";
 
 
-
     // Mech of origin
     $sql_inv1="select distinct i.id, i.name, i.status, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end from inversions i, breakpoints b WHERE i.chr = '$chr_inv1' AND i.id = b.inv_id AND i.status NOT IN ('WITHDRAWN','Withdrawn','withdrawn') AND ((b.bp1_start BETWEEN $start_inv1 AND $end_inv1) OR (b.bp2_end BETWEEN $start_inv1 AND $end_inv1) OR ($start_inv1 BETWEEN b.bp1_start AND b.bp2_end) OR ($end_inv1 BETWEEN b.bp1_start AND b.bp2_end)) group by i.id order by name, id;";
         $result_inv1 = mysql_query($sql_inv1);
@@ -1634,11 +1577,11 @@
     $inversions_mech_checkbox.="<tr><td class='merge_table'>Mechanism of origin</td>";
     while($thisrow = mysql_fetch_array($result_inv1)){
         $id_inv=$thisrow['id'];
-        // $origin_inv=$thisrow['origin'];
+        $origin_inv=$thisrow['origin'];
         
         $inversions_mech_checkbox.="
             <td class='merge_table'>
-                <input type='checkbox' value='$id_inv' name='new_origin_inv[]' />
+                <input type='checkbox' value='$origin_inv' name='new_origin_inv[]' />
             </td>";
     }
     $inversions_mech_checkbox.="</tr>";
@@ -1687,7 +1630,7 @@
     $inversions_functional_checkbox.="</tr>";
 
     // Comments
-   $sql_inv1="select distinct i.id, i.name, i.status, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end from inversions i, breakpoints b WHERE i.chr = '$chr_inv1' AND i.id = b.inv_id AND i.status NOT IN ('WITHDRAWN','Withdrawn','withdrawn') AND ((b.bp1_start BETWEEN $start_inv1 AND $end_inv1) OR (b.bp2_end BETWEEN $start_inv1 AND $end_inv1) OR ($start_inv1 BETWEEN b.bp1_start AND b.bp2_end) OR ($end_inv1 BETWEEN b.bp1_start AND b.bp2_end)) group by i.id order by name, id;";
+    $sql_inv1="select distinct i.id, i.name, i.status, b.bp1_start, b.bp1_end, b.bp2_start, b.bp2_end from inversions i, breakpoints b WHERE i.chr = '$chr_inv1' AND i.id = b.inv_id AND i.status NOT IN ('WITHDRAWN','Withdrawn','withdrawn') AND ((b.bp1_start BETWEEN $start_inv1 AND $end_inv1) OR (b.bp2_end BETWEEN $start_inv1 AND $end_inv1) OR ($start_inv1 BETWEEN b.bp1_start AND b.bp2_end) OR ($end_inv1 BETWEEN b.bp1_start AND b.bp2_end)) group by i.id order by name, id;";
         $result_inv1 = mysql_query($sql_inv1);
     $inversions_comments_checkbox='';
     $inversions_comments_checkbox.="<tr><td class='merge_table'>Comments</td>";
@@ -1849,7 +1792,6 @@
             else{$last_com_pheno_effect=$thisrow['phenotypic_effects_com'];}
         }
 
-
    //### Apartado validaciones (D) field change r.validation_method
 
     #$sql_val="SELECT v.id, GROUP_CONCAT(DISTINCT v.status SEPARATOR ' ;') status, GROUP_CONCAT(DISTINCT v.comment SEPARATOR ' ;') comment,
@@ -1984,7 +1926,7 @@
                         else if ($getresult_nogenotypes['individuals']>0) { $echo_validations.=$getresult_nogenotypes['individuals']." individuals"; }
                         else {}
               
-                        if ($valSupport != '') { $echo_validations.="<br/>$valSupport &nbsp;<a href='php/echo_individualsVal.php?id=".$id."&val=".$thisrow_study['name']."&valid=".$thisrow_study['id']."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>"; }
+                        if ($valSupport != '') { $echo_validations.="<br/>$valSupport &nbsp;<a href='php/echo_individualsVal.php?id=".$id."&val=".$thisrow_study['name']."' ><img src='img/download.png' alt='Download' width='23' height='23'></a>"; }
                         else if ($getresult_nogenotypes['individuals']>0) { $echo_validations.= " (No genotypes available)"; }
                         else {}
             
@@ -2111,7 +2053,7 @@
                                 <input type="reset" value="Clear" />
                                 <img class="masterTooltip" src="img/alert.png" title="Only modified sections are submitted. All the corresponding fields must be complete because they will be overwritten. In the Frequency without genotypes section multiple populations can be added if the editing process is repeated for each one of them." width = "18">
                                 <input type="submit" onclick="return confirm(\'Are you sure?\')" name="Delete"  value="Delete" style="float: right; color : #bb452c;" />
-                            </form>
+                           </form>
 
                         </div>
                     </div>';
@@ -2150,7 +2092,7 @@
         elseif($thisroww['strand']=='+'){$orientationn='Direct';}
         $TE_features.='<tr><td>'.$subtype.'</td><td>'.$thisroww['chrom'].':'.$thisroww['chromStart'].'-'.$thisroww['chromEnd'].'</td><td>'.number_format($size1).'</td>
             <td>'.$thisroww['otherChrom'].':'.$thisroww['otherStart'].'-'.$thisroww['otherEnd'].'</td><td>'.number_format($size2).'</td>
-            <td>'.number_format($thisroww['fracMatch'],1).'</td><td>'.$orientationn.'</td></tr>';
+            <td>'.number_format($thisroww['fracMatch'],2).'</td><td>'.$orientationn.'</td></tr>';
     }
 
     #IR
@@ -2167,7 +2109,7 @@
         elseif($thisroww['strand']=='+'){$orientationn='Direct';}
         $IR_features.='<tr><td>'.$thisroww['chrom'].':'.$thisroww['chromStart'].'-'.$thisroww['chromEnd'].'</td><td>'.number_format($size1).'</td>
             <td>'.$thisroww['otherChrom'].':'.$thisroww['otherStart'].'-'.$thisroww['otherEnd'].'</td><td>'.number_format($size2).'</td>
-            <td>'.number_format($thisroww['fracMatch'],1).'</td><td>'.$orientationn.'</td></tr>';
+            <td>'.number_format($thisroww['fracMatch'],2).'</td><td>'.$orientationn.'</td></tr>';
     }
 
 
