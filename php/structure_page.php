@@ -358,7 +358,7 @@
 
 
       include_once('help_messages.php');
-
+      // $pred_path = 'tmp_files/EXAMPLE_predictions' ;
 
     // **************************************************************************** //
     //	ADD PREDICTION FORM: this division is only visible for logged users

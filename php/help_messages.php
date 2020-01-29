@@ -19,9 +19,9 @@
 <?php
 
 # PREDICTIONS HELP
-	$path = getcwd()."/tmp_files/";
-	$pred_name = "EXAMPLE_predictions";
-	$pred_path = $path.$pred_name;
+	$path = getcwd()."/";
+
+	$pred_path = "tmp_files/EXAMPLE_predictions";
 	$pred_text = "
     #######################################
     #					  #
@@ -68,14 +68,13 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	$pred_text.=  "\n\t".$arr;
 
 	// chmod($pred_path, 777) # this does not work...;
-	$pred_output = fopen("$pred_path", 'w') or die("Unable to create output file!".$pred_path);
+	$pred_output = fopen("$path"."$pred_path", 'w') or die("Unable to create output file! ".$path.$pred_path);
 	fwrite($pred_output, $pred_text);
 	fclose($pred_output);
 
 # PREDICTION INDIVIDUALS HELP
 
-	$prind_name = "EXAMPLE_prindividuals";
-	$prind_path = $path.$prind_name;
+	$prind_path = "tmp_files/EXAMPLE_prindividuals";
 	$prind_text = "
 
     ########################################
@@ -151,14 +150,14 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 ";
 
-	$prind_output = fopen("$prind_path", 'w') or die("Unable to create output file!".$prind_name);
+	$prind_output = fopen("$path"."$prind_path", 'w') or die("Unable to create output file! ".$path.$prind_path);
 	fwrite($prind_output, $prind_text);
 	fclose($prind_output);
 
 #  VALIDATIONS HELP
 
-	$val_name = "EXAMPLE_validations";
-	$val_path = $path.$val_name;
+	
+	$val_path = "tmp_files/EXAMPLE_validations";
 	$val_text = "
 
     ########################################
@@ -263,14 +262,13 @@ An updated list with the available populations is provided.
 
 
 
-	$val_output = fopen("$val_path", 'w') or die("Unable to create output file!".$val_name);
+	$val_output = fopen("$path"."$val_path", 'w') or die("Unable to create output file! ".$path.$val_path);
 	
 	fwrite($val_output, $val_text);
 
 # VALIDATION INDIVIDUALS HELP
 
-	$ind_name = "EXAMPLE_individuals";
-	$ind_path = $path.$ind_name;
+	$ind_path = "tmp_files/EXAMPLE_individuals";
 	$ind_text = "
 
     ########################################
@@ -346,7 +344,7 @@ code	gender	population	region	family	relationship	genotype	allele_comment	allele
 
 ";
 
-	$ind_output = fopen("$ind_path", 'w') or die("Unable to create output file!".$ind_name);
+	$ind_output = fopen("$path"."$ind_path", 'w') or die("Unable to create output file!".$path.$ind_path);
 	fwrite($ind_output, $ind_text);
 	fclose($ind_output);
 
