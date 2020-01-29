@@ -67,6 +67,7 @@ New studies can be added using the 'Add new study' form in the 'Search inversion
 	$arr = implode("\n\t", $checkpoint_research);
 	$pred_text.=  "\n\t".$arr;
 
+	// chmod($pred_path, 777) # this does not work...;
 	$pred_output = fopen("$pred_path", 'w') or die("Unable to create output file!".$pred_path);
 	fwrite($pred_output, $pred_text);
 	fclose($pred_output);
