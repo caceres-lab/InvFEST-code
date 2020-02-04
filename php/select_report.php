@@ -112,26 +112,34 @@
 
     //Se buscan los distintos estudios que predicen la inversion
     $sql_pred_study = "SELECT DISTINCT p.research_name, r.prediction_method, r.pubMedID, r.description
-                        FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
-                         WHERE p.inv_id='$id' ORDER BY r.pubMedID DESC;"; 
+                       FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
+                         WHERE p.inv_id='$id' AND (p.status != 'FILTERED_liftover' OR p.status IS NULL) ORDER BY r.pubMedID DESC;"; 
     $result_pred_study = mysql_query($sql_pred_study);
 
-    // echo 'studies '. $sql_pred_study;
+    $sql_out_pred = "SELECT COUNT(*) FROM (
+                            SELECT  p.research_name, r.prediction_method, r.pubMedID, r.description
+                            FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
+                            WHERE p.inv_id='$id' AND (p.status = 'FILTERED_liftover' ) ORDER BY r.pubMedID DESC) AS badpred;";
+ 
+    $result_out_pred = mysql_query($sql_out_pred);
+    if ($result_out_pred > 0) {
+        $echo_predictions .= mysql_fetch_array($result_out_pred)[0]." predictions associated to this inversion could not be transformed from hg18 to hg38. Find more details at <a href=\"invfreeze/report.php?q=".$id."\" target=\"_blank\" >InvFEST legacy</a>.";
+    }
 
     while($thisstudy = mysql_fetch_array($result_pred_study)) {
     
         //Creo la seccion
-          if ($db == "INVFEST-DB") {
+         # if ($db == "INVFEST-DB") {
             $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
     	        r.prediction_method, r.pubMedID, r.description, r.individuals,p.prediction_name
     	        FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
     	        WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';"; //ID y name van juntos!
-         }else{
-            $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
-                r.prediction_method, r.pubMedID, r.description, r.individuals
-                FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
-                WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';";
-          }
+         // }else{
+         //    $sql_pred="SELECT p.id, concat(p.research_id,';',p.research_name) as p_id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support, p.research_name, p.accuracy, p.score1, p.score2, 
+         //        r.prediction_method, r.pubMedID, r.description, r.individuals
+         //        FROM predictions p INNER JOIN researchs r ON p.research_name=r.name
+         //        WHERE p.inv_id='$id' AND p.research_name='".$thisstudy["research_name"]."';";
+         //  }
         //$sql_pred="SELECT p.id, p.chr, p.BP1s, p.BP1e, p.BP2s, p.BP2e, p.comments, p.support_bp1, p.support_bp2, p.pred_name, p.accuracy FROM predictions p WHERE p.inv_id='$id' ORDER BY p.pred_name;";
         $result_pred = mysql_query($sql_pred);
     // echo 'prediction each'. $sql_pred;
