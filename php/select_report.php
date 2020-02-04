@@ -122,8 +122,11 @@
                             WHERE p.inv_id='$id' AND (p.status = 'FILTERED_liftover' ) ORDER BY r.pubMedID DESC) AS badpred;";
  
     $result_out_pred = mysql_query($sql_out_pred);
-    if (mysql_fetch_array($result_out_pred)[0] > 0) {
-        $echo_predictions .= mysql_fetch_array($result_out_pred)[0]." predictions associated to this inversion could not be transformed from hg18 to hg38. Find more details at <a href=\"invfreeze/report.php?q=".$id."\" target=\"_blank\" >InvFEST legacy</a>.";
+    $bad_predictions = (int)mysql_fetch_array($result_out_pred)[0];
+    if ($bad_predictions > 1) {
+        $echo_predictions .= $bad_predictions." predictions associated to this inversion could not be converted from hg18 to hg38. Find more details at <a href=\"invfreeze/report.php?q=".$id."\" target=\"_blank\" >InvFEST legacy</a>.";
+    } elseif ($bad_predictions == 1){
+        $echo_predictions .= $bad_predictions." prediction associated to this inversion could not be converted from hg18 to hg38. Find more details at <a href=\"invfreeze/report.php?q=".$id."\" target=\"_blank\" >InvFEST legacy</a>.";
     }
 
     while($thisstudy = mysql_fetch_array($result_pred_study)) {
