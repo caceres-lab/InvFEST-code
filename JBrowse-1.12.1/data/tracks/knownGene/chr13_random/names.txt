@@ -1,0 +1,2 @@
+[["uc001vuw.2"],"knownGene","uc001vuw.2","chr13_random",24048,60768]
+[["uc001vux.2"],"knownGene","uc001vux.2","chr13_random",65183,66595]

@@ -1,0 +1,1 @@
+[["BAGE1",["uc011mgu.1","BAGE1","BC112441","n/a"],"uc011mgu.1"],"gene_annotations","BAGE1","chrUn_gl000237",0,2686]

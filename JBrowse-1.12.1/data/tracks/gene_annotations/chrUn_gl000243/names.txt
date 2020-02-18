@@ -1,0 +1,2 @@
+[["DQ579288",["uc011mgw.1","DQ579288","DQ579288","n/a"],"uc011mgw.1"],"gene_annotations","DQ579288","chrUn_gl000243",11500,11530]
+[["DQ590589",["uc022brq.1","DQ590589","DQ590589","n/a"],"uc022brq.1"],"gene_annotations","DQ590589","chrUn_gl000243",13607,13637]

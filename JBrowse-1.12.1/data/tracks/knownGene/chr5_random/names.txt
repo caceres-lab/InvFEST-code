@@ -1,0 +1,8 @@
+[["uc003mss.2"],"knownGene","uc003mss.2","chr5_random",12668,25728]
+[["uc010jna.1"],"knownGene","uc010jna.1","chr5_random",12668,25728]
+[["uc003msr.2"],"knownGene","uc003msr.2","chr5_random",12670,26331]
+[["uc003msu.1"],"knownGene","uc003msu.1","chr5_random",64158,115938]
+[["uc003msv.1"],"knownGene","uc003msv.1","chr5_random",64158,115938]
+[["uc010jnb.1"],"knownGene","uc010jnb.1","chr5_random",64158,115938]
+[["uc010jnc.1"],"knownGene","uc010jnc.1","chr5_random",64158,115938]
+[["uc010jnd.1"],"knownGene","uc010jnd.1","chr5_random",81961,82586]

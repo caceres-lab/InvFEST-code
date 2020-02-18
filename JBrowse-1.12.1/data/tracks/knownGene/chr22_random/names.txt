@@ -1,0 +1,7 @@
+[["uc003bnu.1"],"knownGene","uc003bnu.1","chr22_random",13497,15367]
+[["uc003bnv.1"],"knownGene","uc003bnv.1","chr22_random",13533,15367]
+[["uc010hbl.1"],"knownGene","uc010hbl.1","chr22_random",18049,21207]
+[["uc003bnx.1"],"knownGene","uc003bnx.1","chr22_random",27871,30402]
+[["uc003bny.2"],"knownGene","uc003bny.2","chr22_random",112558,138860]
+[["uc003bnz.1"],"knownGene","uc003bnz.1","chr22_random",139254,183917]
+[["uc003boa.2"],"knownGene","uc003boa.2","chr22_random",173412,199425]

@@ -1,0 +1,2 @@
+[["chrX:73315090"],"genomicSuperDups","chrX:73315090","chr3_random",628835,630717]
+[["chr19:11595646"],"genomicSuperDups","chr19:11595646","chr3_random",628910,630532]

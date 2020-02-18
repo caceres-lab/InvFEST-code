@@ -1,0 +1,8 @@
+[["LOC100507412",["uc011mfs.2","LOC100507412","NR_038958","NR_038958","100507412"],"uc011mfs.2"],"gene_annotations","LOC100507412","chrUn_gl000220",97128,126696]
+[["RNA5-8S5",["uc022brd.2","RNA5-8S5","NR_003285","NR_003285","n/a"],"uc022brd.2"],"gene_annotations","RNA5-8S5","chrUn_gl000220",105423,156152]
+[["JN872559",["uc031tgc.1","JN872559","JN872559","n/a"],"uc031tgc.1"],"gene_annotations","JN872559","chrUn_gl000220",125636,125756]
+[["JN872559",["uc031tgd.1","JN872559","JN872559","n/a"],"uc031tgd.1"],"gene_annotations","JN872559","chrUn_gl000220",126534,126717]
+[["JN872556",["uc031tge.1","JN872556","JN872556","n/a"],"uc031tge.1"],"gene_annotations","JN872556","chrUn_gl000220",133777,134256]
+[["JA668106",["uc022brf.1","JA668106","JA668106","n/a"],"uc022brf.1"],"gene_annotations","JA668106","chrUn_gl000220",150505,150525]
+[["JB158072",["uc022brg.1","JB158072","JB158072","n/a"],"uc022brg.1"],"gene_annotations","JB158072","chrUn_gl000220",151444,151466]
+[["JB074932",["uc022brh.1","JB074932","JB074932","n/a"],"uc022brh.1"],"gene_annotations","JB074932","chrUn_gl000220",151508,151530]

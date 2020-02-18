@@ -1,0 +1,5 @@
+[["uc003woi.2"],"knownGene","uc003woi.2","chr7_random",192049,194784]
+[["uc003woj.1"],"knownGene","uc003woj.1","chr7_random",206035,249501]
+[["uc003wok.1"],"knownGene","uc003wok.1","chr7_random",209203,249501]
+[["uc003wom.1"],"knownGene","uc003wom.1","chr7_random",246103,249501]
+[["uc003won.1"],"knownGene","uc003won.1","chr7_random",300770,304164]

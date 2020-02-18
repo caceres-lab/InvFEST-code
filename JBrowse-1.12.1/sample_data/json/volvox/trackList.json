@@ -1,0 +1,363 @@
+{
+   "formatVersion" : 1,
+   "tracks" : [
+      {
+         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-",
+         "key" : "Reference sequence",
+         "category" : "Reference sequence",
+         "label" : "DNA",
+         "type" : "SequenceTrack",
+         "chunkSize" : 20000,
+         "storeClass" : "JBrowse/Store/Sequence/StaticChunked"
+      },
+      {
+         "type" : "FeatureTrack",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "compress" : 0,
+         "track" : "ExampleFeatures",
+         "autocomplete" : "all",
+         "urlTemplate" : "tracks/ExampleFeatures/{refseq}/trackData.json",
+         "key" : "HTMLFeatures - Example Features",
+         "label" : "ExampleFeatures",
+         "category" : "Miscellaneous",
+         "style" : {
+            "className" : "feature2"
+         },
+         "feature" : [
+            "remark"
+         ]
+      },
+      {
+         "feature" : [
+            "protein_coding_primary_transcript",
+            "polypeptide"
+         ],
+         "category" : "Miscellaneous",
+         "style" : {
+            "className" : "feature2"
+         },
+         "label" : "NameTest",
+         "urlTemplate" : "tracks/NameTest/{refseq}/trackData.json",
+         "key" : "HTMLFeatures - Name test track has a really long track label",
+         "type" : "FeatureTrack",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "compress" : 0,
+         "autocomplete" : "all",
+         "track" : "NameTest"
+      },
+      {
+         "key" : "HTMLFeatures - SNPs",
+         "urlTemplate" : "tracks/snps/{refseq}/trackData.json",
+         "compress" : 0,
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "track" : "snps",
+         "autocomplete" : "all",
+         "feature" : [
+            "SNP"
+         ],
+         "style" : {
+            "className" : "triangle hgred"
+         },
+         "label" : "snps",
+         "category" : "Miscellaneous"
+      },
+      {
+         "feature" : [
+            "polypeptide_domain"
+         ],
+         "description" : 1,
+         "label" : "Motifs",
+         "style" : {
+            "description" : "function(feature) { return feature.get('Name')+': '+feature.get('Note'); }",
+            "className" : "feature3",
+            "label" : "function(feature) { return feature.get('Name')+' (via JS callback)' }"
+         },
+         "category" : "Miscellaneous",
+         "urlTemplate" : "tracks/Motifs/{refseq}/trackData.json",
+         "key" : "HTMLFeatures - Example motifs",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "compress" : 0,
+         "track" : "Motifs",
+         "autocomplete" : "all"
+      },
+      {
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "compress" : 0,
+         "autocomplete" : "all",
+         "track" : "malformed_alignments",
+         "shortDescription" : "Features with customized right-click menus",
+         "hooks" : {
+            "modify" : "function( track, feature, div ) { div.style.backgroundColor = ['green','blue','red','orange','purple'][Math.round(Math.random()*5)];}"
+         },
+         "urlTemplate" : "tracks/malformed_alignments/{refseq}/trackData.json",
+         "key" : "HTMLFeatures - Features with right-click menus",
+         "metadata" : {
+            "Description" : "Features with extensively customized right-click menus, and with their colors set at random by a JavaScript callback.",
+            "category" : "Miscellaneous"
+         },
+         "label" : "malformed_alignments",
+         "style" : {
+            "className" : "feature4"
+         },
+         "feature" : [
+            "match"
+         ],
+         "menuTemplate" : [
+            {
+               "label" : "Item with submenu",
+               "children" : [
+                  {
+                     "label" : "Check gene on databases",
+                     "children" : [
+                        {
+                           "action" : "newWindow",
+                           "iconClass" : "dijitIconBookmark",
+                           "url" : "http://wiki.trin.org.au/{name}-{start}-{end}",
+                           "label" : "Query trin for {name}"
+                        },
+                        {
+                           "url" : "http://example.com/{name}-{start}-{end}",
+                           "label" : "Query example.com for {name}",
+                           "iconClass" : "dijitIconSearch"
+                        }
+                     ]
+                  },
+                  {
+                     "label" : "2nd child of demo"
+                  },
+                  {
+                     "label" : "3rd child: this is a track"
+                  }
+               ]
+            },
+            {
+               "action" : "iframeDialog",
+               "iconClass" : "dijitIconDatabase",
+               "title" : "The magnificent example.com (feature {name})",
+               "label" : "Open example.com in an iframe popup",
+               "url" : "http://www.example.com?featurename={name}"
+            },
+            {
+               "title" : "function(track,feature,div) { return 'Random XHR HTML '+Math.random()+' title!'; }",
+               "label" : "Open popup with XHR HTML snippet (btw this is feature {name})",
+               "url" : "sample_data/test_snippet.html?featurename={name}:{start}-{end}",
+               "action" : "xhrDialog",
+               "iconClass" : "dijitIconDatabase"
+            },
+            {
+               "iconClass" : "dijitIconDatabase",
+               "content" : "function(track,feature,div) { return '<h2>'+feature.get('name')+'</h2><p>This is some test content!</p><p>This message brought to you by the number <span style=\"font-size: 300%\">'+Math.round(Math.random()*100)+'</span>.</p>';} ",
+               "action" : "contentDialog",
+               "label" : "Popup with content snippet from a function (feature {name})",
+               "title" : "function(track,feature,div) { return 'Random content snippet '+Math.random()+' title!'; }"
+            },
+            {
+               "title" : "{randomNumberTitle}",
+               "label" : "Popup with content snippet from string (feature {name})",
+               "iconClass" : "dijitIconDatabase",
+               "action" : "contentDialog",
+               "content" : "<h2>{name}</h2><p>This is some test content about {name}, which goes from {start} to {end} on the {strand} strand.</p>"
+            },
+            {
+               "action" : "{exampleFeatureClick}",
+               "iconClass" : "dijitIconDatabase",
+               "label" : "{randomNumberLabel}"
+            }
+         ]
+      },
+      {
+         "fmtMetaField_Name" : "function(name) { return 'Track Name'; }",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "compress" : 0,
+         "autocomplete" : "all",
+         "track" : "Genes",
+         "urlTemplate" : "tracks/Genes/{refseq}/trackData.json",
+         "onClick" : {
+            "label" : "<div style='font:normal 12px Univers,Helvetica,Arial,sans-serif'><div style='font-weight:bold'>Custom tooltip</div><div style='color:blue;'>Feature name: {name}<br />Feature start: {start}<br />Feature end: {end}</div></div>",
+            "title" : "{type} {name}",
+            "action" : "defaultDialog"
+         },
+         "key" : "CanvasFeatures - Protein-coding genes",
+         "fmtDetailValue_Name" : "function(name,feature) { if(feature.get('type')=='gene') { return name + ' <a href=http://www.ncbi.nlm.nih.gov/gquery/?term='+name+'>[NCBI custom link]</a>'; } else { return name; } }",
+         "fmtMetaValue_Name" : "function(name) { return name+' [Track with custom callbacks for About track popup]'; }",
+         "label" : "Genes",
+         "style" : {
+            "className" : "feature5"
+         },
+         "trackType" : "JBrowse/View/Track/CanvasFeatures",
+         "feature" : [
+            "gene"
+         ],
+         "fmtDetailField_Name" : "function(name,feature) { if(feature.get('type')=='gene') { return 'Gene Name'; } else { return name; } }",
+         "menuTemplate" : [
+            {
+               "label" : "View details"
+            },
+            {
+               "label" : "Zoom this gene"
+            },
+            {
+               "label" : "Highlight this gene"
+            },
+            {
+               "label" : "Popup with content snippet from string (feature {name})",
+               "title" : "{randomNumberTitle}",
+               "iconClass" : "dijitIconDatabase",
+               "action" : "contentDialog",
+               "content" : "<h2>{name}</h2>This is some test content about {type} {name}, which goes from {start} to {end} on the {strand} strand."
+            }
+         ],
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "fmtDetailField_Load_id" : "function(name,feature) { /* remove field from dialog box */ return null; }",
+         "category" : "Transcripts",
+         "fmtMetaDescription_Name" : "function(name) { return '[Custom description]'; }"
+      },
+      {
+         "phase" : 1,
+         "category" : "Transcripts",
+         "style" : {
+            "className" : "cds"
+         },
+         "label" : "ReadingFrame",
+         "feature" : [
+            "mRNA"
+         ],
+         "track" : "ReadingFrame",
+         "autocomplete" : "all",
+         "compress" : 0,
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "onClick" : {
+            "label" : "Search for {name} at NCBI\nFeature start {start}\nFeature end {end}",
+            "title" : "NCBI search box",
+            "url" : "http://www.ncbi.nlm.nih.gov/gquery/?term={name}"
+         },
+         "key" : "HTMLFeatures - mRNAs",
+         "urlTemplate" : "tracks/ReadingFrame/{refseq}/trackData.json"
+      },
+      {
+         "urlTemplate" : "tracks/CDS/{refseq}/trackData.json",
+         "key" : "CanvasFeatures - mixed mRNAs and CDSs",
+         "autocomplete" : "all",
+         "track" : "CDS",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "CanvasFeatures",
+         "compress" : 0,
+         "feature" : [
+            "CDS:bare_predicted",
+            "mRNA:exonerate",
+            "mRNA:predicted"
+         ],
+         "trackType" : "CanvasFeatures",
+         "style" : {
+            "className" : "cds",
+            "linkTemplate" : "http://www.ncbi.nlm.nih.gov/gquery/?term={name}-{start}-{end}"
+         },
+         "label" : "CDS",
+         "category" : "Transcripts"
+      },
+      {
+         "trackType" : "JBrowse/View/Track/CanvasFeatures",
+         "description" : 1,
+         "subfeatures" : true,
+         "feature" : [
+            "mRNA:exonerate"
+         ],
+         "style" : {
+            "color" : "#E32A3A",
+            "className" : "feature"
+         },
+         "label" : "Transcript",
+         "category" : "Transcripts",
+         "onClick" : "{exampleFeatureClick}",
+         "key" : "CanvasFeatures - transcripts",
+         "urlTemplate" : "tracks/Transcript/{refseq}/trackData.json",
+         "compress" : 0,
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "autocomplete" : "all",
+         "track" : "Transcript"
+      },
+      {
+         "description" : 1,
+         "feature" : [
+            "BAC"
+         ],
+         "label" : "Clones",
+         "category" : "Miscellaneous",
+         "style" : {
+            "className" : "exon"
+         },
+         "key" : "HTMLFeatures - Fingerprinted BACs",
+         "urlTemplate" : "tracks/Clones/{refseq}/trackData.json",
+         "compress" : 0,
+         "type" : "FeatureTrack",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "autocomplete" : "all",
+         "track" : "Clones"
+      },
+      {
+         "key" : "HTMLFeatures - ESTs",
+         "urlTemplate" : "tracks/EST/{refseq}/trackData.json",
+         "compress" : 0,
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "track" : "EST",
+         "autocomplete" : "all",
+         "feature" : [
+            "EST_match:est"
+         ],
+         "style" : {
+            "className" : "est"
+         },
+         "category" : "Miscellaneous",
+         "label" : "EST"
+      },
+      {
+         "style" : {
+            "className" : "image"
+         },
+         "metadata" : {
+            "category" : "Pre-generated images"
+         },
+         "label" : "volvox_microarray.wig",
+         "compress" : 0,
+         "type" : "ImageTrack.Wiggle",
+         "key" : "Image - volvox_microarray.wig",
+         "urlTemplate" : "tracks/volvox_microarray.wig/{refseq}/trackData.json"
+      },
+      {
+         "urlTemplate" : "tracks/bam_simulated/{refseq}/trackData.json",
+         "key" : "Legacy BAM - volvox-sorted.bam",
+         "type" : "FeatureTrack",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "compress" : 0,
+         "label" : "bam_simulated",
+         "metadata" : {
+            "category" : "BAM"
+         },
+         "style" : {
+            "featureCss" : "background-color: #66F; height: 8px",
+            "className" : "basic",
+            "histCss" : "background-color: #88F",
+            "histScale" : 2
+         }
+      }
+   ],
+   "plugins" : [
+      "NeatHTMLFeatures",
+      "NeatCanvasFeatures",
+      "HideTrackLabels"
+   ],
+   "dataset_id" : "volvox",
+   "names" : {
+      "type" : "Hash",
+      "url" : "names/"
+   },
+   "include" : [
+      "../../raw/volvox/functions.conf"
+   ]
+}

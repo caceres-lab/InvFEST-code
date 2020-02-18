@@ -1,0 +1,245 @@
+{
+   "formatVersion" : 1,
+   "tracks" : [
+      {
+         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-",
+         "metadata" : {
+            "general_tracks" : "Reference Sequence"
+         },
+         "type" : "SequenceTrack",
+         "chunkSize" : 20000,
+         "category" : "Reference sequence",
+         "key" : "Reference sequence",
+         "storeClass" : "JBrowse/Store/Sequence/StaticChunked",
+         "label" : "DNA"
+      },
+
+      {
+         "fmtDetailValue_Name" : "function(name) { return name+'&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"https://www.ncbi.nlm.nih.gov/gquery/?term='+name+'\" title=\"Search at NCBI\" target=\"_blank\">[NCBI]</a>&nbsp;&nbsp;<a href=\"https://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene='+name+'&db=hg19\" title=\"Search at UCSC\" target=\"_blank\">[UCSC]</a>'; }",
+         "transcriptType" : [
+            "mRNA",
+            "transcript"
+         ],
+         "style" : {
+            "className" : "feature",
+            "color" : "function(feature) { if (feature.get('type')=='exon') {return '#12738A';} else return '#daa520';}",
+            "borderWidth" : 0,
+            "text2Color" : "#595959",
+            "height" : "function(feature) { if (feature.get('type')=='exon') {return 6;} else return 16;}"
+         },
+         "fmtDetailValue_Integrativemkt" : "function(integrativemkt) { return '<a href=\"//pophuman.uab.cat/cgi-bin/R/iMKT?geneid='+integrativemkt+'\" target=\"_blank\">See results in a new window</a>'; }",
+         "subParts" : [
+            "exon",
+            "CDS",
+            "five_prime_UTR",
+            "three_prime_UTR"
+         ],
+         "displayMode": "compact",
+         "menuTemplate" : [
+            {
+               "iconClass" : "dijitIconTask",
+               "action" : "contentDialog",
+               "title" : "{type} {name}",
+               "label" : "View details"
+            },
+            {
+               "iconClass" : "dijitIconFilter"
+            },
+            {
+               "iconClass" : "dijitIconDatabase",
+               "url" : "https://www.ncbi.nlm.nih.gov/gquery/?term={name}",
+               //"action" : "iframeDialog",
+               "action" : "newWindow",
+               //"title" : "Searching for {name} at NCBI",
+               "label" : "Search for {name} at NCBI"
+            },
+            {
+               "iconClass" : "dijitIconDatabase",
+               "url" : "https://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene={id}&db=hg19",
+               //"action" : "iframeDialog",
+               "action" : "newWindow",
+               //"title" : "Searching for {name} at UCSC genes",
+               "label" : "Search for {name} at UCSC genes"
+            }//,
+            // {
+            //    "iconClass" : "dijitIconTable",
+            //    "action" : "iframeDialog",
+            //    "url" : "https://pophuman.uab.cat/cgi-bin/R/iMKT?geneid={integrativemkt}",
+            //    "label" : "Integrative MKT for {name}",
+            //    "title" : "Integrative MKT for {name}"
+            // }
+         ],
+         "key" : "Gene annotations",
+         "category" : "Descriptive tracks",
+         "impliedUTRs" : true,
+         "trackType" : "CanvasFeatures",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "urlTemplate" : "tracks/gene_annotations/{refseq}/trackData.json", 
+         "histograms" : {
+            "color" : "#85b2cb"
+         },
+         "compress" : 0,
+         "label" : "gene_annotations",
+         "type" : "CanvasFeatures",
+         "metadata" : {
+            "mapping_and_sequencing" : "Gene annotations",
+            "description" : "Gene annotations in the human hg19 reference genome. This track is a set of gene predictions based on data from RefSeq, GenBank, CCDS, Rfam, and the tRNA Genes track. It includes both protein-coding genes and non-coding RNA genes. Annotations in this track are linked to the NCBI and UCSC databases."
+         }
+      },
+    //   {
+    //      "histograms" : {
+    //         "color" : "#85b2cb"
+    //      },
+    //      "metadata" : {
+    //         "general_tracks" : "Gene annotations"
+    //      },
+    //      "style" : {
+    //         "color" : "#85b2cb",
+    //         "text2Color" : "#595959",
+    //         "className" : "feature"
+    //      },
+
+  		// "displayMode": "compact",
+    //      "urlTemplate" : "tracks/gene_annotations/{refseq}/trackData.json",
+    //      "trackType" : "CanvasFeatures",
+    //      "type" : "CanvasFeatures",
+    //      "compress" : 0,
+    //      "key" : "Gene annotations",
+    //      "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+    //      "menuTemplate" : [
+    //         {
+    //            "iconClass" : "dijitIconTask",
+    //            "title" : "{type} {name}",
+    //            "label" : "View details",
+    //            "action" : "contentDialog"
+    //         },
+    //         {
+    //            "iconClass" : "dijitIconFilter"
+    //         },
+    //         {
+    //            "action" : "iframeDialog",
+    //            "label" : "Search for {name} at NCBI",
+    //            "url" : "http://www.ncbi.nlm.nih.gov/gquery/?term={name}",
+    //            "title" : "Searching for {name} at NCBI",
+    //            "iconClass" : "dijitIconDatabase"
+    //         },
+    //         {
+    //            "title" : "Searching for {name} at UCSC genes",
+    //            "iconClass" : "dijitIconDatabase",
+    //            "url" : "https://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene={id}&db=hg19",
+    //            "action" : "iframeDialog",
+    //            "label" : "Search for {name} at UCSC genes"
+    //         }
+    //      ],
+    //      "label" : ""
+    //   },
+      {
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "key" : "Inversions",
+         "compress" : 0,
+         "onClick" : {
+            "action" : "defaultDialog",
+            "title" : "Inversion {name}"
+         },
+         "menuTemplate" : [
+            {
+               "title" : "Inversion {name}",
+               "iconClass" : "dijitIconTask",
+               "action" : "contentDialog",
+               "label" : "View details"
+            },
+            {
+               "iconClass" : "dijitIconFilter"
+            },
+            {
+               "title" : "Searching for {name} at InvFEST",
+               "iconClass" : "dijitIconDatabase",
+               "label" : "Search for {name} at InvFEST",
+               "action" : "iframeDialog",
+               "url" : "http://158.109.215.162/invdb/report.php?q={id}"
+            }
+         ],
+         "label" : "Inversions",
+         "category" : "InvFEST specific tracks",
+         "transcriptType" : "Inversion",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "trackType" : "CanvasFeatures",
+         "urlTemplate" : "tracks/Inversions/{refseq}/trackData.json",
+         "style" : {
+            "className" : "feature",
+            "color" : "#4e004e"
+         },
+         "subParts" : "breakpoint",
+         "type" : "CanvasFeatures"
+      },
+      {
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "transcriptType" : "Prediction",
+         "menuTemplate" : [
+            {
+               "label" : "View details",
+               "action" : "contentDialog",
+               "iconClass" : "dijitIconTask",
+               "title" : "Prediction {Prediction name} from {Inversion name}"
+            },
+            {
+               "iconClass" : "dijitIconFilter"
+            },
+            {
+               "iconClass" : "dijitIconDatabase",
+               "title" : "Searching for {Inversion name} at InvFEST",
+               "label" : "Search for {Inversion name} at InvFEST",
+               "action" : "iframeDialog",
+               "url" : "http://158.109.215.162/invdb/report.php?q={id}"
+            },
+            {
+               "iconClass" : "dijitIconDatabase",
+               "title" : "Search for {Study} at PubMed",
+               "url" : "http://www.ncbi.nlm.nih.gov/pubmed/{pmid}",
+               "action" : "iframeDialog",
+               "label" : "Search for {Study} at PubMed"
+            }
+         ],
+         "label" : "Predictions",
+         "category" : "InvFEST specific tracks",
+         "onClick" : {
+            "action" : "defaultDialog",
+            "title" : "Prediction {Prediction name} from {Inversion name}"
+         },
+         "key" : "Predictions",
+         "compress" : 0,
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "type" : "CanvasFeatures",
+         "subParts" : "breakpoint",
+         "style" : {
+            "label" : "Name",
+            "className" : "feature",
+            "description" : "Study",
+            "text2Color" : "#1f78ab"
+         },
+         "trackType" : "CanvasFeatures",
+         "urlTemplate" : "tracks/Predictions/{refseq}/trackData.json"
+      },
+      {
+         "type" : "CanvasFeatures",
+         "label" : "genomicSuperDups",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "urlTemplate" : "tracks/genomicSuperDups/{refseq}/trackData.json",
+         "histograms":{
+         	"color" : "#A9A9A9"
+         },
+         "style" : {
+         	"color":"#A9A9A9",
+
+            "histCss" : "background-color: #000000;",
+            "className" : "basic",
+            "featureCss" : "background-color: #000000; height: 6px;",
+            "height" : "1"
+         },
+  		"displayMode": "compact",
+         "key" : "Segmental duplications",
+         "category" : "Descriptive tracks",
+         "compress" : 0
+      }
+   ]
+}

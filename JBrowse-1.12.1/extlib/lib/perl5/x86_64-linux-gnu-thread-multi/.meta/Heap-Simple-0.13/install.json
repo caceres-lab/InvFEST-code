@@ -1,0 +1,1 @@
+{"name":"Heap::Simple","dist":"Heap-Simple-0.13","provides":{"Heap::Simple":{"file":"lib/Heap/Simple.pm","version":"0.13"},"Heap::Simple::Package":{"version":"0.13","file":"lib/Heap/Simple/Package.pm"}},"version":"0.13","pathname":"T/TH/THOSPEL/Heap-Simple-0.13.tar.gz","target":"Heap::Simple"}

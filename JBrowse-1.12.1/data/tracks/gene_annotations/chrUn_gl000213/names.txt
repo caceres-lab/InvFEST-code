@@ -1,0 +1,6 @@
+[["DQ583164",["uc022bqy.1","DQ583164","DQ583164","n/a"],"uc022bqy.1"],"gene_annotations","DQ583164","chrUn_gl000213",97965,97993]
+[["DQ587539",["uc011mfj.1","DQ587539","DQ587539","n/a"],"uc011mfj.1"],"gene_annotations","DQ587539","chrUn_gl000213",98028,98058]
+[["DQ587539",["uc011mfk.2","DQ587539","DQ587539","n/a"],"uc011mfk.2"],"gene_annotations","DQ587539","chrUn_gl000213",98667,98697]
+[["DQ595048",["uc022bqz.1","DQ595048","DQ595048","n/a"],"uc022bqz.1"],"gene_annotations","DQ595048","chrUn_gl000213",99287,99327]
+[["DQ587539",["uc022bra.1","DQ587539","DQ587539","n/a"],"uc022bra.1"],"gene_annotations","DQ587539","chrUn_gl000213",99936,99966]
+[["LOC100288966",["uc011mfl.2","LOC100288966","NM_001257362","Q86YR6","POTED_HUMAN","NM_001257362","NP_001244291","100288966"],"uc011mfl.2"],"gene_annotations","LOC100288966","chrUn_gl000213",108006,139339]

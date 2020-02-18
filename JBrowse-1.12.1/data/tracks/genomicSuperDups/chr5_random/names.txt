@@ -1,0 +1,1 @@
+[["chr5:180363135"],"genomicSuperDups","chr5:180363135","chr5_random",113060,114326]

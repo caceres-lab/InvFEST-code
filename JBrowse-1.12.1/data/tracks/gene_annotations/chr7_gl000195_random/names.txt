@@ -1,0 +1,5 @@
+[["AK021933",["uc003woi.3","AK021933","AK021933","n/a"],"uc003woi.3"],"gene_annotations","AK021933","chr7_gl000195_random",29244,31980]
+[["LOC389831",["uc003woj.2","LOC389831","NM_001242480","Q69YS9","Q69YS9_HUMAN","NM_001242480","NP_001229409","389831"],"uc003woj.2"],"gene_annotations","LOC389831","chr7_gl000195_random",42937,86719]
+[["LOC389831",["uc003wok.2","LOC389831","BC073929","389831"],"uc003wok.2"],"gene_annotations","LOC389831","chr7_gl000195_random",46399,86719]
+[["LOC389831",["uc003wom.3","LOC389831","BC070385","389831"],"uc003wom.3"],"gene_annotations","LOC389831","chr7_gl000195_random",83300,86719]
+[["BC107568",["uc003won.1","BC107568","BC107568","n/a"],"uc003won.1"],"gene_annotations","BC107568","chr7_gl000195_random",137966,141360]

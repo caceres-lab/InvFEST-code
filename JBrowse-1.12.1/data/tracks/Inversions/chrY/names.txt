@@ -1,0 +1,6 @@
+[["HsInv0952"," 998"],"Inversions","HsInv0952","chrY",9926860,10007403]
+[["HsInv0088","1045"],"Inversions","HsInv0088","chrY",16702143,16704927]
+[["HsInv0832"," 215"],"Inversions","HsInv0832","chrY",17957121,18033620]
+[["HsInv0089","1046"],"Inversions","HsInv0089","chrY",20063106,20801834]
+[["HsInv0416"," 216"],"Inversions","HsInv0416","chrY",23169492,23229059]
+[["HsInv0090","1047"],"Inversions","HsInv0090","chrY",23222306,23227538]

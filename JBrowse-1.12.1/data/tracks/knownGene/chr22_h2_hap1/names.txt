@@ -1,0 +1,1 @@
+[["uc003bnt.1"],"knownGene","uc003bnt.1","chr22_h2_hap1",10696,16485]

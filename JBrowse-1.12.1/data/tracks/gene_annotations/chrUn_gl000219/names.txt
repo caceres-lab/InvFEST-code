@@ -1,0 +1,4 @@
+[["BC039483",["uc011mfo.2","BC039483","BC039483","n/a"],"uc011mfo.2"],"gene_annotations","BC039483","chrUn_gl000219",45396,57412]
+[["AK127309",["uc011mfp.1","AK127309","AK127309","n/a"],"uc011mfp.1"],"gene_annotations","AK127309","chrUn_gl000219",51811,54878]
+[["LOC283788",["uc022brb.1","LOC283788","BC017921","Q05D61","Q05D61_HUMAN","283788"],"uc022brb.1"],"gene_annotations","LOC283788","chrUn_gl000219",53808,99568]
+[["LOC283788",["uc011mfq.2","LOC283788","NR_027436","NR_027436","283788"],"uc011mfq.2"],"gene_annotations","LOC283788","chrUn_gl000219",56348,99642]

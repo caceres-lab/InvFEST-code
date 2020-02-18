@@ -1,0 +1,5 @@
+[["MIR4273",["uc022brj.1","MIR4273","NR_036235","NR_036235","100422955"],"uc022brj.1"],"gene_annotations","MIR4273","chrUn_gl000222",15193,15277]
+[["LOC401074",["uc011mfw.2","LOC401074","NR_040004","NR_040004","401074"],"uc011mfw.2"],"gene_annotations","LOC401074","chrUn_gl000222",74364,81351]
+[["LOC401074",["uc011mfx.2","LOC401074","NR_040005","NR_040005","401074"],"uc011mfx.2"],"gene_annotations","LOC401074","chrUn_gl000222",74364,81351]
+[["FLJ20518",["uc011mfy.2","FLJ20518","NR_037925","A6NGY1","FRG2C_HUMAN","NM_001124759","NP_001118231","647476"],"uc011mfy.2"],"gene_annotations","FLJ20518","chrUn_gl000222",86422,89310]
+[["JB074863",["uc022brk.1","JB074863","JB074863","n/a"],"uc022brk.1"],"gene_annotations","JB074863","chrUn_gl000222",122790,122814]

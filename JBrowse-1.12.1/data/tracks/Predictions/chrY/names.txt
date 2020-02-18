@@ -1,0 +1,6 @@
+[["HsInv0952_p","1271"],"Predictions","HsInv0952_p","chrY",9927421,10007061]
+[["HsInv0088_p"," 512"],"Predictions","HsInv0088_p","chrY",16703143,16703927]
+[["HsInv0832_p","1539"],"Predictions","HsInv0832_p","chrY",17957121,18033620]
+[["HsInv0089_p"," 520"],"Predictions","HsInv0089_p","chrY",20064106,20800834]
+[["HsInv0416_p","1540"],"Predictions","HsInv0416_p","chrY",23169492,23229059]
+[["HsInv0090_p"," 525"],"Predictions","HsInv0090_p","chrY",23223306,23226538]

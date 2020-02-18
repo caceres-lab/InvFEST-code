@@ -1,0 +1,70 @@
+{
+   "formatVersion" : 1,
+   "plugins" : [
+      "NeatHTMLFeatures",
+      "NeatCanvasFeatures",
+      "HideTrackLabels"
+   ],
+   "names" : {
+      "type" : "Hash",
+      "url" : "names/"
+   },
+   "tracks" : [
+      {
+         "chunkSize" : 20000,
+         "storeClass" : "JBrowse/Store/Sequence/StaticChunked",
+         "category" : "Reference sequence",
+         "label" : "DNA",
+         "key" : "Reference sequence",
+         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-",
+         "type" : "SequenceTrack"
+      },
+      {
+         "key" : "Protein-coding genes",
+         "style" : {
+            "className" : "feature5",
+            "arrowheadClass" : "transcript-arrowhead",
+            "subfeatureClasses" : {
+               "CDS" : "transcript-CDS"
+            }
+         },
+         "type" : "FeatureTrack",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "category" : "Genes",
+         "urlTemplate" : "tracks/Genes/{refseq}/trackData.json",
+         "track" : "Genes",
+         "label" : "Genes",
+         "subfeatures" : true,
+         "feature" : [
+            "gene"
+         ],
+         "compress" : 0,
+         "autocomplete" : "all"
+      },
+      {
+         "description" : 1,
+         "autocomplete" : "all",
+         "compress" : 0,
+         "feature" : [
+            "mRNA"
+         ],
+         "urlTemplate" : "tracks/transcript_with_no_features/{refseq}/trackData.json",
+         "label" : "transcript_with_no_features",
+         "track" : "transcript_with_no_features",
+         "subfeatures" : true,
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "category" : "Genes",
+         "key" : "Exonerate predictions (misconfigured for test, and with a long description)",
+         "style" : {
+            "className" : "transcript",
+            "subfeatureClasses" : {
+               "UTR" : "transcript-UTR",
+               "CDS" : "transcript-CDS"
+            },
+            "arrowheadClass" : "transcript-arrowhead"
+         },
+         "type" : "FeatureTrack"
+      }
+   ],
+   "dataset_id" : "yeast"
+}

@@ -1,0 +1,1 @@
+[["HsInv0108"," 608"],"Inversions","HsInv0108","chrM",8558,16124]

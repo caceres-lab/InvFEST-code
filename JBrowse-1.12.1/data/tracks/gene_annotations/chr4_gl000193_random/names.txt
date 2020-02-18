@@ -1,0 +1,2 @@
+[["MGC39584",["uc003izx.3","MGC39584","NR_038377","NR_038377","441058"],"uc003izx.3"],"gene_annotations","MGC39584","chr4_gl000193_random",49162,88375]
+[["MGC39584",["uc003izy.3","MGC39584","BC033389","441058"],"uc003izy.3"],"gene_annotations","MGC39584","chr4_gl000193_random",73407,85550]

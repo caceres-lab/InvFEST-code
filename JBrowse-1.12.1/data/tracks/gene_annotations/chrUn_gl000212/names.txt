@@ -1,0 +1,2 @@
+[["FAM230C",["uc001vuw.2","FAM230C","NR_027278","NR_027278","26080"],"uc001vuw.2"],"gene_annotations","FAM230C","chrUn_gl000212",24048,60768]
+[["DKFZp434B061",["uc001vux.3","DKFZp434B061","AL122069","n/a"],"uc001vux.3"],"gene_annotations","DKFZp434B061","chrUn_gl000212",65183,66597]

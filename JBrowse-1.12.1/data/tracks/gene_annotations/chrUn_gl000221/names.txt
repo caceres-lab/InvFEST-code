@@ -1,0 +1,3 @@
+[["DQ595048",["uc022bri.1","DQ595048","DQ595048","n/a"],"uc022bri.1"],"gene_annotations","DQ595048","chrUn_gl000221",39140,39180]
+[["DQ590126",["uc011mfu.1","DQ590126","DQ590126","n/a"],"uc011mfu.1"],"gene_annotations","DQ590126","chrUn_gl000221",40423,40453]
+[["DQ592442",["uc011mfv.1","DQ592442","DQ592442","n/a"],"uc011mfv.1"],"gene_annotations","DQ592442","chrUn_gl000221",42248,45020]

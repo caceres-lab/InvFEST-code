@@ -1,0 +1,3 @@
+[["uc004con.1"],"knownGene","uc004con.1","chr9_random",12669,22909]
+[["uc004coo.1"],"knownGene","uc004coo.1","chr9_random",1126637,1127706]
+[["uc004cop.1"],"knownGene","uc004cop.1","chr9_random",1130466,1131586]

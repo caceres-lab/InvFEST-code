@@ -1,0 +1,3 @@
+[["CR933660",["uc003bny.3","CR933660","CR933660","n/a"],"uc003bny.3"],"gene_annotations","CR933660","chrUn_gl000211",21804,48108]
+[["FLJ43315",["uc003bnz.1","FLJ43315","NR_033856","NR_033856","644316"],"uc003bnz.1"],"gene_annotations","FLJ43315","chrUn_gl000211",48502,93165]
+[["FLJ43315",["uc003boa.3","FLJ43315","BC057848","644316"],"uc003boa.3"],"gene_annotations","FLJ43315","chrUn_gl000211",82660,108678]

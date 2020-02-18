@@ -1,0 +1,3 @@
+[["HsInv0108_p"," 614"],"Predictions","HsInv0108_p","chrM",2766,9314]
+[["HsInv0108_p"," 617"],"Predictions","HsInv0108_p","chrM",7008,10908]
+[["HsInv0108_p"," 611"],"Predictions","HsInv0108_p","chrM",15368,15661]

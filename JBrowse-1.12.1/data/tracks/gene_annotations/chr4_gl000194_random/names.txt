@@ -1,0 +1,7 @@
+[["MAFIP",["uc003jab.3","MAFIP","NR_046439","NR_046439","727764"],"uc003jab.3"],"gene_annotations","MAFIP","chr4_gl000194_random",53588,115071]
+[["MAFIP",["uc011clu.3","MAFIP","NR_046440","Q3SWV3","Q3SWV3_HUMAN","NR_046440","727764"],"uc011clu.3"],"gene_annotations","MAFIP","chr4_gl000194_random",53588,115071]
+[["MAFIP",["uc021xvt.2","MAFIP","NR_046441","Q8TEH8","Q8TEH8_HUMAN","NR_046441","727764"],"uc021xvt.2"],"gene_annotations","MAFIP","chr4_gl000194_random",53588,115071]
+[["MAFIP",["uc031sii.1","MAFIP","NR_046442","NR_046442","727764"],"uc031sii.1"],"gene_annotations","MAFIP","chr4_gl000194_random",61659,115071]
+[["MAFIP",["uc003jae.3","MAFIP","BC068588","727764"],"uc003jae.3"],"gene_annotations","MAFIP","chr4_gl000194_random",67188,115071]
+[["DQ590589",["uc003jaf.3","DQ590589","DQ590589","n/a"],"uc003jaf.3"],"gene_annotations","DQ590589","chr4_gl000194_random",76192,76222]
+[["DQ590126",["uc003jag.2","DQ590126","DQ590126","n/a"],"uc003jag.2"],"gene_annotations","DQ590126","chr4_gl000194_random",78681,78711]
